@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="style_text_lower_toolbar">
+        <item name="android:textSize">40sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+</resources>
