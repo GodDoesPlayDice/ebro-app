@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.example.ebroapp.base.BaseActivity
 import com.example.ebroapp.databinding.ActivityMainBinding
+import com.example.ebroapp.main.MainFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -24,6 +25,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         setContentView(R.layout.activity_main)
 
         hideSystemUi()
+
+        supportFragmentManager.beginTransaction().replace(R.id.flMain, MainFragment()).commit()
 
         btnToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
