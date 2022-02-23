@@ -23,4 +23,12 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
+    <style name="style_card_view">
+        <item name="cardBackgroundColor">#222222</item>
+        <item name="cardCornerRadius">30dp</item>
+        <item name="contentPaddingLeft">30dp</item>
+        <item name="contentPaddingRight">30dp</item>
+        <item name="contentPaddingTop">20dp</item>
+        <item name="contentPaddingBottom">20dp</item>
+    </style>
 </resources>
