@@ -12,17 +12,10 @@ import com.example.ebroapp.databinding.FragmentUserInfoBinding
 
 class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarPlaceholderBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_lower_toolbar_placeholder, container, false)
-    }
-
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLowerToolbarPlaceholderBinding
             = FragmentLowerToolbarPlaceholderBinding::inflate
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 }
