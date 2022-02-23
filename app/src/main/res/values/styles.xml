@@ -4,7 +4,14 @@
     <style name="style_text_lower_toolbar">
         <item name="android:textSize">40sp</item>
         <item name="android:letterSpacing">0.03</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="temperature_seek_bar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressTint">#4F4E4E</item>
+<!--        <item name="android:progressDrawable">@drawable/abc_seekbar_track_material</item>-->
+<!--        <item name="android:indeterminateDrawable">@drawable/abc_seekbar_track_material</item>-->
+        <item name="android:thumb">@drawable/ic_temperature_sk_thumb</item>
     </style>
 
 </resources>
