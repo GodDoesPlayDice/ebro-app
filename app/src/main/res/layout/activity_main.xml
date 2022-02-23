@@ -14,6 +14,16 @@
         android:background="@color/background"
         tools:context=".MainActivity">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnToggleGroup"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_logo" />
+
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/btnToggleGroup"
             android:layout_width="64dp"
@@ -67,7 +77,9 @@
             app:layout_constraintBottom_toTopOf="@+id/flCarInterface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnToggleGroup"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/flCarInterface"
