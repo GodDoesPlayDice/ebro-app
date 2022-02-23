@@ -14,6 +14,7 @@
             android:launchMode="singleTask"
             android:excludeFromRecents="true"
             android:screenOrientation="sensor"
+            android:theme="@style/Theme.EbroApp.NoActionBarAndStatusBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
