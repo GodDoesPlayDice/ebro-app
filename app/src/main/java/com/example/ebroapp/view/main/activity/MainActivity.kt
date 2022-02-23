@@ -1,62 +1,65 @@
-package com.example.ebroapp
+package com.example.ebroapp.view.main.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.example.ebroapp.base.BaseActivity
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
-import com.example.ebroapp.lowertoolbar.LowerToolbarFragment
-import com.example.ebroapp.main.MainFragment
+import com.example.ebroapp.view.main.base.BaseActivity
+import com.example.ebroapp.view.main.fragment.MainFragment
+import com.example.ebroapp.view.main.fragment.lowertoolbar.LowerToolbarFragment
+import com.example.ebroapp.view.main.fragment.map.MapFragment
+import com.example.ebroapp.view.main.fragment.muisc.MusicFragment
+import com.example.ebroapp.view.main.fragment.settings.SettingsFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 
+// наследуемся от базового класса
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     // хз почему, но для этой залупы viewBinding не пашет
     private val btnToggleGroup by lazy { findViewById<MaterialButtonToggleGroup>(R.id.btnToggleGroup) }
 
+    // нужно для viewBinding. ActivityMainBinding автогенерируется
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding =
         ActivityMainBinding::inflate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         hideSystemUi()
-
-        supportFragmentManager.beginTransaction().replace(R.id.flMain, MainFragment()).commit()
-
-        supportFragmentManager.beginTransaction().replace(R.id.flCarInterface, LowerToolbarFragment()).commit()
+        // ставим фрагменты на место
+        supportFragmentManager.commit { replace<MainFragment>(R.id.fragmentMain) }
+        supportFragmentManager.commit { replace<LowerToolbarFragment>(R.id.fragmentlowerToolbar) }
 
         btnToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     R.id.btnHome -> {
-                        showToast("Home")
+                        supportFragmentManager.commit { replace<MainFragment>(R.id.fragmentMain) }
                     }
-                    R.id.btnLocation -> {
-                        showToast("Location")
+                    R.id.btnMap -> {
+                        supportFragmentManager.commit { replace<MapFragment>(R.id.fragmentMain) }
                     }
                     R.id.btnMusic -> {
-                        showToast("Music")
+                        supportFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMain) }
                     }
                     R.id.btnSettings -> {
-                        showToast("Settings")
+                        supportFragmentManager.commit { replace<SettingsFragment>(R.id.fragmentMain) }
                     }
                 }
             }
         }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
+    // нужно чтоб нажатие на back не срабатывало
     override fun onBackPressed() {}
 
+    // скрываем весь системный UI и расширяем приложение через status bar
     private fun hideSystemUi() {
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,

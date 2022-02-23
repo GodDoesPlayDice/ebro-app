@@ -10,14 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EbroApp">
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTask"
+            android:name=".view.main.activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:excludeFromRecents="true"
-            android:screenOrientation="sensor"
-            android:theme="@style/Theme.EbroApp.NoActionBarAndStatusBar"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.EbroApp.NoActionBarAndStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
