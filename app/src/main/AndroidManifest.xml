@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ebroapp">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".App"
@@ -14,8 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EbroApp">
+
         <activity
-            android:name="com.example.ebroapp.view.activity.MainActivity"
+            android:name=".view.activity.splash.SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.EbroApp.NoActionBarAndStatusBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -25,18 +39,22 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".view.activity.black.BlackActivity"
+            android:exported="false"
+            android:theme="@style/Theme.EbroApp.NoActionBarAndStatusBar" />
+
         <receiver
-            android:name=".receiver.BootReceiver"
+            android:name=".receiver.ActionPowerReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
     </application>

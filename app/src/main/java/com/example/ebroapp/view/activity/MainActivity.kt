@@ -31,8 +31,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        hideSystemUi()
         // ставим фрагменты на место
         openMainFragment()
         supportFragmentManager.commit { replace<LowerToolbarFragment>(R.id.fragmentLowerToolbar) }
@@ -72,20 +70,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     }
                 }
             })
-        }
-    }
-
-    // скрываем весь системный UI и расширяем приложение через status bar
-    private fun hideSystemUi() {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, binding.root).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 }

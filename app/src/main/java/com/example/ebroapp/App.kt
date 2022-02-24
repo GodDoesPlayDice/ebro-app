@@ -17,6 +17,15 @@ class App : Application() {
         initPlayer()
     }
 
+    fun playPauseMusic() {
+        if (player.isPlaying) {
+            player.pause()
+        } else {
+            player.isLooping = true
+            player.start()
+        }
+    }
+
     private fun initPlayer() {
         player.apply {
             setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
@@ -28,15 +37,6 @@ class App : Application() {
             } catch (e: Exception) {
                 Log.e("MUSIC SERVICE", "Error setting data source", e)
             }
-        }
-    }
-
-    fun playPauseMusic() {
-        if (player.isPlaying) {
-            player.pause()
-        } else {
-            player.isLooping = true
-            player.start()
         }
     }
 
