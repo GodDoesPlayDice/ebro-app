@@ -45,7 +45,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     }
                     R.id.btnMap -> {
                         supportFragmentManager.commit {
-                            setAnimation()
                             replace<MapFullFragment>(R.id.fragmentMain)
                         }
                     }
