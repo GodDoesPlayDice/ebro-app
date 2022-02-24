@@ -14,6 +14,7 @@ import com.example.ebroapp.view.main.base.BaseActivity
 import com.example.ebroapp.view.main.fragment.MainFragment
 import com.example.ebroapp.view.main.fragment.lowertoolbar.LowerToolbarFragment
 import com.example.ebroapp.view.main.fragment.map.MapFragment
+import com.example.ebroapp.view.main.fragment.mapfull.MapFullFragment
 import com.example.ebroapp.view.main.fragment.muisc.MusicFragment
 import com.example.ebroapp.view.main.fragment.musicfull.MusicFullFragment
 import com.example.ebroapp.view.main.fragment.settings.SettingsFragment
@@ -44,7 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         supportFragmentManager.commit { replace<MainFragment>(R.id.fragmentMain) }
                     }
                     R.id.btnMap -> {
-                        supportFragmentManager.commit { replace<MapFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit { replace<MapFullFragment>(R.id.fragmentMain) }
                     }
                     R.id.btnMusic -> {
                         supportFragmentManager.commit { replace<MusicFullFragment>(R.id.fragmentMain) }
