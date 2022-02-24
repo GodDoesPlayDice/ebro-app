@@ -1,4 +1,4 @@
-package com.example.ebroapp.view.main.activity
+package com.example.ebroapp.view.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,14 +10,12 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
-import com.example.ebroapp.view.main.base.BaseActivity
-import com.example.ebroapp.view.main.fragment.MainFragment
-import com.example.ebroapp.view.main.fragment.lowertoolbar.LowerToolbarFragment
-import com.example.ebroapp.view.main.fragment.map.MapFragment
-import com.example.ebroapp.view.main.fragment.mapfull.MapFullFragment
-import com.example.ebroapp.view.main.fragment.muisc.MusicFragment
-import com.example.ebroapp.view.main.fragment.musicfull.MusicFullFragment
-import com.example.ebroapp.view.main.fragment.settings.SettingsFragment
+import com.example.ebroapp.view.base.BaseActivity
+import com.example.ebroapp.view.fragment.MainFragment
+import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
+import com.example.ebroapp.view.fragment.mapfull.MapFullFragment
+import com.example.ebroapp.view.fragment.musicfull.MusicFullFragment
+import com.example.ebroapp.view.fragment.settings.SettingsFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 
 // наследуемся от базового класса

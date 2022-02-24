@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EbroApp">
         <activity
-            android:name=".view.main.activity.MainActivity"
+            android:name="com.example.ebroapp.view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:excludeFromRecents="true"
             android:exported="true"

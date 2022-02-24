@@ -1,12 +1,11 @@
-package com.example.ebroapp.view.main.fragment.map
+package com.example.ebroapp.view.fragment.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.ebroapp.databinding.FragmentMapBinding
-import com.example.ebroapp.databinding.FragmentUserInfoBinding
-import com.example.ebroapp.view.main.base.BaseFragment
+import com.example.ebroapp.view.base.BaseFragment
 
 class MapFragment : BaseFragment<FragmentMapBinding>() {
 

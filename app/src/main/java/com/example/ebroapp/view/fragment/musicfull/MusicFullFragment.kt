@@ -1,11 +1,11 @@
-package com.example.ebroapp.view.main.fragment.musicfull
+package com.example.ebroapp.view.fragment.musicfull
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
-import com.example.ebroapp.view.main.base.BaseFragment
+import com.example.ebroapp.view.base.BaseFragment
 
 class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
 

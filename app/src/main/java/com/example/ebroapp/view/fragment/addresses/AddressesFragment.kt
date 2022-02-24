@@ -1,13 +1,11 @@
-package com.example.ebroapp.view.main.fragment.addresses
+package com.example.ebroapp.view.fragment.addresses
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentAddressesBinding
-import com.example.ebroapp.view.main.base.BaseFragment
+import com.example.ebroapp.view.base.BaseFragment
 
 class AddressesFragment : BaseFragment<FragmentAddressesBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAddressesBinding

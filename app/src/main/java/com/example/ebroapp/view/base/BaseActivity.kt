@@ -1,4 +1,4 @@
-package com.example.ebroapp.view.main.base
+package com.example.ebroapp.view.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,17 +1,17 @@
-package com.example.ebroapp.view.main.fragment
+package com.example.ebroapp.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.ebroapp.R
-import com.example.ebroapp.view.main.base.BaseFragment
+import com.example.ebroapp.view.base.BaseFragment
 import com.example.ebroapp.databinding.FragmentMainBinding
-import com.example.ebroapp.view.main.fragment.addresses.AddressesFragment
-import com.example.ebroapp.view.main.fragment.map.MapFragment
-import com.example.ebroapp.view.main.fragment.muisc.MusicFragment
-import com.example.ebroapp.view.main.fragment.userinfo.UserInfoFragment
-import com.example.ebroapp.view.main.fragment.weather.WeatherFragment
+import com.example.ebroapp.view.fragment.addresses.AddressesFragment
+import com.example.ebroapp.view.fragment.map.MapFragment
+import com.example.ebroapp.view.fragment.muisc.MusicFragment
+import com.example.ebroapp.view.fragment.userinfo.UserInfoFragment
+import com.example.ebroapp.view.fragment.weather.WeatherFragment
 
 class MainFragment : BaseFragment<FragmentMainBinding>() {
 

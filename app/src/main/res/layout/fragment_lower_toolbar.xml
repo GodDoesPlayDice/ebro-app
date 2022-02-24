@@ -5,7 +5,7 @@
     android:id="@+id/lower_toolbar_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.fragment.lowertoolbar.LowerToolbarFragment">
+    tools:context=".view.fragment.lowertoolbar.LowerToolbarFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_left_seat_container"
