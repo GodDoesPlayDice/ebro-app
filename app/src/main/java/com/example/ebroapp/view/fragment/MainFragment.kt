@@ -1,12 +1,15 @@
 package com.example.ebroapp.view.fragment
 
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMainBinding
+import com.example.ebroapp.interfaces.OnFragmentMainClick
 import com.example.ebroapp.view.base.BaseFragment
 import com.example.ebroapp.view.fragment.addresses.AddressesFragment
 import com.example.ebroapp.view.fragment.map.MapFragment
@@ -14,7 +17,8 @@ import com.example.ebroapp.view.fragment.muisc.MusicFragment
 import com.example.ebroapp.view.fragment.userinfo.UserInfoFragment
 import com.example.ebroapp.view.fragment.weather.WeatherFragment
 
-class MainFragment(private val onClick: (Int) -> Unit) : BaseFragment<FragmentMainBinding>() {
+class MainFragment(private val playPause: OnFragmentMainClick) :
+    BaseFragment<FragmentMainBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMainBinding =
         FragmentMainBinding::inflate
@@ -23,17 +27,16 @@ class MainFragment(private val onClick: (Int) -> Unit) : BaseFragment<FragmentMa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        parentFragmentManager.beginTransaction().replace(R.id.fragmentUserInfo, UserInfoFragment())
-            .commit()
-        parentFragmentManager.beginTransaction().replace(R.id.fragmentWeather, WeatherFragment())
-            .commit()
-        parentFragmentManager.beginTransaction().replace(R.id.fragmentLocation, AddressesFragment())
-            .commit()
-        parentFragmentManager.beginTransaction().replace(R.id.fragmentMap, MapFragment()).commit()
-        parentFragmentManager.beginTransaction().replace(R.id.fragmentMusic, MusicFragment())
-            .commit()
+        parentFragmentManager.commit { replace<UserInfoFragment>(R.id.fragmentUserInfo) }
+        parentFragmentManager.commit { replace<WeatherFragment>(R.id.fragmentWeather) }
+        parentFragmentManager.commit { replace<AddressesFragment>(R.id.fragmentLocation) }
+        parentFragmentManager.commit { replace<MapFragment>(R.id.fragmentMap) }
 
-        binding.fragmentMap.setOnClickListener { onClick.invoke(it.id) }
-        binding.fragmentMusic.setOnClickListener { onClick.invoke(it.id) }
+        parentFragmentManager.beginTransaction().replace(R.id.fragmentMusic, MusicFragment {
+            playPause.onPlayPauseClick()
+        }).commit()
+
+        binding.fragmentMap.setOnClickListener { playPause.onFragmentClick(it.id) }
+        binding.fragmentMusic.setOnClickListener { playPause.onFragmentClick(it.id) }
     }
 }
