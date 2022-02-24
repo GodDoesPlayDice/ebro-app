@@ -33,14 +33,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         hideSystemUi()
         // ставим фрагменты на место
-        supportFragmentManager.commit { replace<MainFragment>(R.id.fragmentMain) }
-        supportFragmentManager.commit { replace<LowerToolbarFragment>(R.id.fragmentlowerToolbar) }
+        openMainFragment()
+        supportFragmentManager.commit { replace<LowerToolbarFragment>(R.id.fragmentLowerToolbar) }
 
         btnToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     R.id.btnHome -> {
-                        supportFragmentManager.commit { replace<MainFragment>(R.id.fragmentMain) }
+                        openMainFragment()
                     }
                     R.id.btnMap -> {
                         supportFragmentManager.commit { replace<MapFullFragment>(R.id.fragmentMain) }
@@ -58,6 +58,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     // нужно чтоб нажатие на back не срабатывало
     override fun onBackPressed() {}
+
+    private fun openMainFragment() {
+        supportFragmentManager.commit {
+            replace(R.id.fragmentMain, MainFragment { id ->
+                when (id) {
+                    R.id.fragmentMap -> {
+                        btnToggleGroup.check(R.id.btnMap)
+                    }
+                    R.id.fragmentMusic -> {
+                        btnToggleGroup.check(R.id.btnMusic)
+                    }
+                }
+            })
+        }
+    }
 
     // скрываем весь системный UI и расширяем приложение через status bar
     private fun hideSystemUi() {
