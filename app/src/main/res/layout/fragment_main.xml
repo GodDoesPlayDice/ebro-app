@@ -18,6 +18,7 @@
             android:id="@+id/fragmentUserInfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
             tools:layout="@layout/fragment_user_info" />
 
@@ -25,15 +26,18 @@
             android:id="@+id/fragmentWeather"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:layout_weight="1"
-            tools:layout="@layout/fragment_weather"/>
+            tools:layout="@layout/fragment_weather" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentLocation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
-            tools:layout="@layout/fragment_addresses"/>
+            tools:layout="@layout/fragment_addresses" />
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
