@@ -10,6 +10,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
+import com.example.ebroapp.utils.setAnimation
 import com.example.ebroapp.view.base.BaseActivity
 import com.example.ebroapp.view.fragment.MainFragment
 import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
@@ -43,13 +44,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         openMainFragment()
                     }
                     R.id.btnMap -> {
-                        supportFragmentManager.commit { replace<MapFullFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit {
+                            setAnimation()
+                            replace<MapFullFragment>(R.id.fragmentMain)
+                        }
                     }
                     R.id.btnMusic -> {
-                        supportFragmentManager.commit { replace<MusicFullFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit {
+                            setAnimation()
+                            replace<MusicFullFragment>(R.id.fragmentMain)
+                        }
                     }
                     R.id.btnSettings -> {
-                        supportFragmentManager.commit { replace<SettingsFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit {
+                            setAnimation()
+                            replace<SettingsFragment>(R.id.fragmentMain)
+                        }
                     }
                 }
             }
@@ -61,6 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun openMainFragment() {
         supportFragmentManager.commit {
+            setAnimation()
             replace(R.id.fragmentMain, MainFragment { id ->
                 when (id) {
                     R.id.fragmentMap -> {
