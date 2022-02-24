@@ -27,8 +27,8 @@
 
                 <ImageView
                     android:id="@+id/iv_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="63dp"
                     android:src="@drawable/ic_address_icon" />
 
                 <LinearLayout
@@ -41,6 +41,7 @@
                         android:id="@+id/tv_addresses_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
                         android:text="Addresses"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
@@ -51,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:text="Plaça de Catalunya  |  08002 Barcelona"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_addresses_item2"
@@ -59,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:text="C. de Ruiz de Alarcón 23  |  28014 Madrid"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_addresses_item3"
@@ -67,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:text="C. de Mallorca, 401  |  08013 Barcelona"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

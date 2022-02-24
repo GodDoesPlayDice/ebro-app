@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:text="The local time"
                         android:textColor="@color/text_gray"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,7 +81,7 @@
                         android:format12Hour="@null"
                         android:format24Hour="HH:mm"
                         android:textColor="@color/white"
-                        android:textSize="60sp"
+                        android:textSize="32sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -105,15 +105,15 @@
                         android:layout_height="wrap_content"
                         android:text="Equipment"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/ivEquipment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="21dp"
+                        android:layout_height="29dp"
+                        android:layout_marginTop="12dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvEquipmentLabel"
                         app:srcCompat="@drawable/ic_equipment_icon" />
@@ -125,7 +125,7 @@
                         android:layout_marginStart="16dp"
                         android:text="iPhone regeret"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/ivEquipment"
                         app:layout_constraintStart_toEndOf="@id/ivEquipment"
                         app:layout_constraintTop_toTopOf="@+id/ivEquipment" />
