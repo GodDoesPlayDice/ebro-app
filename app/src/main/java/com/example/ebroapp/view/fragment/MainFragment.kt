@@ -1,6 +1,5 @@
 package com.example.ebroapp.view.fragment
 
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMainBinding
-import com.example.ebroapp.interfaces.OnFragmentMainClick
 import com.example.ebroapp.view.base.BaseFragment
 import com.example.ebroapp.view.fragment.addresses.AddressesFragment
 import com.example.ebroapp.view.fragment.map.MapFragment
@@ -17,7 +15,7 @@ import com.example.ebroapp.view.fragment.muisc.MusicFragment
 import com.example.ebroapp.view.fragment.userinfo.UserInfoFragment
 import com.example.ebroapp.view.fragment.weather.WeatherFragment
 
-class MainFragment(private val playPause: OnFragmentMainClick) :
+class MainFragment(private val onClick: (Int) -> Unit) :
     BaseFragment<FragmentMainBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMainBinding =
@@ -31,12 +29,9 @@ class MainFragment(private val playPause: OnFragmentMainClick) :
         parentFragmentManager.commit { replace<WeatherFragment>(R.id.fragmentWeather) }
         parentFragmentManager.commit { replace<AddressesFragment>(R.id.fragmentLocation) }
         parentFragmentManager.commit { replace<MapFragment>(R.id.fragmentMap) }
+        parentFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
 
-        parentFragmentManager.beginTransaction().replace(R.id.fragmentMusic, MusicFragment {
-            playPause.onPlayPauseClick()
-        }).commit()
-
-        binding.fragmentMap.setOnClickListener { playPause.onFragmentClick(it.id) }
-        binding.fragmentMusic.setOnClickListener { playPause.onFragmentClick(it.id) }
+        binding.fragmentMap.setOnClickListener { onClick.invoke(it.id) }
+        binding.fragmentMusic.setOnClickListener { onClick.invoke(it.id) }
     }
 }
