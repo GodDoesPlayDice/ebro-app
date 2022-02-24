@@ -44,21 +44,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         openMainFragment()
                     }
                     R.id.btnMap -> {
-                        supportFragmentManager.commit {
-                            replace<MapFullFragment>(R.id.fragmentMain)
-                        }
+                        supportFragmentManager.commit { replace<MapFullFragment>(R.id.fragmentMain) }
                     }
                     R.id.btnMusic -> {
-                        supportFragmentManager.commit {
-                            setAnimation()
-                            replace<MusicFullFragment>(R.id.fragmentMain)
-                        }
+                        supportFragmentManager.commit { replace<MusicFullFragment>(R.id.fragmentMain) }
                     }
                     R.id.btnSettings -> {
-                        supportFragmentManager.commit {
-                            setAnimation()
-                            replace<SettingsFragment>(R.id.fragmentMain)
-                        }
+                        supportFragmentManager.commit { replace<SettingsFragment>(R.id.fragmentMain) }
                     }
                 }
             }
@@ -70,7 +62,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun openMainFragment() {
         supportFragmentManager.commit {
-            setAnimation()
+            //setAnimation()
             replace(R.id.fragmentMain, MainFragment { id ->
                 when (id) {
                     R.id.fragmentMap -> {
