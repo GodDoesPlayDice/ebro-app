@@ -11,5 +11,11 @@
 
     <color name="background">#191919</color>
     <color name="background_navigation">#222222</color>
+    <color name="background_card">#222222</color>
+    <color name="background_header">#4F4E4E4D</color>
+    <color name="background_panel">#3F3E3E</color>
+
+
     <color name="text_gray">#818181</color>
+    <color name="text_white">#FFFFFF</color>
 </resources>
