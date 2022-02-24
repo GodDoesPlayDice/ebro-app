@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.fragment.addresses.AddressesFragment">
+
+    <androidx.cardview.widget.CardView
+        style="@style/style_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_address_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="80dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_address"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_addresses_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Addresses"
+                    android:textColor="@color/white"
+                    android:textSize="23sp" />
+
+                <TextView
+                    android:id="@+id/tv_addresses_item1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Plaça de Catalunya  |  08002 Barcelona"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_addresses_item2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="C. de Ruiz de Alarcón 23  |  28014 Madrid"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_addresses_item3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="C. de Mallorca, 401  |  08013 Barcelona"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

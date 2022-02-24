@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import com.example.ebroapp.R
 import com.example.ebroapp.view.main.base.BaseFragment
 import com.example.ebroapp.databinding.FragmentMainBinding
+import com.example.ebroapp.view.main.fragment.addresses.AddressesFragment
 import com.example.ebroapp.view.main.fragment.map.MapFragment
 import com.example.ebroapp.view.main.fragment.muisc.MusicFragment
 import com.example.ebroapp.view.main.fragment.userinfo.UserInfoFragment
+import com.example.ebroapp.view.main.fragment.weather.WeatherFragment
 
 class MainFragment : BaseFragment<FragmentMainBinding>() {
 
@@ -21,6 +23,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         parentFragmentManager.beginTransaction().replace(R.id.fragmentUserInfo, UserInfoFragment()).commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragmentWeather, WeatherFragment()).commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragmentLocation,AddressesFragment()).commit()
         parentFragmentManager.beginTransaction().replace(R.id.fragmentMap, MapFragment()).commit()
         parentFragmentManager.beginTransaction().replace(R.id.fragmentMusic, MusicFragment()).commit()
     }
