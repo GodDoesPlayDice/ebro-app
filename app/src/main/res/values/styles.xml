@@ -23,7 +23,7 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
-    <style name="style_card_view">
+    <style name="styleCardView">
         <item name="cardBackgroundColor">@color/background_card</item>
         <item name="cardCornerRadius">15dp</item>
         <item name="contentPaddingLeft">30dp</item>
@@ -31,6 +31,15 @@
         <item name="contentPaddingTop">20dp</item>
         <item name="contentPaddingBottom">20dp</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="styleCardViewGray">
+        <item name="cardBackgroundColor">@color/background_header</item>
+        <item name="cardCornerRadius">30dp</item>
+        <item name="contentPaddingLeft">30dp</item>
+        <item name="contentPaddingRight">30dp</item>
+        <item name="contentPaddingTop">20dp</item>
+        <item name="contentPaddingBottom">20dp</item>
     </style>
 
     <style name="temperature_seek_bar" parent="Widget.AppCompat.SeekBar">
