@@ -25,7 +25,7 @@
 
     <style name="style_card_view">
         <item name="cardBackgroundColor">@color/background_card</item>
-        <item name="cardCornerRadius">30dp</item>
+        <item name="cardCornerRadius">15dp</item>
         <item name="contentPaddingLeft">30dp</item>
         <item name="contentPaddingRight">30dp</item>
         <item name="contentPaddingTop">20dp</item>
