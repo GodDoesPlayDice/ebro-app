@@ -18,7 +18,7 @@ class MapFullFragment : BaseFragment<FragmentMapFullBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnPlay.isChecked = App.get().player.isPlaying
+        binding.btnPlay.isChecked = App.get().isPlaying()
         binding.btnPlay.setOnCheckedChangeListener { _, _ ->
             App.get().playPauseMusic()
         }

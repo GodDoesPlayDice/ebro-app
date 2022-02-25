@@ -32,7 +32,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // ставим фрагменты на место
-        openMainFragment()
         supportFragmentManager.commit { replace<LowerToolbarFragment>(R.id.fragmentLowerToolbar) }
 
         btnToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
@@ -59,6 +58,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             addAction(Intent.ACTION_POWER_CONNECTED)
         }
         registerReceiver(actionPowerReceiver, filter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        openMainFragment()
     }
 
     override fun onDestroy() {
