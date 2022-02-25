@@ -9,7 +9,6 @@ import androidx.fragment.app.replace
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
 import com.example.ebroapp.receiver.ActionPowerReceiver
-import com.example.ebroapp.receiver.BootCompletedReceiver
 import com.example.ebroapp.view.base.BaseActivity
 import com.example.ebroapp.view.fragment.MainFragment
 import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
