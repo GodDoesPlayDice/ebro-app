@@ -21,6 +21,4 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             App.get().playPauseMusic()
         }
     }
-
-
 }

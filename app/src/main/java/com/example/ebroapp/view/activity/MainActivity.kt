@@ -1,15 +1,15 @@
 package com.example.ebroapp.view.activity
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.WindowManager
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
+import com.example.ebroapp.receiver.ActionPowerReceiver
+import com.example.ebroapp.receiver.BootCompletedReceiver
 import com.example.ebroapp.view.base.BaseActivity
 import com.example.ebroapp.view.fragment.MainFragment
 import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
@@ -24,6 +24,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     // хз почему, но для этой залупы viewBinding не пашет
     private val btnToggleGroup by lazy { findViewById<MaterialButtonToggleGroup>(R.id.btnToggleGroup) }
+    private val actionPowerReceiver by lazy { ActionPowerReceiver() }
 
     // нужно для viewBinding. ActivityMainBinding автогенерируется
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding =
@@ -53,6 +54,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
             }
         }
+
+        val filter = IntentFilter().apply {
+            addAction(Intent.ACTION_POWER_DISCONNECTED);
+            addAction(Intent.ACTION_POWER_CONNECTED)
+        }
+        registerReceiver(actionPowerReceiver, filter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        unregisterReceiver(actionPowerReceiver)
     }
 
     // нужно чтоб нажатие на back не срабатывало
