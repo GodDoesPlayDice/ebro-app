@@ -7,12 +7,13 @@ import android.content.Intent.ACTION_POWER_CONNECTED
 import android.content.Intent.ACTION_POWER_DISCONNECTED
 import android.window.SplashScreen
 import com.example.ebroapp.view.activity.black.BlackActivity
+import com.example.ebroapp.view.activity.splash.SplashActivity
 
 class ActionPowerReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         when (intent?.action) {
             ACTION_POWER_CONNECTED -> {
-                context.startActivity(Intent(context, SplashScreen::class.java).apply {
+                context.startActivity(Intent(context, SplashActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
             }
