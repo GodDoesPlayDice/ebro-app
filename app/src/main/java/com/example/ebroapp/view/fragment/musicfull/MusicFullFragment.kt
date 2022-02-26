@@ -10,7 +10,6 @@ import com.example.ebroapp.App
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
-import com.example.ebroapp.utils.getMusicList
 import com.example.ebroapp.utils.getMusicListItems
 import com.example.ebroapp.view.adapter.MusicAdapter
 import com.example.ebroapp.view.base.BaseFragment
@@ -25,6 +24,7 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             binding.tvName.text = it.name
             binding.tvSinger.text = it.singer
             binding.tvAlbum.text = it.album
+            binding.btnFavorite.isChecked = it.isFavorites
         }
     }
 

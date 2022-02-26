@@ -19,7 +19,19 @@
         <item name="iconPadding">0dp</item>
         <item name="iconGravity">textStart</item>
         <item name="rippleColor">@null</item>
+        <item name="android:textOn">@null</item>
+        <item name="android:textOff">@null</item>
         <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="FavoriteButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="rippleColor">@null</item>
+        <item name="android:textOn">@null</item>
+        <item name="android:textOff">@null</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="backgroundTintMode">src_over</item>
     </style>
 
     <style name="Theme.EbroApp.NoActionBarAndStatusBar">
@@ -51,8 +63,8 @@
 
     <style name="TemperatureSeekBar" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressTint">#4F4E4E</item>
-<!--        <item name="android:progressDrawable">@drawable/abc_seekbar_track_material</item>-->
-<!--        <item name="android:indeterminateDrawable">@drawable/abc_seekbar_track_material</item>-->
+        <!--        <item name="android:progressDrawable">@drawable/abc_seekbar_track_material</item>-->
+        <!--        <item name="android:indeterminateDrawable">@drawable/abc_seekbar_track_material</item>-->
         <item name="android:thumb">@drawable/ic_temperature_sk_thumb</item>
     </style>
 
@@ -63,5 +75,4 @@
     <style name="RoundedSongImageView" parent="">
         <item name="cornerSize">10dp</item>
     </style>
-
 </resources>

@@ -33,7 +33,7 @@ fun getMusicList(context: Context): List<Song> {
     var i = 0
     while (i < 30) {
         val rawId = context.resources.getIdentifier("album_cover_$i", "raw", context.packageName)
-        songs.add(Song(rawId, "Billy Jean", "Thriller", "Michael Jackson", i < 20, TYPE_SONG))
+        songs.add(Song(rawId, "Track $i", "Album $i", "Singer $i", i < 20, TYPE_SONG))
         i++
     }
     return songs

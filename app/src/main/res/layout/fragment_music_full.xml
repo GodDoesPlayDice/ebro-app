@@ -35,11 +35,13 @@
             app:layout_constraintStart_toEndOf="@+id/ivAlbumCover"
             app:layout_constraintTop_toTopOf="@+id/ivAlbumCover">
 
-            <ImageView
-                android:id="@+id/imageView7"
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:id="@+id/btnFavorite"
+                style="@style/FavoriteButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_like" />
+                android:background="@drawable/background_favorites"
+                android:checked="false" />
 
             <TextView
                 android:id="@+id/tvName"
@@ -56,7 +58,7 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="Drake"
                 android:textColor="@color/text_white" />
 
@@ -64,7 +66,7 @@
                 android:id="@+id/tvAlbum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="Scorpion"
                 android:textColor="@color/text_gray" />
         </LinearLayout>
