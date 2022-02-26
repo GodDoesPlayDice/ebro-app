@@ -1,4 +1,4 @@
-package com.example.ebroapp.interfaces
+package com.example.ebroapp.domain
 
 interface OnFragmentMainClick {
     fun onFragmentClick(id: Int)

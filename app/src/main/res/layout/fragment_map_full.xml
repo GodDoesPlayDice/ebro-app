@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
         app:srcCompat="@drawable/ic_map_full_stub" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/ivImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="32dp"
@@ -43,9 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toTopOf="@+id/imageView6">
+            app:layout_constraintBottom_toBottomOf="@+id/ivImage"
+            app:layout_constraintStart_toEndOf="@+id/ivImage"
+            app:layout_constraintTop_toTopOf="@+id/ivImage">
 
             <ImageView
                 android:id="@+id/imageView7"
@@ -54,7 +54,7 @@
                 app:srcCompat="@drawable/ic_like" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvName"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvSinger"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 android:textColor="@color/text_white" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tvAlbum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -92,7 +92,7 @@
             app:srcCompat="@drawable/ic_music_progressbar_stub" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tvTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="style_text_lower_toolbar">
+    <style name="StyleTextLowerToolbar">
         <item name="android:textSize">40sp</item>
         <item name="android:letterSpacing">0.03</item>
         <item name="android:textColor">@color/white</item>
@@ -30,7 +30,7 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
-    <style name="styleCardView">
+    <style name="StyleCardView">
         <item name="cardBackgroundColor">@color/background_card</item>
         <item name="cardCornerRadius">15dp</item>
         <item name="contentPaddingLeft">30dp</item>
@@ -40,7 +40,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="styleCardViewGray">
+    <style name="StyleCardViewGray">
         <item name="cardBackgroundColor">@color/background_header</item>
         <item name="cardCornerRadius">30dp</item>
         <item name="contentPaddingLeft">30dp</item>
@@ -49,16 +49,19 @@
         <item name="contentPaddingBottom">20dp</item>
     </style>
 
-    <style name="temperature_seek_bar" parent="Widget.AppCompat.SeekBar">
+    <style name="TemperatureSeekBar" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressTint">#4F4E4E</item>
 <!--        <item name="android:progressDrawable">@drawable/abc_seekbar_track_material</item>-->
 <!--        <item name="android:indeterminateDrawable">@drawable/abc_seekbar_track_material</item>-->
         <item name="android:thumb">@drawable/ic_temperature_sk_thumb</item>
     </style>
 
-    <style name="roundedImageView" parent="">
-        <item name="cornerFamily">rounded</item>
+    <style name="RoundedImageView" parent="">
         <item name="cornerSize">30dp</item>
+    </style>
+
+    <style name="RoundedSongImageView" parent="">
+        <item name="cornerSize">10dp</item>
     </style>
 
 </resources>
