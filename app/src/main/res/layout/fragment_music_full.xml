@@ -16,14 +16,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ivImage"
+            android:id="@+id/ivAlbumCover"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_music_stub_drake" />
+            app:srcCompat="@raw/ic_music_stub_drake" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -31,9 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/ivImage"
-            app:layout_constraintStart_toEndOf="@+id/ivImage"
-            app:layout_constraintTop_toTopOf="@+id/ivImage">
+            app:layout_constraintBottom_toBottomOf="@+id/ivAlbumCover"
+            app:layout_constraintStart_toEndOf="@+id/ivAlbumCover"
+            app:layout_constraintTop_toTopOf="@+id/ivAlbumCover">
 
             <ImageView
                 android:id="@+id/imageView7"
@@ -225,12 +225,10 @@
         android:fadingEdgeLength="100dp"
         android:fillViewport="false"
         android:requiresFadingEdge="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-        app:spanCount="10"
         tools:itemCount="50"
         tools:listitem="@layout/item_song" />
 

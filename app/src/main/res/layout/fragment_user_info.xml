@@ -51,7 +51,7 @@
                         android:id="@+id/ivAvatar"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        app:srcCompat="@drawable/ic_drake" />
+                        app:srcCompat="@raw/ic_drake" />
 
                 </androidx.cardview.widget.CardView>
 
