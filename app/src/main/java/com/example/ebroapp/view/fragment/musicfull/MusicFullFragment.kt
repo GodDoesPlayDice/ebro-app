@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.example.ebroapp.App
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
+import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
-import com.example.ebroapp.utils.getMusicListItems
+import com.example.ebroapp.utils.Mapper.toAdapter
+import com.example.ebroapp.utils.Mapper.toSongs
+import com.example.ebroapp.utils.getMusicList
 import com.example.ebroapp.view.adapter.MusicAdapter
 import com.example.ebroapp.view.base.BaseFragment
 import com.squareup.picasso.Picasso
@@ -18,13 +21,17 @@ import com.squareup.picasso.Picasso
 
 class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
 
+    private val songListItem by lazy { getMusicList(requireContext()).toAdapter().toMutableList()}
+    private var adapterPosition = -1
+
     private val songAdapter by lazy {
-        MusicAdapter {
-            Picasso.get().load(it.albumCover).into(binding.ivAlbumCover)
-            binding.tvName.text = it.name
-            binding.tvSinger.text = it.singer
-            binding.tvAlbum.text = it.album
-            binding.btnFavorite.isChecked = it.isFavorites
+        MusicAdapter { song, position ->
+            Picasso.get().load(song.albumCover).into(binding.ivAlbumCover)
+            binding.tvName.text = song.name
+            binding.tvSinger.text = song.singer
+            binding.tvAlbum.text = song.album
+            binding.btnFavorite.isChecked = song.isFavorites
+            adapterPosition = position
         }
     }
 
@@ -34,11 +41,24 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnPlay.isChecked = App.get().isPlaying()
-        binding.btnPlay.setOnCheckedChangeListener { _, _ ->
-            App.get().playPauseMusic()
+        binding.btnPlay.apply {
+            isChecked = App.get().isPlaying()
+            setOnCheckedChangeListener { _, _ -> App.get().playPauseMusic() }
         }
 
+        initAdapter()
+
+        binding.btnFavorite.setOnCheckedChangeListener { _, isChecked ->
+            if (adapterPosition != -1) {
+                val song = songListItem[adapterPosition] as Song
+                song.isFavorites = isChecked
+                songListItem[adapterPosition] = song
+                songAdapter.addItems(songListItem.toSongs().toAdapter())
+            }
+        }
+    }
+
+    private fun initAdapter() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 10).apply {
             spanSizeLookup = object : SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -54,6 +74,6 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             layoutManager = gridLayoutManager
             adapter = songAdapter
         }
-        songAdapter.addItems(getMusicListItems(requireContext()))
+        songAdapter.addItems(songListItem)
     }
 }

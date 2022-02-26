@@ -5,6 +5,6 @@ class Song(
     val name: String,
     val album: String,
     val singer: String,
-    val isFavorites: Boolean = false,
+    var isFavorites: Boolean = false,
     override val type: Int
 ) : SongListItem()
