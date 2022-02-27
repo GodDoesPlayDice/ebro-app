@@ -91,7 +91,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnToggleGroup"
-            tools:layout="@layout/fragment_lower_toolbar_placeholder" />
+            tools:layout="@layout/fragment_lower_toolbar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
