@@ -30,10 +30,10 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             .subscribe(
                 {
                     val current = it.current
-                    val day1 = it.daily[0]
-                    val day2 = it.daily[1]
-                    val day3 = it.daily[2]
-                    val day4 = it.daily[3]
+                    val day1 = it.daily[1]
+                    val day2 = it.daily[2]
+                    val day3 = it.daily[3]
+                    val day4 = it.daily[4]
 
                     Picasso.get()
                         .load("https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png")
@@ -51,21 +51,21 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
                     binding.tvDay2Temp.text =
                         requireContext().getString(
                             R.string.temperature,
-                            it.daily[1].temp.eve.toInt()
+                            day2.temp.eve.toInt()
                         )
 
                     binding.tvDay3Label.text = getLongDay(day3.dt)
                     binding.tvDay3Temp.text =
                         requireContext().getString(
                             R.string.temperature,
-                            it.daily[2].temp.eve.toInt()
+                            day3.temp.eve.toInt()
                         )
 
                     binding.tvDay4Label.text = getLongDay(day4.dt)
                     binding.tvDay4Temp.text =
                         requireContext().getString(
                             R.string.temperature,
-                            it.daily[3].temp.eve.toInt()
+                            day4.temp.eve.toInt()
                         )
                 },
                 { Log.d("WEATHER", it.message, it) }
