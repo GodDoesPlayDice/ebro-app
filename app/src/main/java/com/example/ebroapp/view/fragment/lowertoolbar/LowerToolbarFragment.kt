@@ -26,14 +26,14 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
     private val fanMax: Int = 5
 
     private var leftSeatState: Int = 0
-    private var frontWindowState: Boolean = true
-    private var seatPositionState: Boolean = true
-    private var fanState: Int = 2
-    private var rearWindowState: Boolean = true
+    private var frontWindowState: Boolean = false
+    private var seatPositionState: Boolean = false
+    private var fanState: Int = 0
+    private var rearWindowState: Boolean = false
     private var rightSeatState: Int = 0
 
-    private var leftTemp: Int = 19
-    private var rightTemp: Int = 24
+    private var leftTemp: Int = 20
+    private var rightTemp: Int = 20
 
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLowerToolbarBinding =
@@ -84,6 +84,8 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
                 setActiveDots(it as ViewGroup, fanState)
             }
 
+        setActiveDots(binding.llLeftSeat, leftSeatState)
+        setActiveDots(binding.llRightSeat, rightSeatState)
         setActiveDots(binding.llFan, fanState)
     }
 
@@ -110,7 +112,7 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
         }
         binding.btnIncreaseLsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                if (this.leftTemp < 25) {
+                if (this.leftTemp < 26) {
                     this.leftTemp++
                     setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
                     binding.skLsTemperature.progress = this.leftTemp - 15
@@ -130,7 +132,7 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
         }
         binding.btnIncreaseRsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                if (this.rightTemp < 25) {
+                if (this.rightTemp < 26) {
                     this.rightTemp++
                     setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
                     binding.skRsTemperature.progress = this.rightTemp - 15
@@ -170,12 +172,20 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
                 v.scaleX = 1f
                 v.scaleY = 1f
             }
-
         }
+
+        (v.children.first { it is ImageView } as ImageView)
+            .setColorFilter(resources.getColor(if (value == 0) R.color.text_gray else R.color.text_white))
         return true
     }
 
     private fun setTemperatureLabel(tempView: TextView, value: Int) {
-        tempView.text = "$value\u00B0"
+        if (value < 16) {
+            tempView.text = "LO"
+        } else if (value > 25) {
+            tempView.text = "HI"
+        } else {
+            tempView.text = "$value\u00B0"
+        }
     }
 }

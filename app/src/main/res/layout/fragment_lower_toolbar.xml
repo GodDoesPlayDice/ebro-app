@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="133dp"
+        android:layout_marginEnd="128dp"
         app:layout_constraintEnd_toStartOf="@id/clRightSeatContainer"
         app:layout_constraintStart_toEndOf="@+id/ivSettings"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
@@ -46,7 +46,7 @@
             style="@style/TemperatureSeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:max="10"
+            android:max="11"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:progress="8"
@@ -73,7 +73,7 @@
         <TextView
             android:id="@+id/tvLsTemperature"
             style="@style/StyleTextLowerToolbar"
-            android:layout_width="wrap_content"
+            android:layout_width="42dp"
             android:layout_height="wrap_content"
             android:text="23"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -96,9 +96,9 @@
         <TextView
             android:id="@+id/tvRsTemperature"
             style="@style/StyleTextLowerToolbar"
-            android:layout_width="wrap_content"
+            android:layout_width="42dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="22dp"
             android:text="19"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnDecreaseRsTemperature"
@@ -132,7 +132,7 @@
             style="@style/TemperatureSeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:max="10"
+            android:max="11"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:progress="4"
@@ -162,8 +162,8 @@
         android:layout_width="108dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
         android:src="@drawable/ic_lower_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -283,7 +283,7 @@
                 android:scaleX="0.6"
                 android:scaleY="0.6"
                 android:src="@drawable/ic_lower_front_window"
-                app:tint="@color/text_white" />
+                app:tint="@color/text_gray" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -311,7 +311,7 @@
                 android:scaleX="0.6"
                 android:scaleY="0.6"
                 android:src="@drawable/ic_lower_seat_position"
-                app:tint="@color/text_white" />
+                app:tint="@color/text_gray" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -403,7 +403,7 @@
                 android:scaleX="0.6"
                 android:scaleY="0.6"
                 android:src="@drawable/ic_lower_rear_window"
-                app:tint="@color/text_white" />
+                app:tint="@color/text_gray" />
 
             <TextView
                 android:id="@+id/textView11"
