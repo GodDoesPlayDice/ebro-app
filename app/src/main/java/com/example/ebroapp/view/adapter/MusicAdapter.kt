@@ -11,7 +11,7 @@ import com.example.ebroapp.domain.entity.song.SongListItem
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 import com.squareup.picasso.Picasso
 
-class MusicAdapter(private val onClick: (Song, Int) -> Unit) :
+class MusicAdapter(private val onClick: (Song) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<SongListItem> = mutableListOf()
@@ -42,9 +42,9 @@ class MusicAdapter(private val onClick: (Song, Int) -> Unit) :
 
     class SongViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun fill(item: Song, onClick: (Song, Int) -> Unit) {
+        fun fill(item: Song, onClick: (Song) -> Unit) {
             Picasso.get().load(item.albumCover).into(binding.ivAlbumCover)
-            binding.ivAlbumCover.setOnClickListener { onClick.invoke(item, adapterPosition) }
+            binding.ivAlbumCover.setOnClickListener { onClick.invoke(item) }
         }
     }
 

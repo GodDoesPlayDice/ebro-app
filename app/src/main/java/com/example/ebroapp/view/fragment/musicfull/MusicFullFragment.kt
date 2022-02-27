@@ -21,17 +21,17 @@ import com.squareup.picasso.Picasso
 
 class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
 
-    private val songListItem by lazy { getMusicList(requireContext()).toAdapter().toMutableList()}
-    private var adapterPosition = -1
+    private val songListItem by lazy { getMusicList(requireContext()).toAdapter().toMutableList() }
+    private var selectedSong: Song? = null
 
     private val songAdapter by lazy {
-        MusicAdapter { song, position ->
+        MusicAdapter { song ->
             Picasso.get().load(song.albumCover).into(binding.ivAlbumCover)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer
             binding.tvAlbum.text = song.album
             binding.btnFavorite.isChecked = song.isFavorites
-            adapterPosition = position
+            selectedSong = song
         }
     }
 
@@ -48,13 +48,8 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
 
         initAdapter()
 
-        binding.btnFavorite.setOnCheckedChangeListener { _, isChecked ->
-            if (adapterPosition != -1) {
-                val song = songListItem[adapterPosition] as Song
-                song.isFavorites = isChecked
-                songListItem[adapterPosition] = song
-                songAdapter.addItems(songListItem.toSongs().toAdapter())
-            }
+        binding.btnFavorite.setOnClickListener {
+            swapSong(binding.btnFavorite.isChecked)
         }
     }
 
@@ -75,5 +70,10 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             adapter = songAdapter
         }
         songAdapter.addItems(songListItem)
+    }
+
+    private fun swapSong(isChecked: Boolean) {
+        songListItem.filterIsInstance<Song>().find { it == selectedSong }?.isFavorites = isChecked
+        songAdapter.addItems(songListItem.toSongs().toAdapter())
     }
 }

@@ -27,8 +27,6 @@ object Mapper {
     }
 
     fun List<SongListItem>.toSongs(): List<Song> {
-        val items: MutableList<Song> = mutableListOf()
-        this.forEach { if (it is Song) items.add(it) }
-        return items
+        return this.filterIsInstance<Song>()
     }
 }
