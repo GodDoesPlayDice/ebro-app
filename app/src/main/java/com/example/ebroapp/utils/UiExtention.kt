@@ -8,10 +8,9 @@ import com.example.ebroapp.R
 fun FragmentTransaction.setAnimation() =
     this.setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
 
-fun SeekBar.setOnSeekBarListener(tempView: TextView, addOp: (Int) -> Unit) {
+fun SeekBar.setOnSeekBarListener(addOp: (Int) -> Unit) {
     this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//            tempView.text = (15 + progress).toString() + "\\u00B0"
             addOp(15 + progress)
         }
 

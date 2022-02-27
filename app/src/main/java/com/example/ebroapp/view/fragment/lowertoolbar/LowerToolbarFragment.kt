@@ -89,11 +89,11 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun prepareTemperatureBars() {
-        binding.skLsTemperature.setOnSeekBarListener(binding.tvLsTemperature) {
+        binding.skLsTemperature.setOnSeekBarListener {
             this.leftTemp = it
             setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
         }
-        binding.skRsTemperature.setOnSeekBarListener(binding.tvRsTemperature) {
+        binding.skRsTemperature.setOnSeekBarListener {
             this.rightTemp = it
             setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
         }
