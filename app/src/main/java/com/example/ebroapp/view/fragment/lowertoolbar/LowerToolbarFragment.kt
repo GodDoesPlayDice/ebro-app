@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import com.example.ebroapp.R
@@ -15,7 +18,8 @@ import com.example.ebroapp.view.base.BaseFragment
 
 class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
 
-    class CustomSeekListener(private val tempView: TextView, private val addOp: (Int) -> Unit) : SeekBar.OnSeekBarChangeListener {
+    class CustomSeekListener(private val tempView: TextView, private val addOp: (Int) -> Unit) :
+        SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 //            tempView.text = (15 + progress).toString() + "\\u00B0"
             addOp(15 + progress)
@@ -51,11 +55,12 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepareUpperButtons(view)
-        prepareTemperatureBars(view)
+
+        prepareUpperButtons()
+        prepareTemperatureBars()
     }
 
-    private fun prepareUpperButtons(view: View) {
+    private fun prepareUpperButtons() {
         binding.llFrontWindow
             .setOnClickListener {
                 frontWindowState = !frontWindowState
@@ -74,21 +79,21 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
 
         binding.llLeftSeat
             .setOnClickListener {
-                leftSeatState ++
+                leftSeatState++
                 if (leftSeatState > leftSeatMax) leftSeatState = 0
                 setActiveDots(it as ViewGroup, leftSeatState)
             }
 
         binding.llRightSeat
             .setOnClickListener {
-                rightSeatState ++
+                rightSeatState++
                 if (rightSeatState > rightSeatMax) rightSeatState = 0
                 setActiveDots(it as ViewGroup, rightSeatState)
             }
 
         binding.llFan
             .setOnClickListener {
-                fanState ++
+                fanState++
                 if (fanState > fanMax) fanState = 0
                 setActiveDots(it as ViewGroup, fanState)
             }
@@ -97,26 +102,22 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun prepareTemperatureBars(view: View) {
-        val leftTv: TextView = view.findViewById(R.id.tvLsTemperature)
-        val rightTv: TextView = view.findViewById(R.id.tvRsTemperature)
-        val leftSeek: SeekBar = view.findViewById(R.id.skLsTemperature)
-        val rightSeek: SeekBar = view.findViewById(R.id.skRsTemperature)
-        leftSeek.setOnSeekBarChangeListener(CustomSeekListener(leftTv) {
+    private fun prepareTemperatureBars() {
+        binding.skLsTemperature.setOnSeekBarChangeListener(CustomSeekListener(binding.tvLsTemperature) {
             this.leftTemp = it
-            setTemeratureLabel(leftTv, this.leftTemp)
+            setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
         })
-        rightSeek.setOnSeekBarChangeListener(CustomSeekListener(rightTv) {
+        binding.skRsTemperature.setOnSeekBarChangeListener(CustomSeekListener(binding.tvRsTemperature) {
             this.rightTemp = it
-            setTemeratureLabel(rightTv, this.rightTemp)
+            setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
         })
 
         binding.btnDecreaseLsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 if (this.leftTemp > 15) {
-                    this.leftTemp --
-                    setTemeratureLabel(leftTv, this.leftTemp)
-                    leftSeek.progress = this.leftTemp - 15
+                    this.leftTemp--
+                    setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
+                    binding.skLsTemperature.progress = this.leftTemp - 15
                 }
             }
             true
@@ -124,9 +125,9 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
         binding.btnIncreaseLsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 if (this.leftTemp < 25) {
-                    this.leftTemp ++
-                    setTemeratureLabel(leftTv, this.leftTemp)
-                    leftSeek.progress = this.leftTemp - 15
+                    this.leftTemp++
+                    setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
+                    binding.skLsTemperature.progress = this.leftTemp - 15
                 }
             }
             true
@@ -134,9 +135,9 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
         binding.btnDecreaseRsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 if (this.rightTemp > 15) {
-                    this.rightTemp --
-                    setTemeratureLabel(rightTv, this.rightTemp)
-                    rightSeek.progress = this.rightTemp - 15
+                    this.rightTemp--
+                    setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
+                    binding.skRsTemperature.progress = this.rightTemp - 15
                 }
             }
             true
@@ -144,17 +145,17 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
         binding.btnIncreaseRsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 if (this.rightTemp < 25) {
-                    this.rightTemp ++
-                    setTemeratureLabel(rightTv, this.rightTemp)
-                    rightSeek.progress = this.rightTemp - 15
+                    this.rightTemp++
+                    setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
+                    binding.skRsTemperature.progress = this.rightTemp - 15
                 }
             }
             true
         }
-        setTemeratureLabel(leftTv, this.leftTemp)
-        setTemeratureLabel(rightTv, this.rightTemp)
-        leftSeek.progress = this.leftTemp - 15
-        rightSeek.progress = this.rightTemp - 15
+        setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
+        setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
+        binding.skLsTemperature.progress = this.leftTemp - 15
+        binding.skRsTemperature.progress = this.rightTemp - 15
     }
 
     private fun onToggleButtonClick(v: View, newValue: Boolean): Boolean {
@@ -172,7 +173,7 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
     }
 
     private fun setActiveDots(v: ViewGroup, value: Int): Boolean {
-        var layout = v.children.first {it is LinearLayout } as LinearLayout
+        val layout = v.children.first { it is LinearLayout } as LinearLayout
         layout.forEachIndexed { ind, v ->
             if (ind < value) {
                 (v as ImageView).setImageResource(dotActive)
@@ -188,7 +189,7 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
         return true
     }
 
-    private fun setTemeratureLabel(tempView: TextView, value: Int) {
+    private fun setTemperatureLabel(tempView: TextView, value: Int) {
         tempView.text = "$value\u00B0"
     }
 }
