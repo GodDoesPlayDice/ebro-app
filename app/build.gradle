@@ -10,8 +10,8 @@ android {
         applicationId "com.example.ebroapp"
         minSdk 24
         targetSdk 31
-        versionCode 10001
-        versionName "1.0.1"
+        versionCode 10002
+        versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -24,15 +24,21 @@ android {
         }
     }
 
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def applicationId = [variant.mergedFlavor.applicationId, "-" ,variant.versionName].findAll().join()
+            outputFileName = "${applicationId}.apk"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.sign
         }
         debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.sign
         }
     }
     compileOptions {
