@@ -2,7 +2,9 @@ package com.example.ebroapp.view.activity
 
 import android.content.Intent
 import android.content.IntentFilter
+import android.media.AudioManager
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -75,6 +77,29 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     // нужно чтоб нажатие на back не срабатывало
     override fun onBackPressed() {}
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        val manager = applicationContext.getSystemService(AUDIO_SERVICE) as AudioManager
+        return when (event.keyCode) {
+            KeyEvent.KEYCODE_VOLUME_UP -> {
+                manager.adjustStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    AudioManager.ADJUST_RAISE,
+                    AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE
+                )
+                true
+            }
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                manager.adjustStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    AudioManager.ADJUST_LOWER,
+                    AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE
+                )
+                true
+            }
+            else -> super.onKeyDown(keyCode, event)
+        }
+    }
 
     private fun openMainFragment() {
         supportFragmentManager.commit {

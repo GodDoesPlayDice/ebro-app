@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.example.ebroapp.App
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMainBinding
 import com.example.ebroapp.view.base.BaseFragment

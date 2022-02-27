@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/megat/AndroidStudioProjects/ebroapp/app/src/main/res/drawable/ic_music_stub_volume.xml" value="0.36" />
+        <entry key="..\:/Users/megat/AndroidStudioProjects/ebroapp/app/src/main/res/layout/activity_main.xml" value="0.18125" />
+        <entry key="..\:/Users/megat/AndroidStudioProjects/ebroapp/app/src/main/res/layout/fragment_music.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/megat/AndroidStudioProjects/ebroapp/app/src/main/res/layout/fragment_music_full.xml" value="0.67" />
         <entry key="..\:/Users/xe72/AndroidStudioProjects/ebro-app/app/src/main/res/drawable/ic_dot_active.xml" value="0.276" />
         <entry key="..\:/Users/xe72/AndroidStudioProjects/ebro-app/app/src/main/res/drawable/ic_dot_inactive.xml" value="0.276" />
         <entry key="..\:/Users/xe72/AndroidStudioProjects/ebro-app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1815" />

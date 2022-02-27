@@ -1,9 +1,25 @@
 package com.example.ebroapp.utils
 
+import android.content.ContentResolver
+import android.provider.Settings.System.CONTENT_URI
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import com.example.ebroapp.R
+
+fun TextView.setTime(time: Int) {
+    val minutes = time / 60
+    val seconds = time % 60
+    val stringMinutes = if (minutes >= 10) minutes else "0$minutes"
+    val stringSeconds = if (seconds >= 10) seconds else "0$seconds"
+    this.text = "$stringMinutes:$stringSeconds"
+}
+
+fun ContentResolver.setOnVolumeChangeListener(
+    volumeObserver: VolumeObserver
+) {
+    this.registerContentObserver(CONTENT_URI, true, volumeObserver)
+}
 
 fun FragmentTransaction.setAnimation() =
     this.setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)

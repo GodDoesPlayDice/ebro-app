@@ -8,33 +8,27 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.example.ebroapp.App
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
+import com.example.ebroapp.domain.OnPlayerStateChangeListener
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.utils.Mapper.toAdapter
 import com.example.ebroapp.utils.Mapper.toSongs
 import com.example.ebroapp.utils.getMusicList
+import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter
 import com.example.ebroapp.view.base.BaseFragment
 import com.squareup.picasso.Picasso
 
 
-class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
+class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>(), OnPlayerStateChangeListener {
 
     private val songListItem by lazy { getMusicList(requireContext()).toAdapter().toMutableList() }
-    private var selectedSong: Song? = null
 
     private val songAdapter by lazy {
         MusicAdapter { song ->
-            Picasso.get().load(song.albumCover).into(binding.ivAlbumCover)
-            binding.tvName.text = song.name
-            binding.tvSinger.text = song.singer
-            binding.tvAlbum.text = song.album
-            binding.btnFavorite.isChecked = song.isFavorites
-            selectedSong = song
-            App.get().stopMusic()
-            binding.btnPlay.isChecked = false
-            binding.btnPlay.isChecked = true
+            App.get().playerDelegate.nextSong(song)
+            fillCurrentSong()
         }
     }
 
@@ -44,19 +38,32 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnPlay.apply {
-            isChecked = App.get().isPlaying()
-            setOnCheckedChangeListener { _, isChecked ->
-                if(isChecked) App.get().playMusic()
-                else App.get().pauseMusic()
-            }
-        }
+        App.get().playerDelegate.setOnPlayerStateChangeListener(this)
 
         initAdapter()
 
         binding.btnFavorite.setOnClickListener {
             swapSong(binding.btnFavorite.isChecked)
         }
+
+        binding.btnPlay.apply {
+            isChecked = App.get().playerDelegate.isPlaying()
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) App.get().playerDelegate.playMusic()
+                else App.get().playerDelegate.pauseMusic()
+            }
+        }
+
+        binding.btnNextSong.setOnClickListener {
+            App.get().playerDelegate.nextSong()
+            fillCurrentSong()
+        }
+        binding.btnPreviousSong.setOnClickListener {
+            App.get().playerDelegate.previousSong()
+            fillCurrentSong()
+        }
+
+        fillCurrentSong()
     }
 
     private fun initAdapter() {
@@ -78,8 +85,24 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
         songAdapter.addItems(songListItem)
     }
 
+    override fun onStateChange(progress: Int, duration: Int) {
+        binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
+        binding.tvTimer.setTime(duration / 100 * progress)
+    }
+
+    private fun fillCurrentSong() {
+        App.get().playerDelegate.currentSong.let { song ->
+            Picasso.get().load(song.albumCover).into(binding.ivAlbumCover)
+            binding.tvName.text = song.name
+            binding.tvSinger.text = song.singer
+            binding.tvAlbum.text = song.album
+            binding.btnFavorite.isChecked = song.isFavorites
+        }
+    }
+
     private fun swapSong(isChecked: Boolean) {
-        songListItem.filterIsInstance<Song>().find { it == selectedSong }?.isFavorites = isChecked
+        songListItem.filterIsInstance<Song>()
+            .find { it == App.get().playerDelegate.currentSong }?.isFavorites = isChecked
         songAdapter.addItems(songListItem.toSongs().toAdapter())
     }
 }

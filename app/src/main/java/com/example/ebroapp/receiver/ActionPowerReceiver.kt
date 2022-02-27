@@ -18,7 +18,7 @@ class ActionPowerReceiver : BroadcastReceiver() {
                 })
             }
             ACTION_POWER_DISCONNECTED -> {
-                App.get().stopMusic()
+                App.get().playerDelegate.stopMusic()
                 context.startActivity(Intent(context, BlackActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
