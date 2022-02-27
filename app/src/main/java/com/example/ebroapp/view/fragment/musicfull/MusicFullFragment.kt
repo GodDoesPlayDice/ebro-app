@@ -32,6 +32,9 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             binding.tvAlbum.text = song.album
             binding.btnFavorite.isChecked = song.isFavorites
             selectedSong = song
+            App.get().stopMusic()
+            binding.btnPlay.isChecked = false
+            binding.btnPlay.isChecked = true
         }
     }
 
@@ -43,7 +46,10 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
 
         binding.btnPlay.apply {
             isChecked = App.get().isPlaying()
-            setOnCheckedChangeListener { _, _ -> App.get().playPauseMusic() }
+            setOnCheckedChangeListener { _, isChecked ->
+                if(isChecked) App.get().playMusic()
+                else App.get().pauseMusic()
+            }
         }
 
         initAdapter()
