@@ -1,25 +1,24 @@
 package com.example.ebroapp.view.fragment.lowertoolbar
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.children
-import androidx.core.view.forEach
 import androidx.core.view.forEachIndexed
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentLowerToolbarBinding
 import com.example.ebroapp.view.base.BaseFragment
-import com.example.ebroapp.databinding.FragmentLowerToolbarPlaceholderBinding
 
 class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
 
-    class CustomSeekListener(private val tempView: TextView) : SeekBar.OnSeekBarChangeListener {
+    class CustomSeekListener(private val tempView: TextView, private val addOp: (Int) -> Unit) : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            tempView.text = (15 + progress).toString()
+//            tempView.text = (15 + progress).toString() + "\\u00B0"
+            addOp(15 + progress)
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -43,6 +42,9 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
     private var rearWindowState: Boolean = true
     private var rightSeatState: Int = 0
 
+    private var leftTemp: Int = 19
+    private var rightTemp: Int = 24
+
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLowerToolbarBinding =
         FragmentLowerToolbarBinding::inflate
@@ -54,94 +56,105 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
     }
 
     private fun prepareUpperButtons(view: View) {
-        view.findViewById<LinearLayout>(R.id.llFrontWindow)
+        binding.llFrontWindow
             .setOnClickListener {
                 frontWindowState = !frontWindowState
                 onToggleButtonClick(it, frontWindowState)
             }
-        view.findViewById<LinearLayout>(R.id.llSeatPosition)
+        binding.llSeatPosition
             .setOnClickListener {
                 seatPositionState = !seatPositionState
                 onToggleButtonClick(it, seatPositionState)
             }
-        view.findViewById<LinearLayout>(R.id.llRearWindow)
+        binding.llRearWindow
             .setOnClickListener {
                 rearWindowState = !rearWindowState
                 onToggleButtonClick(it, rearWindowState)
             }
 
-        view.findViewById<LinearLayout>(R.id.llLeftSeat)
+        binding.llLeftSeat
             .setOnClickListener {
                 leftSeatState ++
                 if (leftSeatState > leftSeatMax) leftSeatState = 0
                 setActiveDots(it as ViewGroup, leftSeatState)
             }
 
-        view.findViewById<LinearLayout>(R.id.llRightSeat)
+        binding.llRightSeat
             .setOnClickListener {
                 rightSeatState ++
                 if (rightSeatState > rightSeatMax) rightSeatState = 0
                 setActiveDots(it as ViewGroup, rightSeatState)
             }
 
-        view.findViewById<LinearLayout>(R.id.llFan)
+        binding.llFan
             .setOnClickListener {
                 fanState ++
                 if (fanState > fanMax) fanState = 0
                 setActiveDots(it as ViewGroup, fanState)
             }
 
-        setActiveDots(view.findViewById<LinearLayout>(R.id.llFan), fanState)
+        setActiveDots(binding.llFan, fanState)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun prepareTemperatureBars(view: View) {
-        val leftTemp: TextView = view.findViewById(R.id.tv_ls_temperature)
-        val rightTemp: TextView = view.findViewById(R.id.tv_rs_temperature)
-        val leftSeek: SeekBar = view.findViewById(R.id.sk_ls_temperature)
-        val rightSeek: SeekBar = view.findViewById(R.id.sk_rs_temperature)
-        leftSeek.setOnSeekBarChangeListener(CustomSeekListener(leftTemp))
-        rightSeek.setOnSeekBarChangeListener(CustomSeekListener(rightTemp))
+        val leftTv: TextView = view.findViewById(R.id.tvLsTemperature)
+        val rightTv: TextView = view.findViewById(R.id.tvRsTemperature)
+        val leftSeek: SeekBar = view.findViewById(R.id.skLsTemperature)
+        val rightSeek: SeekBar = view.findViewById(R.id.skRsTemperature)
+        leftSeek.setOnSeekBarChangeListener(CustomSeekListener(leftTv) {
+            this.leftTemp = it
+            setTemeratureLabel(leftTv, this.leftTemp)
+        })
+        rightSeek.setOnSeekBarChangeListener(CustomSeekListener(rightTv) {
+            this.rightTemp = it
+            setTemeratureLabel(rightTv, this.rightTemp)
+        })
 
-        view.findViewById<ImageButton>(R.id.btn_decrease_ls_temperature).setOnTouchListener { v, event ->
+        binding.btnDecreaseLsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                var curValue = leftTemp.text.toString().toInt()
-                if (curValue > 15) {
-                    leftTemp.text = (curValue - 1).toString()
-                    leftSeek.progress = curValue - 1 - 15
+                if (this.leftTemp > 15) {
+                    this.leftTemp --
+                    setTemeratureLabel(leftTv, this.leftTemp)
+                    leftSeek.progress = this.leftTemp - 15
                 }
             }
             true
         }
-        view.findViewById<ImageButton>(R.id.btn_increase_ls_temperature).setOnTouchListener { v, event ->
+        binding.btnIncreaseLsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                var curValue = leftTemp.text.toString().toInt()
-                if (curValue < 25) {
-                    leftTemp.text = (curValue + 1).toString()
-                    leftSeek.progress = curValue + 1 - 15
+                if (this.leftTemp < 25) {
+                    this.leftTemp ++
+                    setTemeratureLabel(leftTv, this.leftTemp)
+                    leftSeek.progress = this.leftTemp - 15
                 }
             }
             true
         }
-        view.findViewById<ImageButton>(R.id.btn_decrease_rs_temperature).setOnTouchListener { v, event ->
+        binding.btnDecreaseRsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                var curValue = rightTemp.text.toString().toInt()
-                if (curValue > 15) {
-                    rightTemp.text = (curValue - 1).toString()
-                    rightSeek.progress = curValue - 1 - 15
+                if (this.rightTemp > 15) {
+                    this.rightTemp --
+                    setTemeratureLabel(rightTv, this.rightTemp)
+                    rightSeek.progress = this.rightTemp - 15
                 }
             }
             true
         }
-        view.findViewById<ImageButton>(R.id.btn_increase_rs_temperature).setOnTouchListener { v, event ->
+        binding.btnIncreaseRsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                var curValue = rightTemp.text.toString().toInt()
-                if (curValue < 25) {
-                    rightTemp.text = (curValue + 1).toString()
-                    rightSeek.progress = curValue + 1 - 15
+                if (this.rightTemp < 25) {
+                    this.rightTemp ++
+                    setTemeratureLabel(rightTv, this.rightTemp)
+                    rightSeek.progress = this.rightTemp - 15
                 }
             }
             true
         }
+        setTemeratureLabel(leftTv, this.leftTemp)
+        setTemeratureLabel(rightTv, this.rightTemp)
+        leftSeek.progress = this.leftTemp - 15
+        rightSeek.progress = this.rightTemp - 15
     }
 
     private fun onToggleButtonClick(v: View, newValue: Boolean): Boolean {
@@ -173,5 +186,9 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
 
         }
         return true
+    }
+
+    private fun setTemeratureLabel(tempView: TextView, value: Int) {
+        tempView.text = "$value\u00B0"
     }
 }

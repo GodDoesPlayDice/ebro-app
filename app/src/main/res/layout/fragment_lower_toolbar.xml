@@ -9,30 +9,40 @@
     tools:context=".view.fragment.lowertoolbar.LowerToolbarFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_left_seat_container"
+        android:id="@+id/clLeftSeatContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="133dp"
-        app:layout_constraintEnd_toStartOf="@id/cl_right_seat_container"
+        app:layout_constraintEnd_toStartOf="@id/clRightSeatContainer"
         app:layout_constraintStart_toEndOf="@+id/ivSettings"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <ImageButton
-            android:id="@+id/btn_decrease_ls_temperature"
+            android:id="@+id/btnDecreaseLsTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/background"
             android:src="@drawable/ic_lower_minus"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/sk_ls_temperature"
+            app:layout_constraintEnd_toStartOf="@id/skLsTemperature"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/default_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/skLsTemperature"
+            app:layout_constraintEnd_toEndOf="@+id/skLsTemperature"
+            app:layout_constraintStart_toEndOf="@+id/btnDecreaseLsTemperature"
+            app:layout_constraintTop_toTopOf="@+id/skLsTemperature" />
+
         <SeekBar
-            android:id="@+id/sk_ls_temperature"
+            android:id="@+id/skLsTemperature"
             style="@style/TemperatureSeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -40,73 +50,85 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:progress="8"
+            android:progressBackgroundTint="@android:color/transparent"
+            android:progressTint="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_increase_ls_temperature"
-            app:layout_constraintStart_toEndOf="@id/btn_decrease_ls_temperature"
+            app:layout_constraintEnd_toStartOf="@id/btnIncreaseLsTemperature"
+            app:layout_constraintStart_toEndOf="@id/btnDecreaseLsTemperature"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/btn_increase_ls_temperature"
+            android:id="@+id/btnIncreaseLsTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
             android:background="@color/background"
             android:src="@drawable/ic_lower_plus"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_ls_temperature"
-            app:layout_constraintStart_toEndOf="@id/sk_ls_temperature"
+            app:layout_constraintEnd_toStartOf="@id/tvLsTemperature"
+            app:layout_constraintStart_toEndOf="@id/skLsTemperature"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
-            android:id="@+id/tv_ls_temperature"
+            android:id="@+id/tvLsTemperature"
             style="@style/StyleTextLowerToolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="23"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_increase_ls_temperature"
+            app:layout_constraintStart_toEndOf="@id/btnIncreaseLsTemperature"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_right_seat_container"
+        android:id="@+id/clRightSeatContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/switch1"
-        app:layout_constraintStart_toEndOf="@id/cl_left_seat_container"
+        app:layout_constraintStart_toEndOf="@id/clLeftSeatContainer"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <TextView
-            android:id="@+id/tv_rs_temperature"
+            android:id="@+id/tvRsTemperature"
             style="@style/StyleTextLowerToolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
             android:text="19"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_decrease_rs_temperature"
+            app:layout_constraintEnd_toStartOf="@id/btnDecreaseRsTemperature"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/default_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/skRsTemperature"
+            app:layout_constraintEnd_toEndOf="@+id/skRsTemperature"
+            app:layout_constraintStart_toEndOf="@+id/btnDecreaseRsTemperature"
+            app:layout_constraintTop_toTopOf="@+id/skRsTemperature" />
+
         <ImageButton
-            android:id="@+id/btn_decrease_rs_temperature"
+            android:id="@+id/btnDecreaseRsTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/background"
             android:src="@drawable/ic_lower_minus"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/sk_rs_temperature"
-            app:layout_constraintStart_toEndOf="@id/tv_rs_temperature"
+            app:layout_constraintEnd_toStartOf="@id/skRsTemperature"
+            app:layout_constraintStart_toEndOf="@id/tvRsTemperature"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <SeekBar
-            android:id="@+id/sk_rs_temperature"
+            android:id="@+id/skRsTemperature"
             style="@style/TemperatureSeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -114,20 +136,22 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:progress="4"
+            android:progressBackgroundTint="@android:color/transparent"
+            android:progressTint="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_increase_rs_temperature"
-            app:layout_constraintStart_toEndOf="@id/btn_decrease_rs_temperature"
+            app:layout_constraintEnd_toStartOf="@id/btnIncreaseRsTemperature"
+            app:layout_constraintStart_toEndOf="@id/btnDecreaseRsTemperature"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/btn_increase_rs_temperature"
+            android:id="@+id/btnIncreaseRsTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/background"
             android:src="@drawable/ic_lower_plus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/sk_rs_temperature"
+            app:layout_constraintStart_toEndOf="@id/skRsTemperature"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -135,7 +159,7 @@
 
     <ImageView
         android:id="@+id/ivSettings"
-        android:layout_width="59dp"
+        android:layout_width="108dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:scaleX="0.8"
@@ -145,12 +169,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Switch
-        android:id="@+id/switch1"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textColor="@color/text_gray"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivSettings"
+        app:layout_constraintStart_toStartOf="@+id/ivSettings"
+        app:layout_constraintTop_toBottomOf="@+id/ivSettings" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="108dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:autoText="false"
         android:checked="false"
+        android:gravity="center"
         android:showText="true"
         android:singleLine="false"
         android:splitTrack="false"
@@ -159,8 +196,9 @@
         android:textColor="@color/text_gray"
         android:textOff="Off"
         android:textOn="On"
+        android:thumb="@drawable/thumb"
         android:thumbTextPadding="4dp"
-        android:thumbTint="@color/indicator_color"
+        android:track="@drawable/ic_switch_track"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -169,6 +207,9 @@
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="96dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="78dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -19,4 +19,6 @@
     <color name="text_gray">#818181</color>
     <color name="text_white">#FFFFFF</color>
     <color name="indicator_color">#92C01F</color>
+
+    <color name="default_gray">#4F4E4E</color>
 </resources>
