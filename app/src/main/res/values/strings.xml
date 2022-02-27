@@ -10,4 +10,5 @@
     <string name="previous">Previous</string>
 
     <string name="volume_percentage">%d%%</string>
+    <string name="temperature">+%d</string>
 </resources>

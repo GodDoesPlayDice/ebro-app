@@ -34,7 +34,6 @@
                         android:id="@+id/tvDayOfWeek"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Monday"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
 
@@ -43,9 +42,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="+24°"
                         android:textColor="@color/white"
-                        android:textSize="32sp" />
+                        android:textSize="32sp"
+                        tools:text="+24°" />
 
                 </LinearLayout>
 
@@ -75,18 +74,18 @@
                             android:id="@+id/tvDay1Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tuesday"
                             android:textColor="@color/text_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="Tuesday" />
 
                         <TextView
                             android:id="@+id/tvDay1Temp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="64dp"
-                            android:text="+26"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="+26" />
                     </TableRow>
 
                     <TableRow
@@ -98,18 +97,18 @@
                             android:id="@+id/tvDay2Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wednesday"
                             android:textColor="@color/text_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="Wednesday" />
 
                         <TextView
                             android:id="@+id/tvDay2Temp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="64dp"
-                            android:text="+23"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="+23" />
                     </TableRow>
 
                     <TableRow
@@ -121,18 +120,18 @@
                             android:id="@+id/tvDay3Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thursday"
                             android:textColor="@color/text_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="Thursday" />
 
                         <TextView
                             android:id="@+id/tvDay3Temp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="64dp"
-                            android:text="+25"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="+25" />
                     </TableRow>
 
                     <TableRow
@@ -143,18 +142,18 @@
                             android:id="@+id/tvDay4Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Friday"
                             android:textColor="@color/text_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="Friday" />
 
                         <TextView
                             android:id="@+id/tvDay4Temp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="64dp"
-                            android:text="+28"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="+28" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>

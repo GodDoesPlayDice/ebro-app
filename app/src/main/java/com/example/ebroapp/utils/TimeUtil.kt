@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object TimeUtil {
-    private val formatShort = SimpleDateFormat("HH:mm", Locale.getDefault())
+    private val formatLongDay = SimpleDateFormat("EEEE", Locale.US)
 
-    fun getShortTime(): String = formatShort.format(Date())
+    fun getLongDay(time: Long): String = formatLongDay.format(Date(time))
 }

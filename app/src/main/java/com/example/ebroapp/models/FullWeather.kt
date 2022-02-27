@@ -12,7 +12,7 @@ data class FullWeather(
 data class Current(
     val clouds: Int,
     val dew_point: Double,
-    val dt: Int,
+    val dt: Long,
     val feels_like: Double,
     val humidity: Int,
     val pressure: Int,
@@ -30,7 +30,7 @@ data class Current(
 data class Daily(
     val clouds: Int,
     val dew_point: Double,
-    val dt: Int,
+    val dt: Long,
     val feels_like: FeelsLike,
     val humidity: Int,
     val moon_phase: Double,
@@ -53,8 +53,18 @@ data class Weather(
     val description: String,
     val icon: String,
     val id: Int,
-    val main: String
+    val main: Conditions
 )
+
+enum class Conditions {
+    Thunderstorm,
+    Drizzle,
+    Rain,
+    Snow,
+    Atmosphere,
+    Clear,
+    Clouds
+}
 
 data class FeelsLike(
     val day: Double,
@@ -76,5 +86,5 @@ data class WeatherX(
     val description: String,
     val icon: String,
     val id: Int,
-    val main: String
+    val main: Conditions
 )
