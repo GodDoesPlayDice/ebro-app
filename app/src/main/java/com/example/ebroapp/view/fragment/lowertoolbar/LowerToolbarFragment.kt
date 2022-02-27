@@ -8,29 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentLowerToolbarBinding
+import com.example.ebroapp.utils.setOnSeekBarListener
 import com.example.ebroapp.view.base.BaseFragment
 
 class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
-
-    class CustomSeekListener(private val tempView: TextView, private val addOp: (Int) -> Unit) :
-        SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//            tempView.text = (15 + progress).toString() + "\\u00B0"
-            addOp(15 + progress)
-        }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {
-        }
-
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {
-        }
-    }
 
     private val dotActive = R.drawable.ic_dot_active
     private val dotInactive = R.drawable.ic_dot_inactive
@@ -103,14 +89,14 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun prepareTemperatureBars() {
-        binding.skLsTemperature.setOnSeekBarChangeListener(CustomSeekListener(binding.tvLsTemperature) {
+        binding.skLsTemperature.setOnSeekBarListener(binding.tvLsTemperature) {
             this.leftTemp = it
             setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
-        })
-        binding.skRsTemperature.setOnSeekBarChangeListener(CustomSeekListener(binding.tvRsTemperature) {
+        }
+        binding.skRsTemperature.setOnSeekBarListener(binding.tvRsTemperature) {
             this.rightTemp = it
             setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
-        })
+        }
 
         binding.btnDecreaseLsTemperature.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
