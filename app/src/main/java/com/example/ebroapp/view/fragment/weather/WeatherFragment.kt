@@ -76,5 +76,4 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         disposable?.dispose()
         super.onDestroyView()
     }
-
 }
