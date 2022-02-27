@@ -63,6 +63,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
 
+        btnToggleGroup.check(R.id.btnHome)
         openMainFragment()
     }
 
