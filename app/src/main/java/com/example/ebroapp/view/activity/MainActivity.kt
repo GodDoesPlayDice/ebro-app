@@ -16,7 +16,7 @@ import com.example.ebroapp.view.fragment.MainFragment
 import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
 import com.example.ebroapp.view.fragment.mapfull.MapFullFragment
 import com.example.ebroapp.view.fragment.musicfull.MusicFullFragment
-import com.example.ebroapp.view.fragment.settings.SettingsFragment
+import com.example.ebroapp.view.fragment.settings.SettingsInteractiveFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 
 
@@ -49,7 +49,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         supportFragmentManager.commit { replace<MusicFullFragment>(R.id.fragmentMain) }
                     }
                     R.id.btnSettings -> {
-                        supportFragmentManager.commit { replace<SettingsFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit { replace<SettingsInteractiveFragment>(R.id.fragmentMain) }
                     }
                 }
             }
