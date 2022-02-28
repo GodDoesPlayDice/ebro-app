@@ -28,6 +28,7 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>(), OnPlayerStat
     private val songAdapter by lazy {
         MusicAdapter { song ->
             App.get().playerDelegate.nextSong(song)
+            binding.btnPlay.isChecked = true
             fillCurrentSong()
         }
     }

@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivAlbumCover"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -23,7 +23,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@raw/ic_music_stub_drake" />
+            app:shapeAppearanceOverlay="@style/RoundedSongImageView"
+            app:srcCompat="@raw/album_cover_0" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
