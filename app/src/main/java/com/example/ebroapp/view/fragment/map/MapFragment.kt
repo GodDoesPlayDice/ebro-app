@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMapBinding
 import com.example.ebroapp.view.base.BaseFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 
 
 class MapFragment : BaseFragment<FragmentMapBinding>() {
@@ -26,33 +28,40 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.mapView.onCreate(savedInstanceState);
-
+        binding.mapView.onCreate(savedInstanceState)
         binding.mapView.onResume()
-
         try {
             MapsInitializer.initialize(requireContext())
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-        binding.mapView.getMapAsync {
-            map = it.apply {
-                uiSettings.isMyLocationButtonEnabled = false
-                if (ActivityCompat.checkSelfPermission(
+        binding.mapView.getMapAsync { googleMap ->
+            map = googleMap
+            map?.apply {
+                setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
                         requireContext(),
-                        ACCESS_FINE_LOCATION
-                    ) != PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(
-                        requireContext(),
-                        ACCESS_COARSE_LOCATION
-                    ) != PERMISSION_GRANTED
-                ) {
+                        R.raw.style_json
+                    )
+                )
+                moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(41.3888, 2.15899), 14f))
+                if (checkPermission()) {
                     isMyLocationEnabled = true
-                    moveCamera(CameraUpdateFactory.newLatLng(LatLng(43.1, -87.9)))
+                    uiSettings.isMyLocationButtonEnabled = true
                 }
             }
         }
+    }
+
+    private fun checkPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            requireContext(),
+            ACCESS_FINE_LOCATION
+        ) == PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+            requireContext(),
+            ACCESS_COARSE_LOCATION
+        ) == PERMISSION_GRANTED
     }
 
     override fun onResume() {
