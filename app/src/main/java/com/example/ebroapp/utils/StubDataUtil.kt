@@ -2,9 +2,12 @@ package com.example.ebroapp.utils
 
 import android.content.ContentUris
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Size
+import com.example.ebroapp.R
 import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
@@ -35,7 +38,11 @@ fun getMusicList(context: Context): List<Song> {
             val album = it.getString(albumColumn)
             val artist = it.getString(artistColumn)
             val contentUri: Uri = ContentUris.withAppendedId(uri, id)
-            val bitmap = context.contentResolver.loadThumbnail(contentUri, Size(300, 300), null)
+            val bitmap: Bitmap = try {
+                context.contentResolver.loadThumbnail(contentUri, Size(300, 300), null)
+            } catch (exception: Exception) {
+                BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo)
+            }
             val isFavorite = DomainRepository.obtain().isFavoriteSong(id)
             songs.add(Song(id, bitmap, contentUri, title, album, artist, TYPE_SONG, isFavorite))
         }
