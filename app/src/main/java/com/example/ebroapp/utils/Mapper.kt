@@ -13,7 +13,7 @@ object Mapper {
             items.sortBy { !(it as Song).isFavorites }
             items.add(0, Separator("FAVORITES", TYPE_SEPARATOR))
             if (items.size > 2) {
-                var i = 2
+                var i = 1
                 while (i < items.size) {
                     if (!(items[i] as Song).isFavorites) {
                         items.add(i, Separator("TOP STATIONS", TYPE_SEPARATOR))

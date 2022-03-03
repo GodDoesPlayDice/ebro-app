@@ -10,7 +10,7 @@ import com.example.ebroapp.domain.entity.song.Separator
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.entity.song.SongListItem
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
-import com.squareup.picasso.Picasso
+import com.example.ebroapp.utils.setImageBitmapOrPlaceholder
 
 class MusicAdapter(private val onClick: (Song) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -43,9 +43,9 @@ class MusicAdapter(private val onClick: (Song) -> Unit) :
 
     class SongViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun fill(item: Song, onClick: (Song) -> Unit) {
-            binding.ivAlbumCover.setImageBitmap(item.bitmap)
-            binding.ivAlbumCover.setOnClickListener { onClick.invoke(item) }
+        fun fill(song: Song, onClick: (Song) -> Unit) {
+            binding.ivAlbumCover.setImageBitmapOrPlaceholder(song.bitmap)
+            binding.ivAlbumCover.setOnClickListener { onClick.invoke(song) }
         }
     }
 

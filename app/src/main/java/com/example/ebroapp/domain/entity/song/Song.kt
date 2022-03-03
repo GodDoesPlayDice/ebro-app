@@ -5,7 +5,7 @@ import android.net.Uri
 
 class Song(
     val id: Long,
-    val bitmap: Bitmap,
+    val bitmap: Bitmap?,
     val contentUri: Uri,
     val name: String,
     val album: String,

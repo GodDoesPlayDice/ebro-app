@@ -12,6 +12,7 @@ import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMusicBinding
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.utils.VolumeObserver
+import com.example.ebroapp.utils.setImageBitmapOrPlaceholder
 import com.example.ebroapp.utils.setOnVolumeChangeListener
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.base.BaseFragment
@@ -77,7 +78,7 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
 
     private fun fillCurrentSong() {
         App.get().playerDelegate.currentSong?.let { song ->
-            binding.ivAlbumCover.setImageBitmap(song.bitmap)
+            binding.ivAlbumCover.setImageBitmapOrPlaceholder(song.bitmap)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer
             binding.tvAlbum.text = song.album

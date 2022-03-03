@@ -13,6 +13,7 @@ import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARA
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.utils.Mapper.toAdapter
 import com.example.ebroapp.utils.getMusicList
+import com.example.ebroapp.utils.setImageBitmapOrPlaceholder
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter
 import com.example.ebroapp.view.base.BaseFragment
@@ -89,7 +90,7 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
 
     private fun fillCurrentSong() {
         App.get().playerDelegate.currentSong?.let { song ->
-            binding.ivAlbumCover.setImageBitmap(song.bitmap)
+            binding.ivAlbumCover.setImageBitmapOrPlaceholder(song.bitmap)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer
             binding.tvAlbum.text = song.album

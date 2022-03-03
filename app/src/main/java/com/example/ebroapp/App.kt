@@ -1,6 +1,7 @@
 package com.example.ebroapp
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.ebroapp.remote.RemoteRepository
 import com.example.ebroapp.remote.RemoteRepositoryImpl
 import com.example.ebroapp.utils.PlayerDelegate
