@@ -6,15 +6,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 
 
-const val selection = "${MediaStore.Audio.Media.IS_MUSIC}!=0"
-val uri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+const val selection = "${Audio.Media.IS_MUSIC}!=0"
+val uri: Uri = Audio.Media.EXTERNAL_CONTENT_URI
 
 val projection = arrayOf(
     Audio.Media._ID,
