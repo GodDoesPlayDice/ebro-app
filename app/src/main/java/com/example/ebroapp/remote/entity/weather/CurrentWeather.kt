@@ -1,4 +1,4 @@
-package com.example.ebroapp.models
+package com.example.ebroapp.remote.entity
 
 data class CurrentWeather(
     val base: String,

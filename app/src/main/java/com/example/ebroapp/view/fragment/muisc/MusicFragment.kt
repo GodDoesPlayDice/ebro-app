@@ -10,19 +10,16 @@ import android.view.ViewGroup
 import com.example.ebroapp.App
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMusicBinding
-import com.example.ebroapp.domain.OnPlayerStateChangeListener
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.utils.VolumeObserver
 import com.example.ebroapp.utils.setOnVolumeChangeListener
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.base.BaseFragment
-import com.squareup.picasso.Picasso
 
 
-class MusicFragment : BaseFragment<FragmentMusicBinding>(), OnPlayerStateChangeListener {
+class MusicFragment : BaseFragment<FragmentMusicBinding>() {
 
     private lateinit var volumeObserver: VolumeObserver
-    private var currentSong: Song? = null
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMusicBinding =
         FragmentMusicBinding::inflate
@@ -30,7 +27,11 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>(), OnPlayerStateChangeL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        App.get().playerDelegate.setOnPlayerStateChangeListener(this)
+        App.get().playerDelegate.setOnPlayerStateChangeListener { progress, duration ->
+            binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
+            binding.tvTimer.setTime(duration / 100 * progress)
+            binding.tvDuration.setTime(duration)
+        }
 
         val audioManager = requireContext().getSystemService(AUDIO_SERVICE) as AudioManager
         val volume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / 15
@@ -74,15 +75,9 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>(), OnPlayerStateChangeL
         requireContext().contentResolver.unregisterContentObserver(volumeObserver)
     }
 
-    override fun onStateChange(progress: Int, duration: Int) {
-        binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
-        binding.tvTimer.setTime(duration / 100 * progress)
-        binding.tvDuration.setTime(duration)
-    }
-
     private fun fillCurrentSong() {
-        App.get().playerDelegate.currentSong.let { song ->
-            Picasso.get().load(song.albumCover).into(binding.ivAlbumCover)
+        App.get().playerDelegate.currentSong?.let { song ->
+            binding.ivAlbumCover.setImageBitmap(song.bitmap)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer
             binding.tvAlbum.text = song.album

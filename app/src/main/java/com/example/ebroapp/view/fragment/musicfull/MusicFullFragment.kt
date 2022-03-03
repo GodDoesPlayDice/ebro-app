@@ -8,22 +8,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.example.ebroapp.App
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
-import com.example.ebroapp.domain.OnPlayerStateChangeListener
-import com.example.ebroapp.domain.entity.song.Song
+import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.utils.Mapper.toAdapter
-import com.example.ebroapp.utils.Mapper.toSongs
 import com.example.ebroapp.utils.getMusicList
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter
 import com.example.ebroapp.view.base.BaseFragment
-import com.squareup.picasso.Picasso
 
 
-class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>(), OnPlayerStateChangeListener {
-
-    private val songListItem by lazy { getMusicList(requireContext()).toAdapter().toMutableList() }
+class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
 
     private val songAdapter by lazy {
         MusicAdapter { song ->
@@ -39,12 +34,18 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>(), OnPlayerStat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        App.get().playerDelegate.setOnPlayerStateChangeListener(this)
+        App.get().playerDelegate.setOnPlayerStateChangeListener { progress, duration ->
+            binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
+            binding.tvTimer.setTime(duration / 100 * progress)
+        }
 
         initAdapter()
 
         binding.btnFavorite.setOnClickListener {
-            swapSong(binding.btnFavorite.isChecked)
+            App.get().playerDelegate.currentSong?.id?.let {
+                DomainRepository.obtain().setSongIsFavorite(it, binding.btnFavorite.isChecked)
+                songAdapter.addItems(getMusicList(requireContext()).toAdapter())
+            }
         }
 
         binding.btnPlay.apply {
@@ -83,27 +84,16 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>(), OnPlayerStat
             layoutManager = gridLayoutManager
             adapter = songAdapter
         }
-        songAdapter.addItems(songListItem)
-    }
-
-    override fun onStateChange(progress: Int, duration: Int) {
-        binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
-        binding.tvTimer.setTime(duration / 100 * progress)
+        songAdapter.addItems(getMusicList(requireContext()).toAdapter())
     }
 
     private fun fillCurrentSong() {
-        App.get().playerDelegate.currentSong.let { song ->
-            Picasso.get().load(song.albumCover).into(binding.ivAlbumCover)
+        App.get().playerDelegate.currentSong?.let { song ->
+            binding.ivAlbumCover.setImageBitmap(song.bitmap)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer
             binding.tvAlbum.text = song.album
             binding.btnFavorite.isChecked = song.isFavorites
         }
-    }
-
-    private fun swapSong(isChecked: Boolean) {
-        songListItem.filterIsInstance<Song>()
-            .find { it == App.get().playerDelegate.currentSong }?.isFavorites = isChecked
-        songAdapter.addItems(songListItem.toSongs().toAdapter())
     }
 }

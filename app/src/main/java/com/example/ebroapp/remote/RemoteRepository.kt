@@ -1,7 +1,7 @@
-package com.example.ebroapp.network
+package com.example.ebroapp.remote
 
-import com.example.ebroapp.models.CurrentWeather
-import com.example.ebroapp.models.FullWeather
+import com.example.ebroapp.remote.entity.CurrentWeather
+import com.example.ebroapp.remote.entity.FullWeather
 import io.reactivex.Single
 
 interface RemoteRepository {

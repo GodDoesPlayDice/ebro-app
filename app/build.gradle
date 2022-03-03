@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "com.example.ebroapp"
-        minSdk 24
+        minSdk 29
         targetSdk 31
-        versionCode 10007
-        versionName "1.0.7"
+        versionCode 10008
+        versionName "1.0.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,8 +26,7 @@ android {
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            def applicationId = [variant.mergedFlavor.applicationId, "-" ,variant.versionName].findAll().join()
-            outputFileName = "${applicationId}.apk"
+            outputFileName = "Ebro ${variant.versionName}.apk"
         }
     }
 

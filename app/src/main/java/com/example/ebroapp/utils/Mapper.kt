@@ -25,8 +25,4 @@ object Mapper {
         }
         return items
     }
-
-    fun List<SongListItem>.toSongs(): List<Song> {
-        return this.filterIsInstance<Song>()
-    }
 }

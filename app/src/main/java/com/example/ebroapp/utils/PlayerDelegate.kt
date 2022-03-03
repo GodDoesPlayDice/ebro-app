@@ -3,8 +3,8 @@ package com.example.ebroapp.utils
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.PowerManager
-import com.example.ebroapp.domain.OnPlayerStateChangeListener
 import com.example.ebroapp.domain.entity.song.Song
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,35 +14,37 @@ import java.util.concurrent.atomic.AtomicBoolean
 class PlayerDelegate(private val context: Context) {
     private val player by lazy { MediaPlayer() }
     private var observer: MediaObserver? = null
-    private val playList = getMusicList(context)
-    var currentSong: Song = playList.first()
+    var currentSong: Song? = getMusicList(context).firstOrNull()
 
     fun playPauseMusic(isPlay: Boolean) {
         if (isPlay) playMusic() else pauseMusic()
     }
 
     fun stopMusic() {
-        player.stop()
-        setDataSource(currentSong.dataSource)
+        currentSong?.let {
+            player.stop()
+            setDataSource(it.contentUri)
+        }
+
     }
 
     fun isPlaying() = player.isPlaying
 
     fun initPlayer() {
-        player.apply {
-            setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
-            setAudioStreamType(AudioManager.STREAM_MUSIC)
-            val afd = context.assets.openFd(currentSong.dataSource)
-            setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-            prepare()
+        currentSong?.let {
+            player.apply {
+                setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
+                setAudioStreamType(AudioManager.STREAM_MUSIC);
+                setDataSource(context, it.contentUri)
+                prepare()
+            }
         }
     }
 
-    private fun setDataSource(fileName: String) {
+    private fun setDataSource(uri: Uri) {
         player.apply {
             reset()
-            val afd = context.assets.openFd(fileName)
-            setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+            setDataSource(context,uri)
             prepare()
         }
     }
@@ -66,6 +68,7 @@ class PlayerDelegate(private val context: Context) {
     }
 
     fun nextSong() {
+        val playList = getMusicList(context)
         val nextSongIndex = playList.indexOf(currentSong) + 1
         currentSong = if (nextSongIndex == playList.size) {
             playList[0]
@@ -77,6 +80,7 @@ class PlayerDelegate(private val context: Context) {
     }
 
     fun previousSong() {
+        val playList = getMusicList(context)
         val previousSongIndex = playList.indexOf(currentSong) - 1
         currentSong = if (previousSongIndex == -1) {
             playList[playList.size - 1]
@@ -87,17 +91,17 @@ class PlayerDelegate(private val context: Context) {
         playMusic()
     }
 
-    fun setOnPlayerStateChangeListener(onPlayerStateChangeListener: OnPlayerStateChangeListener) {
+    fun setOnPlayerStateChangeListener(listener :(Int, Int) -> Unit) {
         observer?.stop()
         player.setOnCompletionListener {
             observer?.stop()
-            onPlayerStateChangeListener.onStateChange(0, 0)
+            listener(0, 0)
         }
-        observer = MediaObserver(onPlayerStateChangeListener)
+        observer = MediaObserver(listener)
         Thread(observer).start()
     }
 
-    inner class MediaObserver(private val onPlayerStateChangeListener: OnPlayerStateChangeListener) :
+    inner class MediaObserver(private val listener :(Int, Int) -> Unit) :
         Runnable {
         private val stop: AtomicBoolean = AtomicBoolean(false)
         fun stop() {
@@ -108,7 +112,7 @@ class PlayerDelegate(private val context: Context) {
             while (!stop.get()) {
                 GlobalScope.launch(Dispatchers.Main) {
                     if (player.isPlaying) {
-                        onPlayerStateChangeListener.onStateChange(
+                        listener(
                             player.currentPosition / 1000,
                             player.duration / 1000
                         )

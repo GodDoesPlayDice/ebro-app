@@ -1,4 +1,4 @@
-package com.example.ebroapp.network
+package com.example.ebroapp.remote
 
 import com.example.ebroapp.BuildConfig
 import com.google.gson.GsonBuilder

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentWeatherBinding
-import com.example.ebroapp.network.RemoteRepository
+import com.example.ebroapp.remote.RemoteRepository
 import com.example.ebroapp.utils.TimeUtil.getLongDay
 import com.example.ebroapp.view.base.BaseFragment
 import com.squareup.picasso.Picasso

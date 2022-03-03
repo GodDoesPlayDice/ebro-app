@@ -3,6 +3,7 @@ package com.example.ebroapp.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ItemSeparatorBinding
 import com.example.ebroapp.databinding.ItemSongBinding
 import com.example.ebroapp.domain.entity.song.Separator
@@ -43,7 +44,7 @@ class MusicAdapter(private val onClick: (Song) -> Unit) :
     class SongViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun fill(item: Song, onClick: (Song) -> Unit) {
-            Picasso.get().load(item.albumCover).into(binding.ivAlbumCover)
+            binding.ivAlbumCover.setImageBitmap(item.bitmap)
             binding.ivAlbumCover.setOnClickListener { onClick.invoke(item) }
         }
     }
