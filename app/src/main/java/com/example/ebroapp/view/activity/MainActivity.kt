@@ -14,7 +14,7 @@ import com.example.ebroapp.receiver.ActionPowerReceiver
 import com.example.ebroapp.view.base.BaseActivity
 import com.example.ebroapp.view.fragment.MainFragment
 import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
-import com.example.ebroapp.view.fragment.mapfull.MapFullFragment
+import com.example.ebroapp.view.fragment.map.MapFragment
 import com.example.ebroapp.view.fragment.musicfull.MusicFullFragment
 import com.example.ebroapp.view.fragment.settings.SettingsInteractiveFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -43,7 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         openMainFragment()
                     }
                     R.id.btnMap -> {
-                        supportFragmentManager.commit { replace<MapFullFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit { replace<MapFragment>(R.id.fragmentMain) }
                     }
                     R.id.btnMusic -> {
                         supportFragmentManager.commit { replace<MusicFullFragment>(R.id.fragmentMain) }

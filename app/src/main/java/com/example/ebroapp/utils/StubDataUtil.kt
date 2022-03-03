@@ -22,7 +22,7 @@ val projection = arrayOf(
 fun getMusicList(context: Context): List<Song> {
     val songs: MutableList<Song> = mutableListOf()
     context.contentResolver.query(
-        uri, projection, null, null, null
+        uri, projection, selection, null, null
     )?.use {
         val idColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
         val titleColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
