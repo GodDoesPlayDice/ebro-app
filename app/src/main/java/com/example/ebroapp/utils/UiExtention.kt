@@ -11,6 +11,8 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import com.example.ebroapp.R
+import com.example.ebroapp.utils.CacheUtils.addBitmapToMemoryCache
+import com.example.ebroapp.utils.CacheUtils.getBitmapFromMemCache
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -53,22 +55,28 @@ fun ShapeableImageView.setImageFromUri(uri: Uri) {
     val view = this
     GlobalScope.launch(Dispatchers.Main) {
         val bitmap: Bitmap? = withContext(Dispatchers.IO) {
-            var bitmap: Bitmap? = null
-            val dataColumn = arrayOf(MediaStore.Audio.Media.DATA)
-            context.contentResolver.query(uri, dataColumn, null, null, null)
-                ?.use { coverCursor ->
-                    coverCursor.moveToFirst()
-                    val dataIndex: Int = coverCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
-                    val filePath = coverCursor.getString(dataIndex)
-                    val retriever = MediaMetadataRetriever()
-                    retriever.setDataSource(filePath)
-                    val coverBytes = retriever.embeddedPicture
-                    coverBytes?.let {
-                        bitmap = BitmapFactory.decodeByteArray(coverBytes, 0, coverBytes.size)
+            var bitmap: Bitmap? = getBitmapFromMemCache(uri.toString())
+            if (bitmap != null) {
+                bitmap
+            } else {
+                val dataColumn = arrayOf(MediaStore.Audio.Media.DATA)
+                context.contentResolver.query(uri, dataColumn, null, null, null)
+                    ?.use { coverCursor ->
+                        coverCursor.moveToFirst()
+                        val dataIndex: Int = coverCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
+                        val filePath = coverCursor.getString(dataIndex)
+                        val retriever = MediaMetadataRetriever()
+                        retriever.setDataSource(filePath)
+                        val coverBytes = retriever.embeddedPicture
+                        coverBytes?.let {
+                            bitmap = BitmapFactory.decodeByteArray(coverBytes, 0, coverBytes.size)
+                        }
                     }
-                }
-            bitmap
+                addBitmapToMemoryCache(uri.toString(), bitmap)
+                bitmap
+            }
         }
         bitmap?.let { view.setImageBitmap(it) } ?: view.setImageResource(R.drawable.ic_logo)
     }
 }
+
