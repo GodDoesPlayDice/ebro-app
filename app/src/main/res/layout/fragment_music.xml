@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
         app:shapeAppearanceOverlay="@style/RoundedSongImageView"
-        app:srcCompat="@raw/album_cover_0" />
+        app:srcCompat="@drawable/ic_album_cover" />
 
     <TextView
         android:id="@+id/tvVolume"

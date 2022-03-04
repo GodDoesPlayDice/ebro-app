@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/RoundedSongImageView"
-            app:srcCompat="@raw/album_cover_0" />
+            app:srcCompat="@drawable/ic_album_cover" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -50,9 +50,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Elevate"
                 android:textColor="@color/text_white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="Elevate" />
 
             <TextView
                 android:id="@+id/tvSinger"
@@ -60,16 +60,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Drake"
-                android:textColor="@color/text_white" />
+                android:textColor="@color/text_white"
+                tools:text="Drake" />
 
             <TextView
                 android:id="@+id/tvAlbum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Scorpion"
-                android:textColor="@color/text_gray" />
+                android:textColor="@color/text_gray"
+                tools:text="Scorpion" />
         </LinearLayout>
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -172,24 +172,24 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/tvStreaming"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
-                android:text="Streaming"
+                android:text="@string/streaming"
                 android:textColor="@color/text_white"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/tvRadio"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
-                android:text="Radio"
+                android:text="@string/radio"
                 android:textColor="@color/text_white"
                 android:textSize="16sp" />
 
@@ -199,7 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="USB"
+                android:text="@string/usb"
                 android:textColor="@color/text_white"
                 android:textSize="16sp" />
         </LinearLayout>

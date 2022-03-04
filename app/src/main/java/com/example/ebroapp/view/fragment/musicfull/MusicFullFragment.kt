@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.example.ebroapp.App
@@ -67,7 +68,14 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             fillCurrentSong()
         }
 
+        binding.tvRadio.setOnClickListener { showServiceUnavailable() }
+        binding.tvStreaming.setOnClickListener { showServiceUnavailable() }
+
         fillCurrentSong()
+    }
+
+    private fun showServiceUnavailable() {
+        Toast.makeText(requireContext(), "Service is unavailable", Toast.LENGTH_SHORT).show()
     }
 
     private fun initAdapter() {

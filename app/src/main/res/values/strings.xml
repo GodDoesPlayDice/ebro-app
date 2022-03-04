@@ -12,4 +12,7 @@
 
     <string name="volume_percentage">%d%%</string>
     <string name="temperature">+%d</string>
+    <string name="streaming">Streaming</string>
+    <string name="radio">Radio</string>
+    <string name="usb">USB</string>
 </resources>
