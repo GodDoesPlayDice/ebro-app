@@ -72,6 +72,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         registerReceiver(actionPowerReceiver, filter)
 
         requestPermissions()
+
+        recreate()
     }
 
     private fun requestPermissions() {
