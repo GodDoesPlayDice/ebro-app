@@ -1,24 +1,79 @@
 package com.example.ebroapp.domain
 
 import android.content.Context
+import android.net.Uri
 import com.example.ebroapp.App
+import com.example.ebroapp.domain.entity.song.Song
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonToken
+import com.google.gson.stream.JsonWriter
+import java.io.IOException
+
 
 class PreferenceManager private constructor() {
 
-    fun setFavoriteSong(id: Long, isFavorite: Boolean) {
-        preference.edit()
-            .putBoolean(SONG_IS_FAVORITE.format(id), isFavorite)
-            .apply()
+    private val gson: Gson
+
+    init {
+        val builder = GsonBuilder()
+        builder.registerTypeAdapter(Uri::class.java, UriAdapter())
+        builder.setPrettyPrinting()
+        gson = builder.create()
     }
 
-    fun isFavoriteSong(id: Long): Boolean {
-        return preference.getBoolean(SONG_IS_FAVORITE.format(id), false)
+    fun setSongs(songs: List<Song>) =
+        preference.edit().putString(SONGS_LIST, gson.toJson(songs)).apply()
+
+    fun getSongs(): List<Song> {
+        val songs =
+            gson.fromJson(preference.getString(SONGS_LIST, ""), Array<Song>::class.java).toList()
+        songs.forEach { it.isFavorites = isFavoriteSong(it.id) }
+        return songs
+    }
+
+    fun setFavoriteSong(id: Long, isFavorite: Boolean) =
+        preference.edit().putBoolean(SONG_IS_FAVORITE.format(id), isFavorite).apply()
+
+    fun isFavoriteSong(id: Long): Boolean =
+        preference.getBoolean(SONG_IS_FAVORITE.format(id), false)
+
+    internal class UriAdapter : TypeAdapter<Uri?>() {
+        @Throws(IOException::class)
+        override fun read(reader: JsonReader): Uri? {
+            reader.beginObject()
+            var uri: Uri? = null
+            var fieldname: String? = null
+            while (reader.hasNext()) {
+                val token: JsonToken = reader.peek()
+                if (token == JsonToken.NAME) {
+                    fieldname = reader.nextName()
+                }
+                if ("uri" == fieldname) {
+                    reader.peek()
+                    uri = Uri.parse(reader.nextString())
+                }
+            }
+            reader.endObject()
+            return uri
+        }
+
+        @Throws(IOException::class)
+        override fun write(writer: JsonWriter, uri: Uri?) {
+            writer.beginObject()
+            writer.name("uri")
+            writer.value(uri.toString())
+            writer.endObject()
+        }
     }
 
     companion object {
         private val instance = PreferenceManager()
         private const val APP_PREFERENCES = "APP_PREFERENCES"
         private const val SONG_IS_FAVORITE = "SONG_IS_FAVORITE_%d"
+        private const val SONGS_LIST = "SONGS_LIST"
         private val preference =
             App.get().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
 

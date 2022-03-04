@@ -5,16 +5,30 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.PowerManager
+import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.domain.entity.song.Song
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
-class PlayerDelegate(private val context: Context) {
+class PlayerUtil(private val context: Context) {
+
     private val player by lazy { MediaPlayer() }
     private var observer: MediaObserver? = null
-    var currentSong: Song? = getMusicList(context).firstOrNull()
+    private val domainRepository = DomainRepository.obtain()
+    var currentSong: Song? = domainRepository.getSongs().firstOrNull()
+
+    fun init() {
+        currentSong?.let {
+            player.apply {
+                setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
+                setAudioStreamType(AudioManager.STREAM_MUSIC);
+                setDataSource(context, it.uri)
+                prepare()
+            }
+        }
+    }
 
     fun playPauseMusic(isPlay: Boolean) {
         if (isPlay) playMusic() else pauseMusic()
@@ -23,31 +37,12 @@ class PlayerDelegate(private val context: Context) {
     fun stopMusic() {
         currentSong?.let {
             player.stop()
-            setDataSource(it.contentUri)
+            setDataSource(it.uri)
         }
 
     }
 
     fun isPlaying() = player.isPlaying
-
-    fun initPlayer() {
-        currentSong?.let {
-            player.apply {
-                setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
-                setAudioStreamType(AudioManager.STREAM_MUSIC);
-                setDataSource(context, it.contentUri)
-                prepare()
-            }
-        }
-    }
-
-    private fun setDataSource(uri: Uri) {
-        player.apply {
-            reset()
-            setDataSource(context,uri)
-            prepare()
-        }
-    }
 
     fun playMusic() {
         if (!player.isPlaying) {
@@ -68,7 +63,7 @@ class PlayerDelegate(private val context: Context) {
     }
 
     fun nextSong() {
-        val playList = getMusicList(context)
+        val playList = domainRepository.getSongs()
         val nextSongIndex = playList.indexOf(currentSong) + 1
         currentSong = if (nextSongIndex == playList.size) {
             playList[0]
@@ -80,7 +75,7 @@ class PlayerDelegate(private val context: Context) {
     }
 
     fun previousSong() {
-        val playList = getMusicList(context)
+        val playList = domainRepository.getSongs()
         val previousSongIndex = playList.indexOf(currentSong) - 1
         currentSong = if (previousSongIndex == -1) {
             playList[playList.size - 1]
@@ -91,7 +86,7 @@ class PlayerDelegate(private val context: Context) {
         playMusic()
     }
 
-    fun setOnPlayerStateChangeListener(listener :(Int, Int) -> Unit) {
+    fun setOnPlayerStateChangeListener(listener: (Int, Int) -> Unit) {
         observer?.stop()
         player.setOnCompletionListener {
             observer?.stop()
@@ -101,7 +96,15 @@ class PlayerDelegate(private val context: Context) {
         Thread(observer).start()
     }
 
-    inner class MediaObserver(private val listener :(Int, Int) -> Unit) :
+    private fun setDataSource(uri: Uri) {
+        player.apply {
+            reset()
+            setDataSource(context, uri)
+            prepare()
+        }
+    }
+
+    inner class MediaObserver(private val listener: (Int, Int) -> Unit) :
         Runnable {
         private val stop: AtomicBoolean = AtomicBoolean(false)
         fun stop() {

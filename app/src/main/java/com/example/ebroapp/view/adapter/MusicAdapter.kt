@@ -3,14 +3,13 @@ package com.example.ebroapp.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ItemSeparatorBinding
 import com.example.ebroapp.databinding.ItemSongBinding
 import com.example.ebroapp.domain.entity.song.Separator
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.entity.song.SongListItem
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
-import com.example.ebroapp.utils.setImageBitmapOrPlaceholder
+import com.example.ebroapp.utils.setImageFromUri
 
 class MusicAdapter(private val onClick: (Song) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -44,7 +43,7 @@ class MusicAdapter(private val onClick: (Song) -> Unit) :
     class SongViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun fill(song: Song, onClick: (Song) -> Unit) {
-            binding.ivAlbumCover.setImageBitmapOrPlaceholder(song.bitmap)
+            binding.ivAlbumCover.setImageFromUri(song.uri)
             binding.ivAlbumCover.setOnClickListener { onClick.invoke(song) }
         }
     }

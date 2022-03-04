@@ -22,7 +22,7 @@ val projection = arrayOf(
     Audio.Media.ARTIST
 )
 
-fun getMusicList(context: Context): List<Song> {
+suspend fun getMusicList(context: Context): List<Song> {
     val songs: MutableList<Song> = mutableListOf()
     context.contentResolver.query(
         uri, projection, selection, null, null
@@ -38,22 +38,8 @@ fun getMusicList(context: Context): List<Song> {
             val album = cursor.getString(albumColumn)
             val artist = cursor.getString(artistColumn)
             val uri: Uri = ContentUris.withAppendedId(uri, id)
-            val dataColumn = arrayOf(Audio.Media.DATA)
             val isFavorite = DomainRepository.obtain().isFavoriteSong(id)
-            var bitmap: Bitmap? = null
-            context.contentResolver.query(uri, dataColumn, null, null, null)
-                ?.use { coverCursor ->
-                    coverCursor.moveToFirst()
-                    val dataIndex: Int = coverCursor.getColumnIndex(Audio.Media.DATA)
-                    val filePath = coverCursor.getString(dataIndex)
-                    val retriever = MediaMetadataRetriever()
-                    retriever.setDataSource(filePath)
-                    val coverBytes = retriever.embeddedPicture
-                    coverBytes?.let {
-                        bitmap = BitmapFactory.decodeByteArray(coverBytes, 0, coverBytes.size)
-                    }
-                }
-            songs.add(Song(id, bitmap, uri, title, album, artist, TYPE_SONG, isFavorite))
+            songs.add(Song(id, uri, title, album, artist, TYPE_SONG, isFavorite))
         }
     }
     return songs

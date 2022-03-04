@@ -1,22 +1,28 @@
 package com.example.ebroapp
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
-import com.example.ebroapp.remote.RemoteRepository
-import com.example.ebroapp.remote.RemoteRepositoryImpl
-import com.example.ebroapp.utils.PlayerDelegate
-import okhttp3.OkHttpClient
-
+import com.example.ebroapp.domain.DomainRepository
+import com.example.ebroapp.utils.PlayerUtil
+import com.example.ebroapp.utils.getMusicList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class App : Application() {
 
-    val playerDelegate by lazy { PlayerDelegate(applicationContext) }
+    val player by lazy { PlayerUtil(applicationContext) }
 
     override fun onCreate() {
         super.onCreate()
         APPLICATION = this
 
-        playerDelegate.initPlayer()
+        GlobalScope.launch(Dispatchers.IO) {
+            DomainRepository.obtain().setSongs(getMusicList(this@App))
+            withContext(Dispatchers.Main) {
+                player.init()
+            }
+        }
     }
 
     companion object {

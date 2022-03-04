@@ -13,8 +13,7 @@ import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.utils.Mapper.toAdapter
-import com.example.ebroapp.utils.getMusicList
-import com.example.ebroapp.utils.setImageBitmapOrPlaceholder
+import com.example.ebroapp.utils.setImageFromUri
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter
 import com.example.ebroapp.view.base.BaseFragment
@@ -22,9 +21,11 @@ import com.example.ebroapp.view.base.BaseFragment
 
 class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
 
+    private val domainRepository = DomainRepository.obtain()
+
     private val songAdapter by lazy {
         MusicAdapter { song ->
-            App.get().playerDelegate.nextSong(song)
+            App.get().player.nextSong(song)
             binding.btnPlay.isChecked = true
             fillCurrentSong()
         }
@@ -36,7 +37,7 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        App.get().playerDelegate.setOnPlayerStateChangeListener { progress, duration ->
+        App.get().player.setOnPlayerStateChangeListener { progress, duration ->
             binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
             binding.tvTimer.setTime(duration / 100 * progress)
         }
@@ -44,27 +45,27 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
         initAdapter()
 
         binding.btnFavorite.setOnClickListener {
-            App.get().playerDelegate.currentSong?.let {
+            App.get().player.currentSong?.let {
                 DomainRepository.obtain().setSongIsFavorite(it.id, binding.btnFavorite.isChecked)
                 it.isFavorites = binding.btnFavorite.isChecked
-                songAdapter.addItems(getMusicList(requireContext()).toAdapter())
+                songAdapter.addItems(domainRepository.getSongs().toAdapter())
             }
         }
 
         binding.btnPlay.apply {
-            isChecked = App.get().playerDelegate.isPlaying()
+            isChecked = App.get().player.isPlaying()
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) App.get().playerDelegate.playMusic()
-                else App.get().playerDelegate.pauseMusic()
+                if (isChecked) App.get().player.playMusic()
+                else App.get().player.pauseMusic()
             }
         }
 
         binding.btnNextSong.setOnClickListener {
-            App.get().playerDelegate.nextSong()
+            App.get().player.nextSong()
             fillCurrentSong()
         }
         binding.btnPreviousSong.setOnClickListener {
-            App.get().playerDelegate.previousSong()
+            App.get().player.previousSong()
             fillCurrentSong()
         }
 
@@ -94,12 +95,12 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             layoutManager = gridLayoutManager
             adapter = songAdapter
         }
-        songAdapter.addItems(getMusicList(requireContext()).toAdapter())
+        songAdapter.addItems(domainRepository.getSongs().toAdapter())
     }
 
     private fun fillCurrentSong() {
-        App.get().playerDelegate.currentSong?.let { song ->
-            binding.ivAlbumCover.setImageBitmapOrPlaceholder(song.bitmap)
+        App.get().player.currentSong?.let { song ->
+            binding.ivAlbumCover.setImageFromUri(song.uri)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer
             binding.tvAlbum.text = song.album

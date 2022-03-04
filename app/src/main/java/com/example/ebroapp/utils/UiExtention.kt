@@ -2,12 +2,20 @@ package com.example.ebroapp.utils
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.MediaMetadataRetriever
+import android.net.Uri
+import android.provider.MediaStore
 import android.provider.Settings.System.CONTENT_URI
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import com.example.ebroapp.R
 import com.google.android.material.imageview.ShapeableImageView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 fun TextView.setTime(time: Int) {
     val minutes = time / 60
@@ -41,6 +49,26 @@ fun SeekBar.setOnSeekBarListener(addOp: (Int) -> Unit) {
     )
 }
 
-fun ShapeableImageView.setImageBitmapOrPlaceholder(bitmap: Bitmap?) {
-    bitmap?.let { this.setImageBitmap(it) } ?: this.setImageResource(R.drawable.ic_logo)
+fun ShapeableImageView.setImageFromUri(uri: Uri) {
+    val view = this
+    GlobalScope.launch(Dispatchers.Main) {
+        val bitmap: Bitmap? = withContext(Dispatchers.IO) {
+            var bitmap: Bitmap? = null
+            val dataColumn = arrayOf(MediaStore.Audio.Media.DATA)
+            context.contentResolver.query(uri, dataColumn, null, null, null)
+                ?.use { coverCursor ->
+                    coverCursor.moveToFirst()
+                    val dataIndex: Int = coverCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
+                    val filePath = coverCursor.getString(dataIndex)
+                    val retriever = MediaMetadataRetriever()
+                    retriever.setDataSource(filePath)
+                    val coverBytes = retriever.embeddedPicture
+                    coverBytes?.let {
+                        bitmap = BitmapFactory.decodeByteArray(coverBytes, 0, coverBytes.size)
+                    }
+                }
+            bitmap
+        }
+        bitmap?.let { view.setImageBitmap(it) } ?: view.setImageResource(R.drawable.ic_logo)
+    }
 }

@@ -1,7 +1,13 @@
 package com.example.ebroapp.domain
 
+import com.example.ebroapp.domain.entity.song.Song
+
 class DomainRepositoryImpl : DomainRepository {
     private val preferenceManager = PreferenceManager.get()
+
+    override fun setSongs(songs: List<Song>) = preferenceManager.setSongs(songs)
+
+    override fun getSongs(): List<Song> = preferenceManager.getSongs()
 
     override fun isFavoriteSong(id: Long) = preferenceManager.isFavoriteSong(id)
 
