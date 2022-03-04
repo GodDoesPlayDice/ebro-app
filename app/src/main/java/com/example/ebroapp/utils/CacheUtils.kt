@@ -14,8 +14,10 @@ object CacheUtils {
     }
 
     fun addBitmapToMemoryCache(key: String?, bitmap: Bitmap?) {
-        if (getBitmapFromMemCache(key) == null) {
-            memoryCache.put(key, bitmap)
+        if (key != null && bitmap != null) {
+            if (getBitmapFromMemCache(key) == null) {
+                memoryCache.put(key, bitmap)
+            }
         }
     }
 
