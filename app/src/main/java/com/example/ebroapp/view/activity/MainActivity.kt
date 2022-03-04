@@ -1,11 +1,15 @@
 package com.example.ebroapp.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.ebroapp.R
@@ -22,6 +26,12 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 
 // наследуемся от базового класса
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    private val REQUEST_CODE_LOCATION = 1
+    private var LOCATION_GRANTED = false
+
+    private val PERMISSIONS_REQUEST_CODE = 7530
+    private var STORAGE_GRANTED = false
 
     // хз почему, но для этой залупы viewBinding не пашет
     private val btnToggleGroup by lazy { findViewById<MaterialButtonToggleGroup>(R.id.btnToggleGroup) }
@@ -60,6 +70,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             addAction(Intent.ACTION_POWER_CONNECTED)
         }
         registerReceiver(actionPowerReceiver, filter)
+
+        requestPermissions()
+    }
+
+    private fun requestPermissions() {
+        val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
+        ActivityCompat.requestPermissions(this, permissions, PERMISSIONS_REQUEST_CODE)
     }
 
     override fun onResume() {
