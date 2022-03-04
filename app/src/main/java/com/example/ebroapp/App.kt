@@ -17,12 +17,12 @@ class App : Application() {
         super.onCreate()
         APPLICATION = this
 
-        GlobalScope.launch(Dispatchers.IO) {
-            DomainRepository.obtain().setSongs(getMusicList(this@App))
-            withContext(Dispatchers.Main) {
-                player.init()
-            }
-        }
+//        GlobalScope.launch(Dispatchers.IO) {
+//            DomainRepository.obtain().setSongs(getMusicList(this@App))
+//            withContext(Dispatchers.Main) {
+//                player.init()
+//            }
+//        }
     }
 
     companion object {

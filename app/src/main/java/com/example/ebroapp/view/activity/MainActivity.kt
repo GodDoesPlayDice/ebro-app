@@ -12,9 +12,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.example.ebroapp.App
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
+import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.receiver.ActionPowerReceiver
+import com.example.ebroapp.utils.getMusicList
 import com.example.ebroapp.view.base.BaseActivity
 import com.example.ebroapp.view.fragment.MainFragment
 import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
@@ -22,16 +25,17 @@ import com.example.ebroapp.view.fragment.map.MapFragment
 import com.example.ebroapp.view.fragment.musicfull.MusicFullFragment
 import com.example.ebroapp.view.fragment.settings.SettingsFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 // наследуемся от базового класса
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private val REQUEST_CODE_LOCATION = 1
-    private var LOCATION_GRANTED = false
 
     private val PERMISSIONS_REQUEST_CODE = 7530
-    private var STORAGE_GRANTED = false
 
     // хз почему, но для этой залупы viewBinding не пашет
     private val btnToggleGroup by lazy { findViewById<MaterialButtonToggleGroup>(R.id.btnToggleGroup) }
@@ -71,14 +75,40 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
         registerReceiver(actionPowerReceiver, filter)
 
-        requestPermissions()
+        val hasLocationPermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val hasStoragePermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
-        recreate()
+        if (hasLocationPermission != PackageManager.PERMISSION_GRANTED ||
+            hasStoragePermission != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions()
+        }
     }
 
     private fun requestPermissions() {
-        val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
+        val permissions = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
         ActivityCompat.requestPermissions(this, permissions, PERMISSIONS_REQUEST_CODE)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            GlobalScope.launch(Dispatchers.IO) {
+                DomainRepository.obtain().setSongs(getMusicList(this@MainActivity))
+                withContext(Dispatchers.Main) {
+                    App.get().player.init()
+                }
+            }
+        }
     }
 
     override fun onResume() {
