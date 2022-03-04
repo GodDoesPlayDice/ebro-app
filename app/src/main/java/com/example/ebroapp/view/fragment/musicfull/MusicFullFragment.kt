@@ -12,7 +12,7 @@ import com.example.ebroapp.databinding.FragmentMusicFullBinding
 import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
-import com.example.ebroapp.utils.Mapper.toAdapter
+import com.example.ebroapp.utils.SongMapper.toAdapter
 import com.example.ebroapp.utils.setImageFromUri
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter

@@ -3,7 +3,7 @@ package com.example.ebroapp.utils
 import android.graphics.Bitmap
 import android.util.LruCache
 
-object CacheUtils {
+object CacheUtil {
     private val maxMemory: Int = (Runtime.getRuntime().maxMemory() / 1024).toInt()
     private val cacheSize = maxMemory / 8;
 

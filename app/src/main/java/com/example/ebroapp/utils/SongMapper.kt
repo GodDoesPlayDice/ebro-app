@@ -5,7 +5,7 @@ import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.entity.song.SongListItem
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 
-object Mapper {
+object SongMapper {
     fun List<Song>.toAdapter(): List<SongListItem> {
         val items: MutableList<SongListItem> = mutableListOf()
         if (this.isNotEmpty()) {

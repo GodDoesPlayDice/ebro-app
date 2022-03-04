@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import com.example.ebroapp.App
 import com.example.ebroapp.domain.entity.song.Song
+import com.example.ebroapp.utils.UriAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.TypeAdapter
@@ -38,36 +39,7 @@ class PreferenceManager private constructor() {
         preference.edit().putBoolean(SONG_IS_FAVORITE.format(id), isFavorite).apply()
 
     fun isFavoriteSong(id: Long): Boolean =
-        preference.getBoolean(SONG_IS_FAVORITE.format(id), false)
-
-    internal class UriAdapter : TypeAdapter<Uri?>() {
-        @Throws(IOException::class)
-        override fun read(reader: JsonReader): Uri? {
-            reader.beginObject()
-            var uri: Uri? = null
-            var fieldname: String? = null
-            while (reader.hasNext()) {
-                val token: JsonToken = reader.peek()
-                if (token == JsonToken.NAME) {
-                    fieldname = reader.nextName()
-                }
-                if ("uri" == fieldname) {
-                    reader.peek()
-                    uri = Uri.parse(reader.nextString())
-                }
-            }
-            reader.endObject()
-            return uri
-        }
-
-        @Throws(IOException::class)
-        override fun write(writer: JsonWriter, uri: Uri?) {
-            writer.beginObject()
-            writer.name("uri")
-            writer.value(uri.toString())
-            writer.endObject()
-        }
-    }
+        preference.getBoolean(SONG_IS_FAVORITE.format(id), true)
 
     companion object {
         private val instance = PreferenceManager()
