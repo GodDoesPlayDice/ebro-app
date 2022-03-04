@@ -395,17 +395,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        mapboxNavigation.unregisterRoutesObserver(routesObserver)
-        mapboxNavigation.unregisterRouteProgressObserver(routeProgressObserver)
-        mapboxNavigation.unregisterLocationObserver(locationObserver)
-        mapboxNavigation.unregisterVoiceInstructionsObserver(voiceInstructionsObserver)
-        mapboxNavigation.unregisterRouteProgressObserver(replayProgressObserver)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
+        mapboxNavigation.run {
+            unregisterRoutesObserver(routesObserver)
+            unregisterRouteProgressObserver(routeProgressObserver)
+            unregisterLocationObserver(locationObserver)
+            unregisterVoiceInstructionsObserver(voiceInstructionsObserver)
+            unregisterRouteProgressObserver(replayProgressObserver)
+        }
+
         MapboxNavigationProvider.destroy()
         mapboxReplayer.finish()
         maneuverApi.cancel()
