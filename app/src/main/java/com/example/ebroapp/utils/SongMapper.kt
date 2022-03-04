@@ -23,6 +23,9 @@ object SongMapper {
                 }
             }
         }
+        if(items.firstOrNull { it is Song && !it.isFavorites } == null) {
+            items.add(Separator("TOP STATIONS", TYPE_SEPARATOR))
+        }
         return items
     }
 }
