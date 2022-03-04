@@ -17,12 +17,7 @@ class App : Application() {
         super.onCreate()
         APPLICATION = this
 
-//        GlobalScope.launch(Dispatchers.IO) {
-//            DomainRepository.obtain().setSongs(getMusicList(this@App))
-//            withContext(Dispatchers.Main) {
-//                player.init()
-//            }
-//        }
+        player.setPlayList(applicationContext)
     }
 
     companion object {

@@ -7,11 +7,6 @@ import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.utils.UriAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.TypeAdapter
-import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonToken
-import com.google.gson.stream.JsonWriter
-import java.io.IOException
 
 
 class PreferenceManager private constructor() {
@@ -25,14 +20,20 @@ class PreferenceManager private constructor() {
         gson = builder.create()
     }
 
-    fun setSongs(songs: List<Song>) =
-        preference.edit().putString(SONGS_LIST, gson.toJson(songs)).apply()
+    fun setSongs(songs: List<Song>) {
+        if (songs.isNotEmpty()) {
+            preference.edit().putString(SONGS_LIST, gson.toJson(songs)).apply()
+        }
+    }
 
     fun getSongs(): List<Song> {
-        val songs =
-            gson.fromJson(preference.getString(SONGS_LIST, ""), Array<Song>::class.java).toList()
-        songs.forEach { it.isFavorites = isFavoriteSong(it.id) }
-        return songs
+        val json = preference.getString(SONGS_LIST, "")
+        return if (json != "") {
+            gson.fromJson(json, Array<Song>::class.java).toList()
+                .onEach { it.isFavorites = isFavoriteSong(it.id) }
+        } else {
+            listOf()
+        }
     }
 
     fun setFavoriteSong(id: Long, isFavorite: Boolean) =

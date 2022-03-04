@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.setFragmentResult
 import com.example.ebroapp.App
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMainBinding
@@ -16,8 +18,7 @@ import com.example.ebroapp.view.fragment.muisc.MusicFragment
 import com.example.ebroapp.view.fragment.userinfo.UserInfoFragment
 import com.example.ebroapp.view.fragment.weather.WeatherFragment
 
-class MainFragment(private val onClick: (Int) -> Unit) :
-    BaseFragment<FragmentMainBinding>() {
+class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMainBinding =
         FragmentMainBinding::inflate
@@ -32,7 +33,15 @@ class MainFragment(private val onClick: (Int) -> Unit) :
         parentFragmentManager.commit { replace<MapFragment>(R.id.fragmentMap) }
         parentFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
 
-        binding.fragmentMap.setOnClickListener { onClick.invoke(it.id) }
-        binding.fragmentMusic.setOnClickListener { onClick.invoke(it.id) }
+        binding.fragmentMap.setOnClickListener {
+            setFragmentResult("requestKey", bundleOf("fragmentId" to it.id))
+        }
+        binding.fragmentMusic.setOnClickListener {
+            setFragmentResult("requestKey", bundleOf("fragmentId" to it.id))
+        }
+
+        App.get().player.setOnMusicLoadingComplete {
+            parentFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
+        }
     }
 }
