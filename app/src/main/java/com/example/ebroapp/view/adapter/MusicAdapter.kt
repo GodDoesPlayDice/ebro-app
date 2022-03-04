@@ -40,6 +40,13 @@ class MusicAdapter(private val onClick: (Song) -> Unit) :
         notifyDataSetChanged()
     }
 
+    fun changeItem(songs: List<SongListItem>, id: Long) {
+        val fromPosition = items.indexOfFirst { it is Song && it.id == id }
+        val toPosition = songs.indexOfFirst { it is Song && it.id == id }
+        notifyItemMoved(fromPosition, toPosition)
+        items = songs
+    }
+
     class SongViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun fill(song: Song, onClick: (Song) -> Unit) {

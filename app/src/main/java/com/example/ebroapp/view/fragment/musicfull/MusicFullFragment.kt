@@ -48,7 +48,7 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             App.get().player.currentSong?.let {
                 DomainRepository.obtain().setSongIsFavorite(it.id, binding.btnFavorite.isChecked)
                 it.isFavorites = binding.btnFavorite.isChecked
-                songAdapter.addItems(domainRepository.getSongs().toAdapter())
+                songAdapter.changeItem(domainRepository.getSongs().toAdapter(), it.id)
             }
         }
 
