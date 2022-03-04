@@ -13,16 +13,16 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.ToggleButton
 import com.example.ebroapp.R
-import com.example.ebroapp.databinding.FragmentSettingsInteractiveBinding
+import com.example.ebroapp.databinding.FragmentSettingsBinding
 import com.example.ebroapp.view.base.BaseFragment
 
 
-class SettingsFragment : BaseFragment<FragmentSettingsInteractiveBinding>() {
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     private val lightsButtons = mutableListOf<ToggleButton>()
     private lateinit var thumbView: View
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSettingsInteractiveBinding =
-        FragmentSettingsInteractiveBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSettingsBinding =
+        FragmentSettingsBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
