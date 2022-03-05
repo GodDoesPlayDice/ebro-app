@@ -1,4 +1,4 @@
-package com.example.ebroapp.remote.entity
+package com.example.ebroapp.remote.entity.weather
 
 data class FullWeather(
     val current: Current,
@@ -52,19 +52,8 @@ data class Daily(
 data class Weather(
     val description: String,
     val icon: String,
-    val id: Int,
-    val main: Conditions
+    val id: Int
 )
-
-enum class Conditions {
-    Thunderstorm,
-    Drizzle,
-    Rain,
-    Snow,
-    Atmosphere,
-    Clear,
-    Clouds
-}
 
 data class FeelsLike(
     val day: Double,
@@ -85,6 +74,5 @@ data class Temp(
 data class WeatherX(
     val description: String,
     val icon: String,
-    val id: Int,
-    val main: Conditions
+    val id: Int
 )

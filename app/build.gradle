@@ -10,8 +10,8 @@ android {
         applicationId "com.example.ebroapp"
         minSdk 24
         targetSdk 31
-        versionCode 10010
-        versionName "1.0.10"
+        versionCode 10011
+        versionName "1.0.11"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,13 +26,15 @@ android {
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "Ebro ${variant.versionName}.apk"
+            outputFileName = "Ebro ${variant.versionName} ${variant.buildType.name}.apk"
         }
     }
 
     buildTypes {
         release {
             debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.sign
         }

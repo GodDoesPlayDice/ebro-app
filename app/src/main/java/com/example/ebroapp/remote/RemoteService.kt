@@ -1,7 +1,7 @@
 package com.example.ebroapp.remote
 
-import com.example.ebroapp.remote.entity.CurrentWeather
-import com.example.ebroapp.remote.entity.FullWeather
+import com.example.ebroapp.remote.entity.weather.CurrentWeather
+import com.example.ebroapp.remote.entity.weather.FullWeather
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
