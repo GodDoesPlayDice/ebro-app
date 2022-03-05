@@ -17,7 +17,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -32,43 +32,27 @@
                     android:src="@drawable/ic_address_icon" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="24dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_addresses_label"
+                        android:id="@+id/tvAddressesLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:text="Addresses"
+                        android:text="@string/addresses"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_addresses_item1"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvAddresses"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Plaça de Catalunya  |  08002 Barcelona"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:layout_height="match_parent"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_addresses" />
 
-                    <TextView
-                        android:id="@+id/tv_addresses_item2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="C. de Ruiz de Alarcón 23  |  28014 Madrid"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_addresses_item3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="C. de Mallorca, 401  |  08013 Barcelona"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

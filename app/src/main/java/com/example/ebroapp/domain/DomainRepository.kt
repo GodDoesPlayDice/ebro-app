@@ -22,4 +22,10 @@ interface DomainRepository {
     fun isFavoriteSong(id: Long): Boolean
 
     fun setSongIsFavorite(id: Long, isFavorite: Boolean)
+
+    fun addAddress(it: String)
+
+    fun getAddresses() : List<String>
+
+    fun setOnAddressesChangeListener(onAddressChangeListener: (List<String>) -> Unit)
 }

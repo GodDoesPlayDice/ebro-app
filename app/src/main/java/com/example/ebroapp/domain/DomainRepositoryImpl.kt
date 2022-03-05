@@ -13,4 +13,11 @@ class DomainRepositoryImpl : DomainRepository {
 
     override fun setSongIsFavorite(id: Long, isFavorite: Boolean) =
         preferenceManager.setFavoriteSong(id, isFavorite)
+
+    override fun addAddress(it: String) = preferenceManager.addAddress(it)
+
+    override fun getAddresses(): List<String> = preferenceManager.getAddresses()
+
+    override fun setOnAddressesChangeListener(onAddressChangeListener: (List<String>) -> Unit) =
+        preferenceManager.setOnAddressesChangeListener(onAddressChangeListener)
 }

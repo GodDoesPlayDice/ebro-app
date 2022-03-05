@@ -15,4 +15,5 @@
     <string name="streaming">Streaming</string>
     <string name="radio">Radio</string>
     <string name="usb">USB</string>
+    <string name="addresses">Addresses</string>
 </resources>

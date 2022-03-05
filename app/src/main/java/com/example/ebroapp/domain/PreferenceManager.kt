@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder
 class PreferenceManager private constructor() {
 
     private val gson: Gson
+    private var onAddressChangeListener: ((List<String>) -> Unit)? = null
 
     init {
         val builder = GsonBuilder()
@@ -42,11 +43,32 @@ class PreferenceManager private constructor() {
     fun isFavoriteSong(id: Long): Boolean =
         preference.getBoolean(SONG_IS_FAVORITE.format(id), true)
 
+    fun addAddress(address: String) {
+        val list = getAddresses().toMutableList()
+        list.add(address)
+        preference.edit().putString(ADDRESSES_LIST, gson.toJson(list.toList())).apply()
+        onAddressChangeListener?.invoke(list)
+    }
+
+    fun getAddresses(): List<String> {
+        val json = preference.getString(ADDRESSES_LIST, "")
+        return if (json != "") {
+            gson.fromJson(json, Array<String>::class.java).toList()
+        } else {
+            listOf()
+        }
+    }
+
+    fun setOnAddressesChangeListener(onAddressChangeListener: (List<String>) -> Unit) {
+        this.onAddressChangeListener = onAddressChangeListener
+    }
+
     companion object {
         private val instance = PreferenceManager()
         private const val APP_PREFERENCES = "APP_PREFERENCES"
         private const val SONG_IS_FAVORITE = "SONG_IS_FAVORITE_%d"
         private const val SONGS_LIST = "SONGS_LIST"
+        private const val ADDRESSES_LIST = "ADDRESSES_LIST"
         private val preference =
             App.get().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
 

@@ -98,8 +98,8 @@ class PlayerUtil(private val context: Context) {
     }
 
 
-    fun setOnMusicLoadingComplete(listener: () -> Unit) {
-        onMusicLoadingComplete = listener
+    fun setOnMusicLoadingComplete(onMusicLoadingComplete: () -> Unit) {
+        this.onMusicLoadingComplete = onMusicLoadingComplete
     }
 
     private fun init() {
