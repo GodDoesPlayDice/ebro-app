@@ -337,11 +337,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         val routeArrowOptions = RouteArrowOptions.Builder(requireContext()).build()
         routeArrowView = MapboxRouteArrowView(routeArrowOptions)
 
-        mapboxMap.loadStyleUri(Style.DARK) {
-            binding.mapView.gestures.addOnMapLongClickListener { point ->
-                findRoute(point)
-                true
-            }
+        mapboxMap.loadStyleUri(Style.DARK)
+
+        binding.mapView.gestures.addOnMapLongClickListener { point ->
+            findRoute(point)
+            true
         }
 
         binding.stop.setOnClickListener {
