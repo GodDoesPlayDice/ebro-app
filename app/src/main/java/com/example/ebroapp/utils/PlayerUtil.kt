@@ -7,12 +7,11 @@ import android.net.Uri
 import android.os.PowerManager
 import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.domain.entity.song.Song
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import java.lang.Runnable
 import java.util.concurrent.atomic.AtomicBoolean
 
+@OptIn(DelicateCoroutinesApi::class)
 class PlayerUtil(private val context: Context) {
 
     private val player by lazy { MediaPlayer() }
@@ -107,7 +106,7 @@ class PlayerUtil(private val context: Context) {
         currentSong?.let {
             player.apply {
                 setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
-                setAudioStreamType(AudioManager.STREAM_MUSIC);
+                setAudioStreamType(AudioManager.STREAM_MUSIC)
                 setDataSource(context, it.uri)
                 prepare()
             }

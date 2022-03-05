@@ -52,8 +52,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
             }
 
-        lightsButtons.forEach { buton ->
-            buton.setOnCheckedChangeListener(listener)
+        lightsButtons.forEach { button ->
+            button.setOnCheckedChangeListener(listener)
         }
     }
 
@@ -77,8 +77,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.sbDisplayBrightness.thumbOffset = 60
     }
 
-    fun getThumb(progress: Int): Drawable? {
-        (thumbView.findViewById(R.id.tvProgress) as TextView).text = "${progress + 10}%"
+    fun getThumb(progress: Int): Drawable {
+        (thumbView.findViewById(R.id.tvProgress) as TextView).text =
+            requireContext().getString(R.string.volume_percentage, progress + 10)
         thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         val bitmap = Bitmap.createBitmap(
             thumbView.measuredWidth,

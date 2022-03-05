@@ -34,10 +34,6 @@
         android:theme="@style/Theme.EbroApp"
         android:usesCleartextTraffic="true">
 
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyB2MCW6OIDUcdDy8LuACYdec3c3h5OlYRE" />
-
         <activity
             android:name=".view.activity.splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden"

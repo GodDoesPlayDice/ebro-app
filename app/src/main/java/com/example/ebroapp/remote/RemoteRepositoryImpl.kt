@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 class RemoteRepositoryImpl : RemoteRepository {
 
     private val remoteService: RemoteService
-    var client: OkHttpClient
+    private var client: OkHttpClient
 
     init {
         val logging = HttpLoggingInterceptor()

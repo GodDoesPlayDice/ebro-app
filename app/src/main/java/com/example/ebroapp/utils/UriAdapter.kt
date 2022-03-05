@@ -12,13 +12,13 @@ internal class UriAdapter : TypeAdapter<Uri?>() {
     override fun read(reader: JsonReader): Uri? {
         reader.beginObject()
         var uri: Uri? = null
-        var fieldname: String? = null
+        var fieldName: String? = null
         while (reader.hasNext()) {
             val token: JsonToken = reader.peek()
             if (token == JsonToken.NAME) {
-                fieldname = reader.nextName()
+                fieldName = reader.nextName()
             }
-            if ("uri" == fieldname) {
+            if ("uri" == fieldName) {
                 reader.peek()
                 uri = Uri.parse(reader.nextString())
             }

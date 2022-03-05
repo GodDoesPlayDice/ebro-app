@@ -62,7 +62,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         val filter = IntentFilter().apply {
-            addAction(Intent.ACTION_POWER_DISCONNECTED);
+            addAction(Intent.ACTION_POWER_DISCONNECTED)
             addAction(Intent.ACTION_POWER_CONNECTED)
         }
         registerReceiver(actionPowerReceiver, filter)

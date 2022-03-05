@@ -148,9 +148,7 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
 
     private fun onToggleButtonClick(v: View, newValue: Boolean): Boolean {
         if (v is ViewGroup) {
-            getImageView(v).let {
-                it.setColorFilter(resources.getColor(if (newValue) R.color.text_white else R.color.text_gray));
-            }
+            getImageView(v).setColorFilter(resources.getColor(if (newValue) R.color.text_white else R.color.text_gray))
             return true
         }
         return false
@@ -180,12 +178,16 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
     }
 
     private fun setTemperatureLabel(tempView: TextView, value: Int) {
-        if (value < 16) {
-            tempView.text = "LO"
-        } else if (value > 25) {
-            tempView.text = "HI"
-        } else {
-            tempView.text = "$value\u00B0"
+        when {
+            value < 16 -> {
+                tempView.text = requireContext().getString(R.string.lo)
+            }
+            value > 25 -> {
+                tempView.text = requireContext().getString(R.string.hi)
+            }
+            else -> {
+                tempView.text = requireContext().getString(R.string.temperature_label, value)
+            }
         }
     }
 }

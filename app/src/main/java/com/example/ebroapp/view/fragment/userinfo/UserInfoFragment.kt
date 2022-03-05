@@ -11,8 +11,4 @@ class UserInfoFragment : BaseFragment<FragmentUserInfoBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentUserInfoBinding =
         FragmentUserInfoBinding::inflate
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 }

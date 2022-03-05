@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Quick Controls"
+                    android:text="@string/quick_controls"
                     android:textColor="@color/text_white"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView6"
@@ -72,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="Lights"
+                    android:text="@string/lights"
                     android:textColor="@color/default_gray"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView9"
@@ -103,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Locks"
+                    android:text="@string/locks"
                     android:textColor="@color/default_gray"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView34"
@@ -128,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Display"
+                    android:text="@string/display"
                     android:textColor="@color/default_gray"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView35"
@@ -159,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Driving"
+                    android:text="@string/driving"
                     android:textColor="@color/default_gray"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView36"
@@ -183,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Autopilot"
+                    android:text="@string/autopilot"
                     android:textColor="@color/default_gray"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView37"
@@ -214,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Safety &amp; Security"
+                    android:text="@string/safety_amp_security"
                     android:textColor="@color/default_gray"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView38"
@@ -238,7 +237,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Service"
+                    android:text="@string/service"
                     android:textColor="@color/default_gray"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView39"
@@ -258,7 +257,7 @@
             android:paddingTop="0dp"
             android:paddingEnd="28dp"
             android:paddingBottom="0dp"
-            android:text="glovebox"
+            android:text="@string/glovebox"
             android:textAllCaps="false"
             android:textColor="@color/text_white"
             android:textSize="12sp"
@@ -304,7 +303,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Display brightness"
+                android:text="@string/display_brightness"
                 android:textColor="@color/text_white"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"
@@ -343,7 +342,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Exterior lights"
+                android:text="@string/exterior_lights"
                 android:textColor="@color/text_white"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
@@ -367,11 +366,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/settings_lights_toggle"
                     android:checked="false"
-                    android:text="ToggleButton"
+                    android:text="@string/togglebutton"
                     android:textAllCaps="false"
                     android:textColor="@color/text_white"
-                    android:textOff="off"
-                    android:textOn="off" />
+                    android:textOff="@string/off"
+                    android:textOn="@string/off" />
 
                 <ToggleButton
                     android:id="@+id/tbLightsParking"
@@ -380,11 +379,10 @@
                     android:layout_weight="1"
                     android:background="@drawable/settings_lights_toggle"
                     android:checked="false"
-                    android:text="ToggleButton"
                     android:textAllCaps="false"
                     android:textColor="@color/text_white"
-                    android:textOff="parking"
-                    android:textOn="parking" />
+                    android:textOff="@string/parking"
+                    android:textOn="@string/parking" />
 
                 <ToggleButton
                     android:id="@+id/tbLightsOn"
@@ -392,11 +390,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/settings_lights_toggle"
-                    android:text="ToggleButton"
                     android:textAllCaps="false"
                     android:textColor="@color/text_white"
-                    android:textOff="on"
-                    android:textOn="on" />
+                    android:textOff="@string/on"
+                    android:textOn="@string/on" />
 
                 <ToggleButton
                     android:id="@+id/tbLightsAuto"
@@ -405,11 +402,10 @@
                     android:layout_weight="1"
                     android:background="@drawable/settings_lights_toggle"
                     android:checked="true"
-                    android:text="ToggleButton"
                     android:textAllCaps="false"
                     android:textColor="@color/text_white"
-                    android:textOff="auto"
-                    android:textOn="auto" />
+                    android:textOff="@string/_auto"
+                    android:textOn="@string/_auto" />
             </LinearLayout>
 
             <ToggleButton
@@ -419,11 +415,10 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/settings_button_selector"
                 android:checked="false"
-                android:text="ToggleButton"
                 android:textAllCaps="false"
                 android:textColor="@color/text_white"
-                android:textOff="front fog"
-                android:textOn="front fog"
+                android:textOff="@string/front_fog"
+                android:textOn="@string/front_fog"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
@@ -452,7 +447,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Adjustments"
+                android:text="@string/adjustments"
                 android:textColor="@color/text_white"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView7"
@@ -484,11 +479,10 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/settings_button_selector"
-                android:text="ToggleButton"
                 android:textAllCaps="false"
                 android:textColor="@color/text_white"
-                android:textOff="fold mirrors"
-                android:textOn="fold mirrors"
+                android:textOff="@string/fold_mirrors"
+                android:textOn="@string/fold_mirrors"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView7"
                 app:layout_constraintTop_toBottomOf="@+id/imageView8" />

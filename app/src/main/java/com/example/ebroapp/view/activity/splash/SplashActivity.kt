@@ -1,5 +1,6 @@
 package com.example.ebroapp.view.activity.splash
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,7 +10,7 @@ import com.example.ebroapp.databinding.ActivitySplashBinding
 import com.example.ebroapp.view.activity.MainActivity
 import com.example.ebroapp.view.base.BaseActivity
 
-
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override val bindingInflater: (LayoutInflater) -> ActivitySplashBinding =

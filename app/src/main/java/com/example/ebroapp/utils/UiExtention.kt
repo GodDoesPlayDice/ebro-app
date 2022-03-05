@@ -14,17 +14,15 @@ import com.example.ebroapp.R
 import com.example.ebroapp.utils.CacheUtil.addBitmapToMemoryCache
 import com.example.ebroapp.utils.CacheUtil.getBitmapFromMemCache
 import com.google.android.material.imageview.ShapeableImageView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 fun TextView.setTime(time: Int) {
     val minutes = time / 60
     val seconds = time % 60
     val stringMinutes = if (minutes >= 10) minutes else "0$minutes"
     val stringSeconds = if (seconds >= 10) seconds else "0$seconds"
-    this.text = "$stringMinutes:$stringSeconds"
+    val text = "$stringMinutes:$stringSeconds"
+    this.text = text
 }
 
 fun ContentResolver.setOnVolumeChangeListener(
@@ -32,9 +30,6 @@ fun ContentResolver.setOnVolumeChangeListener(
 ) {
     this.registerContentObserver(CONTENT_URI, true, volumeObserver)
 }
-
-fun FragmentTransaction.setAnimation() =
-    this.setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
 
 fun SeekBar.setOnSeekBarListener(addOp: (Int) -> Unit) {
     this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -51,6 +46,7 @@ fun SeekBar.setOnSeekBarListener(addOp: (Int) -> Unit) {
     )
 }
 
+@OptIn(DelicateCoroutinesApi::class)
 fun ShapeableImageView.setImageFromUri(uri: Uri) {
     val view = this
     GlobalScope.launch(Dispatchers.Main) {
