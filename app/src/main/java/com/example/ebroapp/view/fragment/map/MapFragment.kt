@@ -16,8 +16,6 @@ import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMapBinding
 import com.example.ebroapp.domain.DomainRepository
 import com.example.ebroapp.view.base.BaseFragment
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.DirectionsRoute
 import com.mapbox.api.directions.v5.models.RouteOptions
@@ -466,7 +464,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         binding.tripProgressCard.visibility = View.VISIBLE
         navigationCamera.requestNavigationCameraToOverview()
 
-        if(routes.isNotEmpty()) {
+        if (routes.isNotEmpty()) {
             routes.first().legs()?.first()?.summary()?.let {
                 DomainRepository.obtain().addAddress(it)
             }
