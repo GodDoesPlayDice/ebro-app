@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.example.ebroapp.App
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
-import com.example.ebroapp.domain.DomainRepository
+import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.utils.SongMapper.toAdapter

@@ -14,7 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMapBinding
-import com.example.ebroapp.domain.DomainRepository
+import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.view.base.BaseFragment
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.DirectionsRoute

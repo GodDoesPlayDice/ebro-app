@@ -1,4 +1,4 @@
-package com.example.ebroapp.domain
+package com.example.ebroapp.domain.repository
 
 import android.content.Context
 import android.net.Uri

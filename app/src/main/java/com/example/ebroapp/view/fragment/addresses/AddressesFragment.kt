@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ebroapp.databinding.FragmentAddressesBinding
-import com.example.ebroapp.domain.DomainRepository
+import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.view.adapter.AddressesAdapter
 import com.example.ebroapp.view.base.BaseFragment
 

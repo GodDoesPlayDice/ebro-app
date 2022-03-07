@@ -1,4 +1,4 @@
-package com.example.ebroapp.domain
+package com.example.ebroapp.domain.repository
 
 import com.example.ebroapp.domain.entity.song.Song
 

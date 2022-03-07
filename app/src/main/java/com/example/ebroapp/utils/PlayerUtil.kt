@@ -5,7 +5,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.PowerManager
-import com.example.ebroapp.domain.DomainRepository
+import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.domain.entity.song.Song
 import kotlinx.coroutines.*
 import java.lang.Runnable
