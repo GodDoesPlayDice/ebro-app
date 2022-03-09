@@ -49,6 +49,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
             LocationUtil.currentLocation = location
             displayWeatherWidget()
+            locationListener?.stop()
         }
     }
     

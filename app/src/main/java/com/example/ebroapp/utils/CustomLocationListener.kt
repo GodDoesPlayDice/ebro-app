@@ -16,12 +16,13 @@ class CustomLocationListener(context: Context) : LocationListener {
     @SuppressLint("MissingPermission")
     fun setUpLocationListener(consumer: Consumer<Location>) {
         this.consumer = consumer
-        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-            currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
             currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+            currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         }
     }
 
