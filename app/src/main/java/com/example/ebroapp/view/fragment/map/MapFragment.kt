@@ -3,7 +3,6 @@ package com.example.ebroapp.view.fragment.map
 import android.Manifest
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,13 +14,19 @@ import androidx.core.content.ContextCompat
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMapBinding
 import com.example.ebroapp.domain.repository.DomainRepository
+import com.example.ebroapp.utils.MapUtil.BUTTON_ANIMATION_DURATION
+import com.example.ebroapp.utils.MapUtil.followingPadding
+import com.example.ebroapp.utils.MapUtil.landscapeFollowingPadding
+import com.example.ebroapp.utils.MapUtil.landscapeOverviewPadding
+import com.example.ebroapp.utils.MapUtil.overviewPadding
 import com.example.ebroapp.view.base.BaseFragment
+import com.google.android.gms.location.LocationServices
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.DirectionsRoute
 import com.mapbox.api.directions.v5.models.RouteOptions
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
-import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -41,6 +46,7 @@ import com.mapbox.navigation.core.directions.session.RoutesObserver
 import com.mapbox.navigation.core.formatter.MapboxDistanceFormatter
 import com.mapbox.navigation.core.replay.MapboxReplayer
 import com.mapbox.navigation.core.replay.ReplayLocationEngine
+import com.mapbox.navigation.core.replay.history.ReplayEventBase
 import com.mapbox.navigation.core.replay.route.ReplayProgressObserver
 import com.mapbox.navigation.core.replay.route.ReplayRouteMapper
 import com.mapbox.navigation.core.trip.session.LocationMatcherResult
@@ -53,7 +59,6 @@ import com.mapbox.navigation.ui.maps.camera.NavigationCamera
 import com.mapbox.navigation.ui.maps.camera.data.MapboxNavigationViewportDataSource
 import com.mapbox.navigation.ui.maps.camera.lifecycle.NavigationBasicGesturesHandler
 import com.mapbox.navigation.ui.maps.camera.state.NavigationCameraState
-import com.mapbox.navigation.ui.maps.camera.transition.NavigationCameraTransitionOptions
 import com.mapbox.navigation.ui.maps.location.NavigationLocationProvider
 import com.mapbox.navigation.ui.maps.route.arrow.api.MapboxRouteArrowApi
 import com.mapbox.navigation.ui.maps.route.arrow.api.MapboxRouteArrowView
@@ -74,50 +79,16 @@ import java.util.*
 
 class MapFragment : BaseFragment<FragmentMapBinding>() {
 
-    private companion object {
-        private const val BUTTON_ANIMATION_DURATION = 1500L
-    }
+    private val repository by lazy { DomainRepository.obtain() }
 
     private val mapboxReplayer = MapboxReplayer()
     private val replayLocationEngine = ReplayLocationEngine(mapboxReplayer)
     private val replayProgressObserver = ReplayProgressObserver(mapboxReplayer)
     private lateinit var mapboxMap: MapboxMap
     private lateinit var mapboxNavigation: MapboxNavigation
-    private lateinit var navigationCamera: NavigationCamera
+    private var navigationCamera: NavigationCamera? = null
     private lateinit var viewportDataSource: MapboxNavigationViewportDataSource
-    private val pixelDensity = Resources.getSystem().displayMetrics.density
-    private val overviewPadding: EdgeInsets by lazy {
-        EdgeInsets(
-            140.0 * pixelDensity,
-            40.0 * pixelDensity,
-            120.0 * pixelDensity,
-            40.0 * pixelDensity
-        )
-    }
-    private val landscapeOverviewPadding: EdgeInsets by lazy {
-        EdgeInsets(
-            30.0 * pixelDensity,
-            380.0 * pixelDensity,
-            110.0 * pixelDensity,
-            20.0 * pixelDensity
-        )
-    }
-    private val followingPadding: EdgeInsets by lazy {
-        EdgeInsets(
-            180.0 * pixelDensity,
-            40.0 * pixelDensity,
-            150.0 * pixelDensity,
-            40.0 * pixelDensity
-        )
-    }
-    private val landscapeFollowingPadding: EdgeInsets by lazy {
-        EdgeInsets(
-            30.0 * pixelDensity,
-            380.0 * pixelDensity,
-            110.0 * pixelDensity,
-            40.0 * pixelDensity
-        )
-    }
+
     private lateinit var maneuverApi: MapboxManeuverApi
     private lateinit var tripProgressApi: MapboxTripProgressApi
     private lateinit var routeLineApi: MapboxRouteLineApi
@@ -164,7 +135,15 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private val navigationLocationProvider = NavigationLocationProvider()
     private val locationObserver = object : LocationObserver {
         var firstLocationUpdateReceived = false
-        override fun onNewRawLocation(rawLocation: Location) {}
+        override fun onNewRawLocation(rawLocation: Location) {
+            repository.addCurrentLocation(
+                Point.fromLngLat(
+                    rawLocation.longitude,
+                    rawLocation.latitude
+                )
+            )
+        }
+
         override fun onNewLocationMatcherResult(locationMatcherResult: LocationMatcherResult) {
             val enhancedLocation = locationMatcherResult.enhancedLocation
             navigationLocationProvider.changePosition(
@@ -175,11 +154,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             viewportDataSource.evaluate()
             if (!firstLocationUpdateReceived) {
                 firstLocationUpdateReceived = true
-                navigationCamera.requestNavigationCameraToOverview(
-                    stateTransitionOptions = NavigationCameraTransitionOptions.Builder()
-                        .maxDuration(0)
-                        .build()
-                )
             }
         }
     }
@@ -267,21 +241,19 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             )
         }
         viewportDataSource = MapboxNavigationViewportDataSource(mapboxMap)
-        navigationCamera = NavigationCamera(
-            mapboxMap,
-            binding.mapView.camera,
-            viewportDataSource
-        )
-        binding.mapView.camera.addCameraAnimationsLifecycleListener(
-            NavigationBasicGesturesHandler(navigationCamera)
-        )
-        navigationCamera.registerNavigationCameraStateChangeObserver { navigationCameraState ->
-            when (navigationCameraState) {
-                NavigationCameraState.TRANSITION_TO_FOLLOWING,
-                NavigationCameraState.FOLLOWING -> binding.recenter.visibility = View.INVISIBLE
-                NavigationCameraState.TRANSITION_TO_OVERVIEW,
-                NavigationCameraState.OVERVIEW,
-                NavigationCameraState.IDLE -> binding.recenter.visibility = View.VISIBLE
+        navigationCamera = NavigationCamera(mapboxMap, binding.mapView.camera, viewportDataSource)
+        navigationCamera?.apply {
+            binding.mapView.camera.addCameraAnimationsLifecycleListener(
+                NavigationBasicGesturesHandler(this)
+            )
+            registerNavigationCameraStateChangeObserver { navigationCameraState ->
+                when (navigationCameraState) {
+                    NavigationCameraState.TRANSITION_TO_FOLLOWING,
+                    NavigationCameraState.FOLLOWING -> binding.recenter.visibility = View.INVISIBLE
+                    NavigationCameraState.TRANSITION_TO_OVERVIEW,
+                    NavigationCameraState.OVERVIEW,
+                    NavigationCameraState.IDLE -> binding.recenter.visibility = View.VISIBLE
+                }
             }
         }
         if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -294,11 +266,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         } else {
             viewportDataSource.followingPadding = followingPadding
         }
-        val distanceFormatterOptions = mapboxNavigation.navigationOptions.distanceFormatterOptions
+        val distanceFormatterOptions =
+            mapboxNavigation.navigationOptions.distanceFormatterOptions
 
-        maneuverApi = MapboxManeuverApi(
-            MapboxDistanceFormatter(distanceFormatterOptions)
-        )
+        maneuverApi = MapboxManeuverApi(MapboxDistanceFormatter(distanceFormatterOptions))
 
         tripProgressApi = MapboxTripProgressApi(
             TripProgressUpdateFormatter.Builder(requireContext())
@@ -340,7 +311,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         mapboxMap.loadStyleUri(Style.DARK)
 
         binding.mapView.gestures.addOnMapLongClickListener { point ->
-            findRoute(point)
+            findRoute(point, true)
             true
         }
 
@@ -348,11 +319,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             clearRouteAndStopNavigation()
         }
         binding.recenter.setOnClickListener {
-            navigationCamera.requestNavigationCameraToFollowing()
+            navigationCamera?.requestNavigationCameraToFollowing()
             binding.routeOverview.showTextAndExtend(BUTTON_ANIMATION_DURATION)
         }
         binding.routeOverview.setOnClickListener {
-            navigationCamera.requestNavigationCameraToOverview()
+            navigationCamera?.requestNavigationCameraToOverview()
             binding.recenter.showTextAndExtend(BUTTON_ANIMATION_DURATION)
         }
         binding.soundButton.setOnClickListener {
@@ -361,21 +332,20 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
         binding.soundButton.unmute()
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
+        if (checkPermission()) {
+            LocationServices.getFusedLocationProviderClient(requireContext()).lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        DomainRepository.obtain().addCurrentLocation(
+                            Point.fromLngLat(
+                                location.longitude,
+                                location.latitude
+                            )
+                        )
+                    }
+                }
+            mapboxNavigation.startTripSession()
         }
-        mapboxNavigation.startTripSession()
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         mapboxNavigation.registerRoutesObserver(routesObserver)
         mapboxNavigation.registerRouteProgressObserver(routeProgressObserver)
@@ -383,43 +353,59 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         mapboxNavigation.registerVoiceInstructionsObserver(voiceInstructionsObserver)
         mapboxNavigation.registerRouteProgressObserver(replayProgressObserver)
 
-        if (mapboxNavigation.getRoutes().isEmpty()) {
-            mapboxReplayer.pushEvents(
-                listOf(
-                    ReplayRouteMapper.mapToUpdateLocation(
-                        eventTimestamp = 0.0,
-                        point = Point.fromLngLat(-122.39726512303575, 37.785128345296805)
-                    )
-                )
-            )
-            mapboxReplayer.playFirstLocation()
+        repository.getCurrentLocation()?.let {
+            mapboxMap.setCamera(CameraOptions.Builder().center(it).zoom(16.0).build())
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mapboxNavigation.run {
-            unregisterRoutesObserver(routesObserver)
-            unregisterRouteProgressObserver(routeProgressObserver)
-            unregisterLocationObserver(locationObserver)
-            unregisterVoiceInstructionsObserver(voiceInstructionsObserver)
-            unregisterRouteProgressObserver(replayProgressObserver)
+    override fun onStart() {
+        super.onStart()
+
+        if (checkPermission()) {
+            val points = mutableListOf<ReplayEventBase>()
+            repository.getCurrentLocation()?.let { current ->
+                points.add(
+                    ReplayRouteMapper.mapToUpdateLocation(
+                        eventTimestamp = 0.0,
+                        point = current
+                    )
+                )
+            }
+            mapboxReplayer.pushEvents(points)
+            mapboxReplayer.playFirstLocation()
         }
 
+        repository.getDestinationLocation()?.let {
+            findRoute(it, false)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
         MapboxNavigationProvider.destroy()
+
         mapboxReplayer.finish()
         maneuverApi.cancel()
         routeLineApi.cancel()
         routeLineView.cancel()
         speechApi.cancel()
         voiceInstructionsPlayer.shutdown()
+
+        mapboxNavigation.unregisterRoutesObserver(routesObserver)
+        mapboxNavigation.unregisterRouteProgressObserver(routeProgressObserver)
+        mapboxNavigation.unregisterLocationObserver(locationObserver)
+        mapboxNavigation.unregisterVoiceInstructionsObserver(voiceInstructionsObserver)
+        mapboxNavigation.unregisterRouteProgressObserver(replayProgressObserver)
     }
 
-    private fun findRoute(destination: Point) {
-        val originLocation = navigationLocationProvider.lastLocation
-        val originPoint = originLocation?.let {
-            Point.fromLngLat(it.longitude, it.latitude)
-        } ?: return
+    private fun findRoute(destination: Point, isNewPoint: Boolean) {
+        repository.addDestinationLocation(destination)
+        val originPoint = repository.getCurrentLocation() ?: return
+        val originLocation = Location("").apply {
+            latitude = originPoint.latitude()
+            longitude = originPoint.longitude()
+        }
 
         mapboxNavigation.requestRoutes(
             RouteOptions.builder()
@@ -442,7 +428,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                     routes: List<DirectionsRoute>,
                     routerOrigin: RouterOrigin
                 ) {
-                    setRouteAndStartNavigation(routes)
+                    setRouteAndStartNavigation(routes, isNewPoint)
                 }
 
                 override fun onFailure(
@@ -451,27 +437,32 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                 ) {
                 }
 
-                override fun onCanceled(routeOptions: RouteOptions, routerOrigin: RouterOrigin) {}
+                override fun onCanceled(
+                    routeOptions: RouteOptions,
+                    routerOrigin: RouterOrigin
+                ) {
+                }
             }
         )
     }
 
-    private fun setRouteAndStartNavigation(routes: List<DirectionsRoute>) {
+    private fun setRouteAndStartNavigation(routes: List<DirectionsRoute>, isNewPoint: Boolean) {
         mapboxNavigation.setRoutes(routes)
-        startSimulation(routes.first())
+        //startSimulation(routes.first())
         binding.soundButton.visibility = View.VISIBLE
         binding.routeOverview.visibility = View.VISIBLE
         binding.tripProgressCard.visibility = View.VISIBLE
-        navigationCamera.requestNavigationCameraToOverview()
+        navigationCamera?.requestNavigationCameraToOverview()
 
-        if (routes.isNotEmpty()) {
+        if (isNewPoint && routes.isNotEmpty()) {
             routes.first().legs()?.first()?.summary()?.let {
-                DomainRepository.obtain().addAddress(it)
+                repository.addAddress(it)
             }
         }
     }
 
     private fun clearRouteAndStopNavigation() {
+        repository.removeDestinationLocation()
         mapboxNavigation.setRoutes(listOf())
         mapboxReplayer.stop()
         binding.soundButton.visibility = View.INVISIBLE
@@ -491,4 +482,13 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
+    private fun checkPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
 }

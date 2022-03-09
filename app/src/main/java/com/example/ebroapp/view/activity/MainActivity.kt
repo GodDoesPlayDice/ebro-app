@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.setFragmentResultListener
 import com.example.ebroapp.App
 import com.example.ebroapp.R
@@ -40,7 +39,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // ставим фрагменты на место
-        supportFragmentManager.commit { replace<LowerToolbarFragment>(R.id.fragmentLowerToolbar) }
+        supportFragmentManager.commit { replace(R.id.fragmentLowerToolbar, LowerToolbarFragment()) }
 
         btnToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
@@ -49,13 +48,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         openMainFragment()
                     }
                     R.id.btnMap -> {
-                        supportFragmentManager.commit { replace<MapFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit {
+                            replace(R.id.fragmentMain, MapFragment())
+                        }
                     }
                     R.id.btnMusic -> {
-                        supportFragmentManager.commit { replace<MusicFullFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit {
+                            replace(
+                                R.id.fragmentMain,
+                                MusicFullFragment()
+                            )
+                        }
                     }
                     R.id.btnSettings -> {
-                        supportFragmentManager.commit { replace<SettingsFragment>(R.id.fragmentMain) }
+                        supportFragmentManager.commit {
+                            replace(
+                                R.id.fragmentMain,
+                                SettingsFragment()
+                            )
+                        }
                     }
                 }
             }
@@ -107,6 +118,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         btnToggleGroup.check(R.id.btnHome)
         openMainFragment()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        App.get().player.pauseMusic()
     }
 
     override fun onDestroy() {

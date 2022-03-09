@@ -1,6 +1,7 @@
 package com.example.ebroapp.domain.repository
 
 import com.example.ebroapp.domain.entity.song.Song
+import com.mapbox.geojson.Point
 
 interface DomainRepository {
     companion object {
@@ -25,7 +26,17 @@ interface DomainRepository {
 
     fun addAddress(it: String)
 
-    fun getAddresses() : List<String>
+    fun getAddresses(): List<String>
 
     fun setOnAddressesChangeListener(onAddressChangeListener: (List<String>) -> Unit)
+
+    fun addCurrentLocation(point: Point)
+
+    fun getCurrentLocation(): Point?
+
+    fun addDestinationLocation(point: Point)
+
+    fun removeDestinationLocation()
+
+    fun getDestinationLocation(): Point?
 }

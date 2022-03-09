@@ -7,6 +7,7 @@ import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.utils.UriAdapter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.mapbox.geojson.Point
 
 
 class PreferenceManager private constructor() {
@@ -63,12 +64,45 @@ class PreferenceManager private constructor() {
         this.onAddressChangeListener = onAddressChangeListener
     }
 
+    fun addCurrentLocation(point: Point) {
+        preference.edit().putString(CURRENT_LOCATION, gson.toJson(point)).apply()
+    }
+
+    fun getCurrentLocation(): Point? {
+        val json = preference.getString(CURRENT_LOCATION, "")
+        return if (json != "") {
+            gson.fromJson(json, Point::class.java)
+        } else {
+            null
+        }
+    }
+
+    fun addDestinationLocation(point: Point) {
+        preference.edit().putString(DESTINATION_LOCATION, gson.toJson(point)).apply()
+    }
+
+
+    fun removeDestinationLocation() {
+        preference.edit().putString(DESTINATION_LOCATION, "").apply()
+    }
+
+    fun getDestinationLocation(): Point? {
+        val json = preference.getString(DESTINATION_LOCATION, "")
+        return if (json != "") {
+            gson.fromJson(json, Point::class.java)
+        } else {
+            null
+        }
+    }
+
     companion object {
         private val instance = PreferenceManager()
         private const val APP_PREFERENCES = "APP_PREFERENCES"
         private const val SONG_IS_FAVORITE = "SONG_IS_FAVORITE_%d"
         private const val SONGS_LIST = "SONGS_LIST"
         private const val ADDRESSES_LIST = "ADDRESSES_LIST"
+        private const val CURRENT_LOCATION = "CURRENT_LOCATION"
+        private const val DESTINATION_LOCATION = "DESTINATION_LOCATION"
         private val preference =
             App.get().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
 

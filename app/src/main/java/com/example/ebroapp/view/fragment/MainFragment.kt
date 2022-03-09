@@ -27,11 +27,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        parentFragmentManager.commit { replace<UserInfoFragment>(R.id.fragmentUserInfo) }
-        parentFragmentManager.commit { replace<WeatherFragment>(R.id.fragmentWeather) }
-        parentFragmentManager.commit { replace<AddressesFragment>(R.id.fragmentLocation) }
-        parentFragmentManager.commit { replace<MapFragment>(R.id.fragmentMap) }
-        parentFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
+        childFragmentManager.commit { replace<UserInfoFragment>(R.id.fragmentUserInfo) }
+        childFragmentManager.commit { replace<WeatherFragment>(R.id.fragmentWeather) }
+        childFragmentManager.commit { replace<AddressesFragment>(R.id.fragmentLocation) }
+        childFragmentManager.commit { replace<MapFragment>(R.id.fragmentMap) }
+        childFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
 
         binding.fragmentMap.setOnClickListener {
             setFragmentResult("requestKey", bundleOf("fragmentId" to it.id))
@@ -41,7 +41,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         }
 
         App.get().player.setOnMusicLoadingComplete {
-            parentFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
+            childFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
         }
     }
 }
