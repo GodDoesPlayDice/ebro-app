@@ -41,8 +41,8 @@ class RemoteRepositoryImpl : RemoteRepository {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    override fun getWeatherFull() =
-        remoteService.getWeatherFull()
+    override fun getWeatherFull(lat: Double?, lon: Double?) =
+        remoteService.getWeatherFull(lat, lon)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }

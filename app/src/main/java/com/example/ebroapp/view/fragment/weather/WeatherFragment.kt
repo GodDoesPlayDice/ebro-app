@@ -1,13 +1,18 @@
 package com.example.ebroapp.view.fragment.weather
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentWeatherBinding
 import com.example.ebroapp.remote.repository.RemoteRepository
+import com.example.ebroapp.utils.CustomLocationListener
+import com.example.ebroapp.utils.LocationUtil
 import com.example.ebroapp.utils.TimeUtil.getLongDay
 import com.example.ebroapp.view.base.BaseFragment
 import com.squareup.picasso.Picasso
@@ -19,14 +24,40 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     private var disposable: Disposable? = null
     private val repository = RemoteRepository.obtain()
 
+    private var locationListener: CustomLocationListener? = null
+
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentWeatherBinding =
         FragmentWeatherBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        locationListener = CustomLocationListener(requireContext())
+
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            setLocationListener()
+        } else {
+            return
+        }
+    }
+
+    private fun setLocationListener() {
+        locationListener?.setUpLocationListener { location ->
+            Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
+            LocationUtil.currentLocation = location
+            displayWeatherWidget()
+            locationListener?.stop()
+        }
+    }
+    
+    private fun displayWeatherWidget() {
+        val location = LocationUtil.currentLocation
+
         disposable?.dispose()
-        disposable = repository.getWeatherFull()
+        disposable = repository.getWeatherFull(location?.latitude, location?.longitude)
             .subscribe(
                 {
                     val current = it.current
@@ -74,6 +105,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     override fun onDestroyView() {
         disposable?.dispose()
+        locationListener?.stop()
         super.onDestroyView()
     }
 }
