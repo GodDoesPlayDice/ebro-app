@@ -20,5 +20,5 @@ interface RemoteRepository {
 
     fun getCurrentWeather(): Single<CurrentWeather>
 
-    fun getWeatherFull(): Single<FullWeather>
+    fun getWeatherFull(lat: Double?, lon: Double?): Single<FullWeather>
 }

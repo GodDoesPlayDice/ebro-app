@@ -26,8 +26,8 @@ interface RemoteService {
     // Полные данные включая текущую погоду, и погоду на ближайшие 7 дней
     @GET("data/2.5/onecall")
     fun getWeatherFull(
-        @Query("lat") lat: Double = WeatherProperties.lat,
-        @Query("lon") lon: Double = WeatherProperties.lon,
+        @Query("lat") lat: Double?,
+        @Query("lon") lon: Double?,
         @Query("units") units: String = WeatherProperties.units,
         @Query("appid") appid: String = WeatherProperties.token,
         @Query("exclude") exclude: String = WeatherProperties.exclude
