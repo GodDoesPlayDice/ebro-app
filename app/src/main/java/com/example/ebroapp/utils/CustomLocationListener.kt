@@ -11,17 +11,28 @@ class CustomLocationListener(context: Context) : LocationListener {
 
     private var currentLocation: Location? = null
     private var consumer: Consumer<Location>? = null
-    var locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private var locationManager =
+        context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     @SuppressLint("MissingPermission")
     fun setUpLocationListener(consumer: Consumer<Location>) {
         this.consumer = consumer
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                MIN_UPDATE_TIME,
+                0f,
+                this
+            )
             currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+            locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                MIN_UPDATE_TIME,
+                0f,
+                this
+            )
             currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         }
     }
@@ -41,5 +52,9 @@ class CustomLocationListener(context: Context) : LocationListener {
         if (provider == LocationManager.NETWORK_PROVIDER) {
             consumer?.accept(location)
         }
+    }
+
+    companion object {
+        const val MIN_UPDATE_TIME = 1000L * 60L * 60L * 24L
     }
 }

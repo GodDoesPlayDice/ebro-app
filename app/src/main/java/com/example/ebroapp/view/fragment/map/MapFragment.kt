@@ -1,7 +1,5 @@
 package com.example.ebroapp.view.fragment.map
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.Location
 import android.os.Bundle
@@ -9,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMapBinding
@@ -19,6 +16,7 @@ import com.example.ebroapp.utils.MapUtil.followingPadding
 import com.example.ebroapp.utils.MapUtil.landscapeFollowingPadding
 import com.example.ebroapp.utils.MapUtil.landscapeOverviewPadding
 import com.example.ebroapp.utils.MapUtil.overviewPadding
+import com.example.ebroapp.utils.PermissionUtil.checkLocationPermission
 import com.example.ebroapp.view.base.BaseFragment
 import com.google.android.gms.location.LocationServices
 import com.mapbox.api.directions.v5.models.Bearing
@@ -332,18 +330,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
         binding.soundButton.unmute()
 
-        if (checkPermission()) {
-            LocationServices.getFusedLocationProviderClient(requireContext()).lastLocation
-                .addOnSuccessListener { location ->
-                    if (location != null) {
-                        DomainRepository.obtain().addCurrentLocation(
-                            Point.fromLngLat(
-                                location.longitude,
-                                location.latitude
-                            )
-                        )
-                    }
-                }
+        if (checkLocationPermission(requireContext())) {
             mapboxNavigation.startTripSession()
         }
 
@@ -361,7 +348,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     override fun onStart() {
         super.onStart()
 
-        if (checkPermission()) {
+        if (checkLocationPermission(requireContext())) {
             val points = mutableListOf<ReplayEventBase>()
             repository.getCurrentLocation()?.let { current ->
                 points.add(
@@ -480,15 +467,5 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             seekTo(replayEvents.first())
             play()
         }
-    }
-
-    private fun checkPermission(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
     }
 }

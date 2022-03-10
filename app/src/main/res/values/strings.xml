@@ -3,7 +3,7 @@
     <string name="mapbox_access_token">pk.eyJ1Ijoic2xvd2Zhcm0iLCJhIjoiY2wwYjduZWxmMDB3ODNpczF3bjIzZmJudSJ9._ALyH1rQD9m8pSpstxyWkw</string>
 
     <string name="volume_percentage">%d%%</string>
-    <string name="temperature">+%d</string>
+    <string name="temperature">%d</string>
     <string name="streaming">Streaming</string>
     <string name="radio">Radio</string>
     <string name="usb">USB</string>

@@ -1,20 +1,19 @@
 package com.example.ebroapp.view.fragment.weather
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentWeatherBinding
+import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.remote.repository.RemoteRepository
 import com.example.ebroapp.utils.CustomLocationListener
-import com.example.ebroapp.utils.LocationUtil
+import com.example.ebroapp.utils.PermissionUtil.checkLocationPermission
 import com.example.ebroapp.utils.TimeUtil.getLongDay
 import com.example.ebroapp.view.base.BaseFragment
+import com.mapbox.geojson.Point
 import com.squareup.picasso.Picasso
 import io.reactivex.disposables.Disposable
 
@@ -22,7 +21,8 @@ import io.reactivex.disposables.Disposable
 class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     private var disposable: Disposable? = null
-    private val repository = RemoteRepository.obtain()
+    private val remoteRepository = RemoteRepository.obtain()
+    private val domainRepository = DomainRepository.obtain()
 
     private var locationListener: CustomLocationListener? = null
 
@@ -34,30 +34,23 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
         locationListener = CustomLocationListener(requireContext())
 
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED
-        ) {
-            setLocationListener()
-        } else {
-            return
+        if (checkLocationPermission(requireContext())) {
+            domainRepository.getCurrentLocation()?.let {
+                displayWeatherWidget(it)
+            } ?: run {
+                locationListener?.setUpLocationListener { location ->
+                    val point = Point.fromLngLat(location.longitude, location.latitude)
+                    domainRepository.addCurrentLocation(point)
+                    displayWeatherWidget(point)
+                    locationListener?.stop()
+                }
+            }
         }
     }
 
-    private fun setLocationListener() {
-        locationListener?.setUpLocationListener { location ->
-            Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
-            LocationUtil.currentLocation = location
-            displayWeatherWidget()
-            locationListener?.stop()
-        }
-    }
-    
-    private fun displayWeatherWidget() {
-        val location = LocationUtil.currentLocation
-
+    private fun displayWeatherWidget(point: Point) {
         disposable?.dispose()
-        disposable = repository.getWeatherFull(location?.latitude, location?.longitude)
+        disposable = remoteRepository.getWeatherFull(point.latitude(), point.longitude())
             .subscribe(
                 {
                     val current = it.current

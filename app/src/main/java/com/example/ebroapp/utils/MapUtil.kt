@@ -38,5 +38,5 @@ object MapUtil {
             40.0 * pixelDensity
         )
 
-    val BUTTON_ANIMATION_DURATION = 1500L
+    const val BUTTON_ANIMATION_DURATION = 1500L
 }
