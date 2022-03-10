@@ -11,14 +11,18 @@ import androidx.fragment.app.setFragmentResult
 import com.example.ebroapp.App
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMainBinding
+import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.view.base.BaseFragment
 import com.example.ebroapp.view.fragment.addresses.AddressesFragment
 import com.example.ebroapp.view.fragment.map.MapFragment
 import com.example.ebroapp.view.fragment.muisc.MusicFragment
 import com.example.ebroapp.view.fragment.userinfo.UserInfoFragment
 import com.example.ebroapp.view.fragment.weather.WeatherFragment
+import com.mapbox.geojson.Point
 
 class MainFragment : BaseFragment<FragmentMainBinding>() {
+
+    private val repository = DomainRepository.obtain()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMainBinding =
         FragmentMainBinding::inflate
@@ -43,5 +47,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         App.get().player.setOnMusicLoadingComplete {
             childFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
         }
+
+        App.get().locationListener.setOnLocationListener { location ->
+            repository.addCurrentLocation(
+                Point.fromLngLat(location.longitude, location.latitude)
+            )
+            childFragmentManager.commit { replace<WeatherFragment>(R.id.fragmentWeather) }
+        }
+
     }
 }

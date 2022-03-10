@@ -1,11 +1,13 @@
 package com.example.ebroapp
 
 import android.app.Application
+import com.example.ebroapp.utils.CustomLocationListener
 import com.example.ebroapp.utils.PlayerUtil
 
 class App : Application() {
 
     val player by lazy { PlayerUtil(applicationContext) }
+    val locationListener by lazy { CustomLocationListener(applicationContext) }
 
     override fun onCreate() {
         super.onCreate()

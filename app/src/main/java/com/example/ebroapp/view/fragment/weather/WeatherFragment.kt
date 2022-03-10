@@ -9,8 +9,6 @@ import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentWeatherBinding
 import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.remote.repository.RemoteRepository
-import com.example.ebroapp.utils.CustomLocationListener
-import com.example.ebroapp.utils.PermissionUtil.checkLocationPermission
 import com.example.ebroapp.utils.TimeUtil.getLongDay
 import com.example.ebroapp.view.base.BaseFragment
 import com.mapbox.geojson.Point
@@ -24,27 +22,14 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     private val remoteRepository = RemoteRepository.obtain()
     private val domainRepository = DomainRepository.obtain()
 
-    private var locationListener: CustomLocationListener? = null
-
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentWeatherBinding =
         FragmentWeatherBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        locationListener = CustomLocationListener(requireContext())
-
-        if (checkLocationPermission(requireContext())) {
-            domainRepository.getCurrentLocation()?.let {
-                displayWeatherWidget(it)
-            } ?: run {
-                locationListener?.setUpLocationListener { location ->
-                    val point = Point.fromLngLat(location.longitude, location.latitude)
-                    domainRepository.addCurrentLocation(point)
-                    displayWeatherWidget(point)
-                    locationListener?.stop()
-                }
-            }
+        domainRepository.getCurrentLocation()?.let {
+            displayWeatherWidget(it)
         }
     }
 
@@ -98,7 +83,6 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     override fun onDestroyView() {
         disposable?.dispose()
-        locationListener?.stop()
         super.onDestroyView()
     }
 }
