@@ -13,7 +13,7 @@ import com.mapbox.geojson.Point
 class PreferenceManager private constructor() {
 
     private val gson: Gson
-    private var onAddressChangeListener: ((List<String>) -> Unit)? = null
+    private var onAddressChangeListener: ((String) -> Unit)? = null
 
     init {
         val builder = GsonBuilder()
@@ -48,7 +48,7 @@ class PreferenceManager private constructor() {
         val list = getAddresses().toMutableList()
         list.add(address)
         preference.edit().putString(ADDRESSES_LIST, gson.toJson(list.toList())).apply()
-        onAddressChangeListener?.invoke(list)
+        onAddressChangeListener?.invoke(address)
     }
 
     fun getAddresses(): List<String> {
@@ -60,7 +60,7 @@ class PreferenceManager private constructor() {
         }
     }
 
-    fun setOnAddressesChangeListener(onAddressChangeListener: (List<String>) -> Unit) {
+    fun setOnAddressesChangeListener(onAddressChangeListener: (String) -> Unit) {
         this.onAddressChangeListener = onAddressChangeListener
     }
 

@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +16,15 @@ import com.example.ebroapp.databinding.FragmentSettingsBinding
 import com.example.ebroapp.view.base.BaseFragment
 
 
-class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
+class SettingsFragment :
+    BaseFragment<FragmentSettingsBinding, SettingsViewModel>(SettingsViewModel::class.java) {
     private val lightsButtons = mutableListOf<ToggleButton>()
     private lateinit var thumbView: View
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSettingsBinding =
         FragmentSettingsBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupUI() {
         prepareLightsButtons()
         prepareSeekBar()
     }

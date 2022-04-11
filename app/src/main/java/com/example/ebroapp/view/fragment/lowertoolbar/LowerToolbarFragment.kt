@@ -1,7 +1,6 @@
 package com.example.ebroapp.view.fragment.lowertoolbar
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -16,7 +15,8 @@ import com.example.ebroapp.databinding.FragmentLowerToolbarBinding
 import com.example.ebroapp.utils.setOnSeekBarListener
 import com.example.ebroapp.view.base.BaseFragment
 
-class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
+class LowerToolbarFragment :
+    BaseFragment<FragmentLowerToolbarBinding, LowerToolbarViewModel>(LowerToolbarViewModel::class.java) {
 
     private val dotActive = R.drawable.ic_dot_active
     private val dotInactive = R.drawable.ic_dot_inactive
@@ -35,13 +35,10 @@ class LowerToolbarFragment : BaseFragment<FragmentLowerToolbarBinding>() {
     private var leftTemp: Int = 20
     private var rightTemp: Int = 20
 
-
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLowerToolbarBinding =
         FragmentLowerToolbarBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setupUI() {
         prepareUpperButtons()
         prepareTemperatureBars()
     }

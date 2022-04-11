@@ -28,7 +28,7 @@ interface DomainRepository {
 
     fun getAddresses(): List<String>
 
-    fun setOnAddressesChangeListener(onAddressChangeListener: (List<String>) -> Unit)
+    fun setOnAddressesChangeListener(onAddressChangeListener: (String) -> Unit)
 
     fun addCurrentLocation(point: Point)
 

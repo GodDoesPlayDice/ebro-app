@@ -1,31 +1,29 @@
 package com.example.ebroapp.view.fragment.musicfull
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.example.ebroapp.App
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
-import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
-import com.example.ebroapp.utils.SongMapper.toAdapter
+import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.utils.setImageFromUri
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter
 import com.example.ebroapp.view.base.BaseFragment
 
 
-class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
+class MusicFullFragment :
+    BaseFragment<FragmentMusicFullBinding, MusicFullViewModel>(MusicFullViewModel::class.java) {
 
-    private val domainRepository = DomainRepository.obtain()
+    private val player = App.get().player
 
     private val songAdapter by lazy {
         MusicAdapter { song ->
-            App.get().player.nextSong(song)
+            player.nextSong(song)
             binding.btnPlay.isChecked = true
             fillCurrentSong()
         }
@@ -34,38 +32,44 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMusicFullBinding =
         FragmentMusicFullBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupUI() {
+        viewModel.songs.observe(viewLifecycleOwner) {
+            songAdapter.addItems(it)
+        }
 
-        App.get().player.setOnPlayerStateChangeListener { progress, duration ->
-            binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
-            binding.tvTimer.setTime(duration / 100 * progress)
+        viewModel.insertedSongs.observe(viewLifecycleOwner) {
+            songAdapter.changeItem(it.first, it.second)
         }
 
         initAdapter()
 
+        player.setOnPlayerStateChangeListener { progress, duration ->
+            binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
+            binding.tvTimer.setTime(duration / 100 * progress)
+        }
+
         binding.btnFavorite.setOnClickListener {
-            App.get().player.currentSong?.let {
+            player.currentSong?.let {
                 DomainRepository.obtain().setSongIsFavorite(it.id, binding.btnFavorite.isChecked)
                 it.isFavorites = binding.btnFavorite.isChecked
-                songAdapter.changeItem(domainRepository.getSongs().toAdapter(), it.id)
+                viewModel.getInsertedSong(it.id)
             }
         }
 
         binding.btnPlay.apply {
-            isChecked = App.get().player.isPlaying()
+            isChecked = player.isPlaying()
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) App.get().player.playMusic()
-                else App.get().player.pauseMusic()
+                if (isChecked) player.playMusic()
+                else player.pauseMusic()
             }
         }
 
         binding.btnNextSong.setOnClickListener {
-            App.get().player.nextSong()
+            player.nextSong()
             fillCurrentSong()
         }
         binding.btnPreviousSong.setOnClickListener {
-            App.get().player.previousSong()
+            player.previousSong()
             fillCurrentSong()
         }
 
@@ -95,11 +99,11 @@ class MusicFullFragment : BaseFragment<FragmentMusicFullBinding>() {
             layoutManager = gridLayoutManager
             adapter = songAdapter
         }
-        songAdapter.addItems(domainRepository.getSongs().toAdapter())
+        viewModel.getSongs()
     }
 
     private fun fillCurrentSong() {
-        App.get().player.currentSong?.let { song ->
+        player.currentSong?.let { song ->
             binding.ivAlbumCover.setImageFromUri(song.uri)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer

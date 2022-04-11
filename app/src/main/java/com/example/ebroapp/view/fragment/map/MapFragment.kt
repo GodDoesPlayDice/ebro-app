@@ -2,7 +2,6 @@ package com.example.ebroapp.view.fragment.map
 
 import android.content.res.Configuration
 import android.location.Location
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.example.ebroapp.utils.MapUtil.landscapeOverviewPadding
 import com.example.ebroapp.utils.MapUtil.overviewPadding
 import com.example.ebroapp.utils.PermissionUtil.checkLocationPermission
 import com.example.ebroapp.view.base.BaseFragment
-import com.google.android.gms.location.LocationServices
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.DirectionsRoute
 import com.mapbox.api.directions.v5.models.RouteOptions
@@ -75,7 +73,7 @@ import com.mapbox.navigation.ui.voice.model.SpeechValue
 import com.mapbox.navigation.ui.voice.model.SpeechVolume
 import java.util.*
 
-class MapFragment : BaseFragment<FragmentMapBinding>() {
+class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel::class.java) {
 
     private val repository by lazy { DomainRepository.obtain() }
 
@@ -212,9 +210,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMapBinding =
         FragmentMapBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setupUI() {
         mapboxMap = binding.mapView.getMapboxMap()
 
         binding.mapView.location.apply {

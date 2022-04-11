@@ -2,10 +2,8 @@ package com.example.ebroapp.view.fragment.muisc
 
 import android.content.Context.AUDIO_SERVICE
 import android.media.AudioManager
-import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.example.ebroapp.App
 import com.example.ebroapp.R
@@ -17,17 +15,18 @@ import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.base.BaseFragment
 
 
-class MusicFragment : BaseFragment<FragmentMusicBinding>() {
+class MusicFragment :
+    BaseFragment<FragmentMusicBinding, MusicViewModel>(MusicViewModel::class.java) {
 
+    private val player = App.get().player
     private lateinit var volumeObserver: VolumeObserver
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMusicBinding =
         FragmentMusicBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        App.get().player.setOnPlayerStateChangeListener { progress, duration ->
+    override fun setupUI() {
+        player.setOnPlayerStateChangeListener { progress, duration ->
             binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
             binding.tvTimer.setTime(duration / 100 * progress)
             binding.tvDuration.setTime(duration)
@@ -53,17 +52,17 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
             )
         }
 
-        binding.btnPlay.isChecked = App.get().player.isPlaying()
+        binding.btnPlay.isChecked = player.isPlaying()
         binding.btnPlay.setOnCheckedChangeListener { _, isChecked ->
-            App.get().player.playPauseMusic(isChecked)
+            player.playPauseMusic(isChecked)
         }
 
         binding.btnNextSong.setOnClickListener {
-            App.get().player.nextSong()
+            player.nextSong()
             fillCurrentSong()
         }
         binding.btnPreviousSong.setOnClickListener {
-            App.get().player.previousSong()
+            player.previousSong()
             fillCurrentSong()
         }
 
@@ -76,7 +75,7 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
     }
 
     private fun fillCurrentSong() {
-        App.get().player.currentSong?.let { song ->
+        player.currentSong?.let { song ->
             binding.ivAlbumCover.setImageFromUri(song.uri)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer

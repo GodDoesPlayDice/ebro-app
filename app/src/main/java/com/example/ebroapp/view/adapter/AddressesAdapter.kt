@@ -7,7 +7,7 @@ import com.example.ebroapp.databinding.ItemAddressesBinding
 
 class AddressesAdapter : RecyclerView.Adapter<AddressesAdapter.ViewHolder>() {
 
-    private var items: List<String> = mutableListOf()
+    private var items: MutableList<String> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,14 +20,13 @@ class AddressesAdapter : RecyclerView.Adapter<AddressesAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = items.size
 
-
     fun addItems(addresses: List<String>) {
-        items = addresses
+        items = addresses.toMutableList()
         notifyDataSetChanged()
     }
 
-    fun addItem(addresses: List<String>) {
-        items = addresses
+    fun addItem(addresses: String) {
+        items.add(addresses)
         notifyItemInserted(items.size - 1)
     }
 

@@ -163,8 +163,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         supportFragmentManager.commit {
             replace(R.id.fragmentMain, mainFragment)
         }
-        mainFragment.setFragmentResultListener("requestKey") { _, bundle ->
-            when (bundle.getInt("fragmentId")) {
+        mainFragment.setFragmentResultListener(REQUEST_KEY) { _, bundle ->
+            when (bundle.getInt(FRAGMENT_ID)) {
                 R.id.fragmentMap -> {
                     btnToggleGroup.check(R.id.btnMap)
                 }
@@ -176,6 +176,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     companion object {
+        const val REQUEST_KEY = "REQUEST_KEY"
+        const val FRAGMENT_ID = "FRAGMENT_ID"
         private const val PERMISSIONS_REQUEST_CODE = 7530
     }
 }

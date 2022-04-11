@@ -9,7 +9,6 @@ import android.provider.MediaStore
 import android.provider.Settings.System.CONTENT_URI
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.fragment.app.FragmentTransaction
 import com.example.ebroapp.R
 import com.example.ebroapp.utils.CacheUtil.addBitmapToMemoryCache
 import com.example.ebroapp.utils.CacheUtil.getBitmapFromMemCache
