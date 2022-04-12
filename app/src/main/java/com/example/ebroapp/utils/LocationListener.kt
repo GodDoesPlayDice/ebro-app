@@ -9,7 +9,8 @@ import android.location.LocationManager.GPS_PROVIDER
 import android.location.LocationManager.NETWORK_PROVIDER
 import com.example.ebroapp.utils.PermissionUtil.checkLocationPermission
 
-class CustomLocationListener(private val context: Context) : LocationListener {
+class LocationListener(private val context: Context) :
+    LocationListener {
 
     private var locationManager =
         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
