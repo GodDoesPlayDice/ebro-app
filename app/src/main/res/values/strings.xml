@@ -39,4 +39,6 @@
     <string name="lo">LO</string>
     <string name="hi">HI</string>
     <string name="temperature_label">%d°</string>
+    <string name="temperature_23">23</string>
+    <string name="temperature_19">19</string>
 </resources>

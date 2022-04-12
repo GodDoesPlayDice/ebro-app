@@ -4,7 +4,12 @@ import com.example.ebroapp.remote.entity.weather.CurrentWeather
 import com.example.ebroapp.remote.entity.weather.FullWeather
 import io.reactivex.Single
 
+
 interface RemoteRepository {
+
+    fun getCurrentWeather(): Single<CurrentWeather>
+
+    fun getWeatherFull(lat: Double?, lon: Double?): Single<FullWeather>
 
     companion object {
         @Volatile
@@ -17,8 +22,4 @@ interface RemoteRepository {
             return instance!!
         }
     }
-
-    fun getCurrentWeather(): Single<CurrentWeather>
-
-    fun getWeatherFull(lat: Double?, lon: Double?): Single<FullWeather>
 }

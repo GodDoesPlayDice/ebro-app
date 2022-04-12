@@ -2,6 +2,7 @@ package com.example.ebroapp.domain.entity.song
 
 import android.net.Uri
 
+
 class Song(
     val id: Long,
     val uri: Uri,

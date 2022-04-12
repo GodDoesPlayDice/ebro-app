@@ -4,6 +4,7 @@ import android.content.res.Resources
 import com.mapbox.maps.EdgeInsets
 
 object MapUtil {
+
     private val pixelDensity = Resources.getSystem().displayMetrics.density
 
     val overviewPadding: EdgeInsets =

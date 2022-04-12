@@ -3,18 +3,8 @@ package com.example.ebroapp.domain.repository
 import com.example.ebroapp.domain.entity.song.Song
 import com.mapbox.geojson.Point
 
-interface DomainRepository {
-    companion object {
-        @Volatile
-        private var instance: DomainRepository? = null
 
-        fun obtain(): DomainRepository {
-            instance = instance ?: synchronized(this) {
-                DomainRepositoryImpl()
-            }
-            return instance!!
-        }
-    }
+interface DomainRepository {
 
     fun setSongs(songs: List<Song>)
 
@@ -39,4 +29,16 @@ interface DomainRepository {
     fun removeDestinationLocation()
 
     fun getDestinationLocation(): Point?
+
+    companion object {
+        @Volatile
+        private var instance: DomainRepository? = null
+
+        fun obtain(): DomainRepository {
+            instance = instance ?: synchronized(this) {
+                DomainRepositoryImpl()
+            }
+            return instance!!
+        }
+    }
 }

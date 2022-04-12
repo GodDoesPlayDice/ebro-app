@@ -14,11 +14,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 @OptIn(DelicateCoroutinesApi::class)
 class PlayerUtil(private val context: Context) {
 
+    var currentSong: Song? = null
     private val player by lazy { MediaPlayer() }
     private var observer: MediaObserver? = null
     private var onMusicLoadingComplete: (() -> Unit)? = null
     private val domainRepository = DomainRepository.obtain()
-    var currentSong: Song? = null
 
     fun setPlayList(context: Context) {
         GlobalScope.launch(Dispatchers.IO) {

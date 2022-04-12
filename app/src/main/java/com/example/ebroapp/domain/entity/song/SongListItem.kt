@@ -1,6 +1,7 @@
 package com.example.ebroapp.domain.entity.song
 
 abstract class SongListItem {
+
     abstract val type: Int
 
     companion object {

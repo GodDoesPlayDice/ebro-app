@@ -16,6 +16,19 @@ class LocationListener(private val context: Context) :
         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     private var locationListener: ((Location) -> Unit)? = null
 
+    override fun onLocationChanged(location: Location) {
+        locationListener?.invoke(location)
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onProviderEnabled(provider: String) {
+        locationManager.getLastKnownLocation(provider)?.let { location ->
+            if (provider == NETWORK_PROVIDER) {
+                locationListener?.invoke(location)
+            }
+        }
+    }
+
     @SuppressLint("MissingPermission")
     fun setOnLocationListener(listener: (Location) -> Unit) {
         if(checkLocationPermission(context)) {
@@ -36,19 +49,6 @@ class LocationListener(private val context: Context) :
 
     private fun stop() {
         locationManager.removeUpdates(this)
-    }
-
-    override fun onLocationChanged(location: Location) {
-        locationListener?.invoke(location)
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun onProviderEnabled(provider: String) {
-        locationManager.getLastKnownLocation(provider)?.let { location ->
-            if (provider == NETWORK_PROVIDER) {
-                locationListener?.invoke(location)
-            }
-        }
     }
 
     companion object {

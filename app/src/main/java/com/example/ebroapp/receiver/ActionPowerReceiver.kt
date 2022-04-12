@@ -10,6 +10,7 @@ import com.example.ebroapp.view.activity.black.BlackActivity
 import com.example.ebroapp.view.activity.splash.SplashActivity
 
 class ActionPowerReceiver : BroadcastReceiver() {
+
     override fun onReceive(context: Context, intent: Intent?) {
         when (intent?.action) {
             ACTION_POWER_CONNECTED -> {

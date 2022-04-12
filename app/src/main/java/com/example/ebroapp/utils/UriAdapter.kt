@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonWriter
 import java.io.IOException
 
 internal class UriAdapter : TypeAdapter<Uri?>() {
+
     @Throws(IOException::class)
     override fun read(reader: JsonReader): Uri? {
         reader.beginObject()

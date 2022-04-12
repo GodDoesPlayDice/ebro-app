@@ -3,7 +3,9 @@ package com.example.ebroapp.domain.repository
 import com.example.ebroapp.domain.entity.song.Song
 import com.mapbox.geojson.Point
 
+
 class DomainRepositoryImpl : DomainRepository {
+
     private val preferenceManager = PreferenceManager.get()
 
     override fun setSongs(songs: List<Song>) = preferenceManager.setSongs(songs)

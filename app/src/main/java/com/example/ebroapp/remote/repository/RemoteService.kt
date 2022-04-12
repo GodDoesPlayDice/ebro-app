@@ -6,6 +6,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+
 object WeatherProperties {
     const val lat = 41.390205
     const val lon = 2.154007
@@ -23,7 +24,6 @@ interface RemoteService {
         @Query("appid") appid: String = WeatherProperties.token
     ): Single<CurrentWeather>
 
-    // Полные данные включая текущую погоду, и погоду на ближайшие 7 дней
     @GET("data/2.5/onecall")
     fun getWeatherFull(
         @Query("lat") lat: Double?,
