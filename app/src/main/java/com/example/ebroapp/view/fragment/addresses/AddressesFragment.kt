@@ -21,7 +21,6 @@ class AddressesFragment :
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAddressesBinding =
         FragmentAddressesBinding::inflate
 
-
     override fun setupUI() {
         binding.rvAddresses.apply {
             layoutManager = viewManager

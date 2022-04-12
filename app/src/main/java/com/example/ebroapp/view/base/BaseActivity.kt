@@ -7,13 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity<Binding : ViewBinding> : AppCompatActivity() {
+abstract class BaseActivity<Binding : ViewBinding, ViewModel : AndroidViewModel>(
+    private val viewModelType: Class<ViewModel>
+) : AppCompatActivity() {
 
+    private var _viewModel: ViewModel? = null
     private var _binding: Binding? = null
     abstract val bindingInflater: (LayoutInflater) -> Binding
 
+    protected val viewModel: ViewModel
+        get() = _viewModel as ViewModel
     protected val binding: Binding
         get() = _binding as Binding
 
@@ -21,6 +28,7 @@ abstract class BaseActivity<Binding : ViewBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = bindingInflater.invoke(layoutInflater)
         setContentView(requireNotNull(_binding).root)
+        _viewModel = ViewModelProvider(this).get(viewModelType)
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -32,10 +40,13 @@ abstract class BaseActivity<Binding : ViewBinding> : AppCompatActivity() {
             controller.systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
+        setupUI()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
+    abstract fun setupUI()
 }

@@ -45,6 +45,5 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(MainViewMo
             viewModel.addCurrentLocation(location)
             childFragmentManager.commit { replace<WeatherFragment>(R.id.fragmentWeather) }
         }
-
     }
 }

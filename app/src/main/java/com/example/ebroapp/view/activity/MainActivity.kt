@@ -26,19 +26,15 @@ import com.example.ebroapp.view.fragment.settings.SettingsFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 
 
-// наследуемся от базового класса
-class MainActivity : BaseActivity<ActivityMainBinding>() {
-    // хз почему, но для этой залупы viewBinding не пашет
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class.java) {
+
     private val btnToggleGroup by lazy { findViewById<MaterialButtonToggleGroup>(R.id.btnToggleGroup) }
     private val actionPowerReceiver by lazy { ActionPowerReceiver() }
 
-    // нужно для viewBinding. ActivityMainBinding автогенерируется
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding =
         ActivityMainBinding::inflate
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // ставим фрагменты на место
+    override fun setupUI() {
         supportFragmentManager.commit { replace(R.id.fragmentLowerToolbar, LowerToolbarFragment()) }
 
         btnToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
@@ -90,11 +86,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun requestPermissions() {
-        val permissions = arrayOf(READ_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION)
-        ActivityCompat.requestPermissions(this, permissions, PERMISSIONS_REQUEST_CODE)
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -132,7 +123,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         unregisterReceiver(actionPowerReceiver)
     }
 
-    // нужно чтоб нажатие на back не срабатывало
     override fun onBackPressed() {}
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -156,6 +146,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             else -> super.onKeyDown(keyCode, event)
         }
+    }
+
+    private fun requestPermissions() {
+        val permissions = arrayOf(READ_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION)
+        ActivityCompat.requestPermissions(this, permissions, PERMISSIONS_REQUEST_CODE)
     }
 
     private fun openMainFragment() {

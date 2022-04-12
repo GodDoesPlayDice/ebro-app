@@ -2,7 +2,6 @@ package com.example.ebroapp.view.fragment.lowertoolbar
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -44,42 +43,36 @@ class LowerToolbarFragment :
     }
 
     private fun prepareUpperButtons() {
-        binding.llFrontWindow
-            .setOnClickListener {
-                frontWindowState = !frontWindowState
-                onToggleButtonClick(it, frontWindowState)
-            }
-        binding.llSeatPosition
-            .setOnClickListener {
-                seatPositionState = !seatPositionState
-                onToggleButtonClick(it, seatPositionState)
-            }
-        binding.llRearWindow
-            .setOnClickListener {
-                rearWindowState = !rearWindowState
-                onToggleButtonClick(it, rearWindowState)
-            }
+        binding.llFrontWindow.setOnClickListener {
+            frontWindowState = !frontWindowState
+            onToggleButtonClick(it, frontWindowState)
+        }
+        binding.llSeatPosition.setOnClickListener {
+            seatPositionState = !seatPositionState
+            onToggleButtonClick(it, seatPositionState)
+        }
+        binding.llRearWindow.setOnClickListener {
+            rearWindowState = !rearWindowState
+            onToggleButtonClick(it, rearWindowState)
+        }
 
-        binding.llLeftSeat
-            .setOnClickListener {
-                leftSeatState++
-                if (leftSeatState > leftSeatMax) leftSeatState = 0
-                setActiveDots(it as ViewGroup, leftSeatState)
-            }
+        binding.llLeftSeat.setOnClickListener {
+            leftSeatState++
+            if (leftSeatState > leftSeatMax) leftSeatState = 0
+            setActiveDots(it as ViewGroup, leftSeatState)
+        }
 
-        binding.llRightSeat
-            .setOnClickListener {
-                rightSeatState++
-                if (rightSeatState > rightSeatMax) rightSeatState = 0
-                setActiveDots(it as ViewGroup, rightSeatState)
-            }
+        binding.llRightSeat.setOnClickListener {
+            rightSeatState++
+            if (rightSeatState > rightSeatMax) rightSeatState = 0
+            setActiveDots(it as ViewGroup, rightSeatState)
+        }
 
-        binding.llFan
-            .setOnClickListener {
-                fanState++
-                if (fanState > fanMax) fanState = 0
-                setActiveDots(it as ViewGroup, fanState)
-            }
+        binding.llFan.setOnClickListener {
+            fanState++
+            if (fanState > fanMax) fanState = 0
+            setActiveDots(it as ViewGroup, fanState)
+        }
 
         setActiveDots(binding.llLeftSeat, leftSeatState)
         setActiveDots(binding.llRightSeat, rightSeatState)
@@ -97,45 +90,33 @@ class LowerToolbarFragment :
             setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
         }
 
-        binding.btnDecreaseLsTemperature.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                if (this.leftTemp > 15) {
-                    this.leftTemp--
-                    setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
-                    binding.skLsTemperature.progress = this.leftTemp - 15
-                }
+        binding.btnDecreaseLsTemperature.setOnClickListener {
+            if (this.leftTemp > 15) {
+                this.leftTemp--
+                setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
+                binding.skLsTemperature.progress = this.leftTemp - 15
             }
-            true
         }
-        binding.btnIncreaseLsTemperature.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                if (this.leftTemp < 26) {
-                    this.leftTemp++
-                    setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
-                    binding.skLsTemperature.progress = this.leftTemp - 15
-                }
+        binding.btnIncreaseLsTemperature.setOnClickListener {
+            if (this.leftTemp < 26) {
+                this.leftTemp++
+                setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
+                binding.skLsTemperature.progress = this.leftTemp - 15
             }
-            true
         }
-        binding.btnDecreaseRsTemperature.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                if (this.rightTemp > 15) {
-                    this.rightTemp--
-                    setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
-                    binding.skRsTemperature.progress = this.rightTemp - 15
-                }
+        binding.btnDecreaseRsTemperature.setOnClickListener {
+            if (this.rightTemp > 15) {
+                this.rightTemp--
+                setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
+                binding.skRsTemperature.progress = this.rightTemp - 15
             }
-            true
         }
-        binding.btnIncreaseRsTemperature.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                if (this.rightTemp < 26) {
-                    this.rightTemp++
-                    setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
-                    binding.skRsTemperature.progress = this.rightTemp - 15
-                }
+        binding.btnIncreaseRsTemperature.setOnClickListener {
+            if (this.rightTemp < 26) {
+                this.rightTemp++
+                setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
+                binding.skRsTemperature.progress = this.rightTemp - 15
             }
-            true
         }
         setTemperatureLabel(binding.tvLsTemperature, this.leftTemp)
         setTemperatureLabel(binding.tvRsTemperature, this.rightTemp)
@@ -143,34 +124,34 @@ class LowerToolbarFragment :
         binding.skRsTemperature.progress = this.rightTemp - 15
     }
 
-    private fun onToggleButtonClick(v: View, newValue: Boolean): Boolean {
-        if (v is ViewGroup) {
-            getImageView(v).setColorFilter(resources.getColor(if (newValue) R.color.text_white else R.color.text_gray))
+    private fun onToggleButtonClick(view: View, newValue: Boolean): Boolean {
+        if (view is ViewGroup) {
+            getImageView(view).setColorFilter(requireContext().getColor(if (newValue) R.color.text_white else R.color.text_gray))
             return true
         }
         return false
     }
 
-    private fun getImageView(v: ViewGroup): ImageView {
-        return v.children.first { it is ImageView } as ImageView
+    private fun getImageView(viewGroup: ViewGroup): ImageView {
+        return viewGroup.children.first { it is ImageView } as ImageView
     }
 
-    private fun setActiveDots(v: ViewGroup, value: Int): Boolean {
-        val layout = v.children.first { it is LinearLayout } as LinearLayout
-        layout.forEachIndexed { ind, v ->
+    private fun setActiveDots(viewGroup: ViewGroup, value: Int): Boolean {
+        val layout = viewGroup.children.first { it is LinearLayout } as LinearLayout
+        layout.forEachIndexed { ind, view ->
             if (ind < value) {
-                (v as ImageView).setImageResource(dotActive)
-                v.scaleX = 4f
-                v.scaleY = 4f
+                (view as ImageView).setImageResource(dotActive)
+                view.scaleX = 4f
+                view.scaleY = 4f
             } else {
-                (v as ImageView).setImageResource(dotInactive)
-                v.scaleX = 1f
-                v.scaleY = 1f
+                (view as ImageView).setImageResource(dotInactive)
+                view.scaleX = 1f
+                view.scaleY = 1f
             }
         }
 
-        (v.children.first { it is ImageView } as ImageView)
-            .setColorFilter(resources.getColor(if (value == 0) R.color.text_gray else R.color.text_white))
+        (viewGroup.children.first { it is ImageView } as ImageView)
+            .setColorFilter(requireContext().getColor(if (value == 0) R.color.text_gray else R.color.text_white))
         return true
     }
 

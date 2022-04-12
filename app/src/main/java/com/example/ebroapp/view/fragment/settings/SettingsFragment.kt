@@ -18,6 +18,7 @@ import com.example.ebroapp.view.base.BaseFragment
 
 class SettingsFragment :
     BaseFragment<FragmentSettingsBinding, SettingsViewModel>(SettingsViewModel::class.java) {
+
     private val lightsButtons = mutableListOf<ToggleButton>()
     private lateinit var thumbView: View
 
@@ -76,7 +77,7 @@ class SettingsFragment :
         binding.sbDisplayBrightness.thumbOffset = 60
     }
 
-    fun getThumb(progress: Int): Drawable {
+    private fun getThumb(progress: Int): Drawable {
         (thumbView.findViewById(R.id.tvProgress) as TextView).text =
             requireContext().getString(R.string.volume_percentage, progress + 10)
         thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)

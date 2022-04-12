@@ -2,6 +2,7 @@ package com.example.ebroapp.view.fragment.muisc
 
 import android.content.Context.AUDIO_SERVICE
 import android.media.AudioManager
+import android.media.AudioManager.*
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -24,32 +25,25 @@ class MusicFragment :
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMusicBinding =
         FragmentMusicBinding::inflate
 
-
     override fun setupUI() {
         player.setOnPlayerStateChangeListener { progress, duration ->
-            binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
-            binding.tvTimer.setTime(duration / 100 * progress)
+            binding.pbMusic.progress = if (duration != 0) progress * PERCENT / duration else 0
+            binding.tvTimer.setTime(duration / PERCENT * progress)
             binding.tvDuration.setTime(duration)
         }
 
         val audioManager = requireContext().getSystemService(AUDIO_SERVICE) as AudioManager
-        val volume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / 15
+        val volume: Int = audioManager.getStreamVolume(STREAM_MUSIC) * PERCENT / MAX_VOLUME
         binding.tvVolume.text = requireContext().getString(R.string.volume_percentage, volume)
         volumeObserver = VolumeObserver(requireContext(), Handler()) {
             binding.tvVolume.text = requireContext().getString(R.string.volume_percentage, it)
         }
         requireContext().contentResolver.setOnVolumeChangeListener(volumeObserver)
         binding.ivVolumeUp.setOnClickListener {
-            audioManager.adjustVolume(
-                AudioManager.ADJUST_RAISE,
-                AudioManager.FLAG_PLAY_SOUND
-            )
+            audioManager.adjustVolume(ADJUST_RAISE, FLAG_PLAY_SOUND)
         }
         binding.ivVolumeDown.setOnClickListener {
-            audioManager.adjustVolume(
-                AudioManager.ADJUST_LOWER,
-                AudioManager.FLAG_PLAY_SOUND
-            )
+            audioManager.adjustVolume(ADJUST_LOWER, FLAG_PLAY_SOUND)
         }
 
         binding.btnPlay.isChecked = player.isPlaying()
@@ -81,5 +75,10 @@ class MusicFragment :
             binding.tvSinger.text = song.singer
             binding.tvAlbum.text = song.album
         }
+    }
+
+    companion object {
+        private const val PERCENT = 100
+        private const val MAX_VOLUME = 15
     }
 }

@@ -44,8 +44,8 @@ class MusicFullFragment :
         initAdapter()
 
         player.setOnPlayerStateChangeListener { progress, duration ->
-            binding.pbMusic.progress = if (duration != 0) progress * 100 / duration else 0
-            binding.tvTimer.setTime(duration / 100 * progress)
+            binding.pbMusic.progress = if (duration != 0) progress * PERCENT / duration else 0
+            binding.tvTimer.setTime(duration / PERCENT * progress)
         }
 
         binding.btnFavorite.setOnClickListener {
@@ -110,5 +110,9 @@ class MusicFullFragment :
             binding.tvAlbum.text = song.album
             binding.btnFavorite.isChecked = song.isFavorites
         }
+    }
+
+    companion object {
+        private const val PERCENT = 100
     }
 }
