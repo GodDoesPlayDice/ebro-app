@@ -3,6 +3,7 @@ package com.example.ebroapp
 import android.app.Application
 import com.example.ebroapp.utils.LocationListener
 import com.example.ebroapp.utils.PlayerUtil
+import timber.log.Timber
 
 class App : Application() {
 
@@ -12,6 +13,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         APPLICATION = this
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
 
         player.setPlayList(applicationContext)
     }

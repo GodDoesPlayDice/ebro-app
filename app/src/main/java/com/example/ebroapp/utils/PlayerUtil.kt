@@ -5,10 +5,11 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.PowerManager
-import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.domain.entity.song.Song
-import kotlinx.coroutines.*
-import java.lang.Runnable
+import com.example.ebroapp.domain.repository.DomainRepository
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
 @OptIn(DelicateCoroutinesApi::class)
@@ -21,13 +22,13 @@ class PlayerUtil(private val context: Context) {
     private val domainRepository = DomainRepository.obtain()
 
     fun setPlayList(context: Context) {
-        GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launchIO({
             DomainRepository.obtain().setSongs(getMusicList(context))
-            withContext(Dispatchers.Main) {
+            withMain {
                 init()
                 onMusicLoadingComplete?.invoke()
             }
-        }
+        }, { Timber.e(it) })
     }
 
     fun playPauseMusic(isPlay: Boolean) {
@@ -130,14 +131,14 @@ class PlayerUtil(private val context: Context) {
 
         override fun run() {
             while (!stop.get()) {
-                GlobalScope.launch(Dispatchers.Main) {
+                GlobalScope.launchMain({
                     if (player.isPlaying) {
                         listener(
                             player.currentPosition / 1000,
                             player.duration / 1000
                         )
                     }
-                }
+                }, { Timber.e(it) })
                 Thread.sleep(1000)
             }
         }

@@ -13,7 +13,8 @@ import com.example.ebroapp.R
 import com.example.ebroapp.utils.CacheUtil.addBitmapToMemoryCache
 import com.example.ebroapp.utils.CacheUtil.getBitmapFromMemCache
 import com.google.android.material.imageview.ShapeableImageView
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 
 
 fun TextView.setTime(time: Int) {
@@ -47,34 +48,36 @@ fun SeekBar.setOnSeekBarListener(addOp: (Int) -> Unit) {
 }
 
 @OptIn(DelicateCoroutinesApi::class)
-fun ShapeableImageView.setImageFromUri(uri: Uri) {
-    val view = this
-    GlobalScope.launch(Dispatchers.Main) {
-        val bitmap: Bitmap? = withContext(Dispatchers.IO) {
+fun ShapeableImageView.setImageFromUri(
+    uri: Uri,
+    placeholder: Int = R.drawable.ic_logo,
+    error: Int = R.drawable.ic_logo
+) {
+    setImageResource(placeholder)
+    GlobalScope.launchMain({
+        val bitmap: Bitmap? = withIO {
             var bitmap: Bitmap? = getBitmapFromMemCache(uri.toString())
             if (bitmap != null) {
                 bitmap
             } else {
-                runCatching {
-                    val dataColumn = arrayOf(MediaStore.Audio.Media.DATA)
-                    context.contentResolver.query(uri, dataColumn, null, null, null)
-                        ?.use { coverCursor ->
-                            coverCursor.moveToFirst()
-                            val dataIndex = coverCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
-                            val filePath = coverCursor.getString(dataIndex)
-                            val retriever = MediaMetadataRetriever()
-                            retriever.setDataSource(filePath)
-                            val coverBytes = retriever.embeddedPicture
-                            coverBytes?.let {
-                                bitmap = BitmapFactory.decodeByteArray(coverBytes, 0, it.size)
-                            }
+                val dataColumn = arrayOf(MediaStore.Audio.Media.DATA)
+                context.contentResolver.query(uri, dataColumn, null, null, null)
+                    ?.use { coverCursor ->
+                        coverCursor.moveToFirst()
+                        val dataIndex = coverCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
+                        val filePath = coverCursor.getString(dataIndex)
+                        val retriever = MediaMetadataRetriever()
+                        retriever.setDataSource(filePath)
+                        val coverBytes = retriever.embeddedPicture
+                        coverBytes?.let {
+                            bitmap = BitmapFactory.decodeByteArray(coverBytes, 0, it.size)
                         }
-                }
+                    }
                 addBitmapToMemoryCache(uri.toString(), bitmap)
                 bitmap
             }
         }
-        bitmap?.let { view.setImageBitmap(it) } ?: view.setImageResource(R.drawable.ic_logo)
-    }
+        bitmap?.let { setImageBitmap(it) } ?: setImageResource(error)
+    }, { setImageResource(error) })
 }
 
