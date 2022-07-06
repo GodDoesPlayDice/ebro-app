@@ -454,14 +454,14 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
         binding.tripProgressCard.visibility = View.INVISIBLE
     }
 
-    private fun startSimulation(route: DirectionsRoute) {
-        mapboxReplayer.run {
-            stop()
-            clearEvents()
-            val replayEvents = ReplayRouteMapper().mapDirectionsRouteGeometry(route)
-            pushEvents(replayEvents)
-            seekTo(replayEvents.first())
-            play()
-        }
-    }
+//    private fun startSimulation(route: DirectionsRoute) {
+//        mapboxReplayer.run {
+//            stop()
+//            clearEvents()
+//            val replayEvents = ReplayRouteMapper().mapDirectionsRouteGeometry(route)
+//            pushEvents(replayEvents)
+//            seekTo(replayEvents.first())
+//            play()
+//        }
+//    }
 }

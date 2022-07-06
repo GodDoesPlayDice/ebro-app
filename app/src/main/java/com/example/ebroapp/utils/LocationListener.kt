@@ -47,9 +47,9 @@ class LocationListener(private val context: Context) :
         }
     }
 
-    private fun stop() {
-        locationManager.removeUpdates(this)
-    }
+//    private fun stop() {
+//        locationManager.removeUpdates(this)
+//    }
 
     companion object {
         const val MIN_UPDATE_TIME = 1000L * 60L * 60L * 24L

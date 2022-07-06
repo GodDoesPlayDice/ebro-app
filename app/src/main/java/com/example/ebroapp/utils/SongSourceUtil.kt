@@ -19,7 +19,7 @@ val projection = arrayOf(
     Audio.Media.ARTIST
 )
 
-suspend fun getMusicList(context: Context): List<Song> {
+fun getMusicList(context: Context): List<Song> {
     val songs: MutableList<Song> = mutableListOf()
     context.contentResolver.query(
         uri, projection, selection, null, null
