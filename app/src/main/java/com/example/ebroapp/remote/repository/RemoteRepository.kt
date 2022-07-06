@@ -1,15 +1,11 @@
 package com.example.ebroapp.remote.repository
 
-import com.example.ebroapp.remote.entity.weather.CurrentWeather
 import com.example.ebroapp.remote.entity.weather.FullWeather
-import io.reactivex.Single
 
 
 interface RemoteRepository {
 
-    fun getCurrentWeather(): Single<CurrentWeather>
-
-    fun getWeatherFull(lat: Double?, lon: Double?): Single<FullWeather>
+    suspend fun getWeatherFull(lat: Double?, lon: Double?): FullWeather
 
     companion object {
         @Volatile

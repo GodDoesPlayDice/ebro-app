@@ -1,6 +1,5 @@
 package com.example.ebroapp.remote.repository
 
-import com.example.ebroapp.remote.entity.weather.CurrentWeather
 import com.example.ebroapp.remote.entity.weather.FullWeather
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -16,20 +15,12 @@ object WeatherProperties {
 }
 
 interface RemoteService {
-    @GET("data/2.5/weather")
-    fun getCurrentWeather(
-        @Query("lat") lat: Double = WeatherProperties.lat,
-        @Query("lon") lon: Double = WeatherProperties.lon,
-        @Query("units") units: String = WeatherProperties.units,
-        @Query("appid") appid: String = WeatherProperties.token
-    ): Single<CurrentWeather>
-
     @GET("data/2.5/onecall")
-    fun getWeatherFull(
+    suspend fun getWeatherFull(
         @Query("lat") lat: Double?,
         @Query("lon") lon: Double?,
         @Query("units") units: String = WeatherProperties.units,
         @Query("appid") appid: String = WeatherProperties.token,
         @Query("exclude") exclude: String = WeatherProperties.exclude
-    ): Single<FullWeather>
+    ): FullWeather
 }

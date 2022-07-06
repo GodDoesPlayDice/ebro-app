@@ -2,8 +2,6 @@ package com.example.ebroapp.remote.repository
 
 import com.example.ebroapp.BuildConfig
 import com.google.gson.GsonBuilder
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -37,13 +35,6 @@ class RemoteRepositoryImpl : RemoteRepository {
             .create(RemoteService::class.java)
     }
 
-    override fun getCurrentWeather() =
-        remoteService.getCurrentWeather()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-
-    override fun getWeatherFull(lat: Double?, lon: Double?) =
+    override suspend fun getWeatherFull(lat: Double?, lon: Double?) =
         remoteService.getWeatherFull(lat, lon)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
 }
