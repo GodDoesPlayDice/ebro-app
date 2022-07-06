@@ -8,6 +8,10 @@ import androidx.core.app.ActivityCompat
 
 object PermissionUtil {
     fun checkLocationPermission(context: Context) =
-        ActivityCompat.checkSelfPermission(context, ACCESS_FINE_LOCATION) == PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(context, ACCESS_COARSE_LOCATION) == PERMISSION_GRANTED
+        ActivityCompat.checkSelfPermission(
+            context, ACCESS_FINE_LOCATION
+        ) == PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            context,
+            ACCESS_COARSE_LOCATION
+        ) == PERMISSION_GRANTED
 }

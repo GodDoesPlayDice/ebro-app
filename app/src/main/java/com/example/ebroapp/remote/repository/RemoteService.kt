@@ -7,8 +7,6 @@ import retrofit2.http.Query
 
 
 object WeatherProperties {
-    const val lat = 41.390205
-    const val lon = 2.154007
     const val units = "metric"
     const val token = "7e72084d8d1fd4939c577cd7394bcac5"
     const val exclude = "hourly,minutely,alerts"

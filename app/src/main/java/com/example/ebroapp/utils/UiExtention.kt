@@ -15,7 +15,6 @@ import com.example.ebroapp.utils.CacheUtil.getBitmapFromMemCache
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.GlobalScope
 
-
 fun TextView.setTime(time: Int) {
     val minutes = time / 60
     val seconds = time % 60

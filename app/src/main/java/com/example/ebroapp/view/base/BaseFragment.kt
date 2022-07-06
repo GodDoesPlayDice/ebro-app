@@ -33,7 +33,7 @@ abstract class BaseFragment<Binding : ViewBinding, ViewModel : AndroidViewModel>
         val transitionInflater = TransitionInflater.from(requireContext())
         enterTransition = transitionInflater.inflateTransition(R.transition.slide_left)
         exitTransition = transitionInflater.inflateTransition(R.transition.fade)
-        _viewModel = ViewModelProvider(this).get(viewModelType)
+        _viewModel = ViewModelProvider(this)[viewModelType]
 
         return requireNotNull(_binding).root
     }
