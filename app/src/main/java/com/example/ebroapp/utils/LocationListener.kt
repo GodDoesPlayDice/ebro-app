@@ -31,7 +31,7 @@ class LocationListener(private val context: Context) :
 
     @SuppressLint("MissingPermission")
     fun setOnLocationListener(listener: (Location) -> Unit) {
-        if(checkLocationPermission(context)) {
+        if (checkLocationPermission(context)) {
             locationListener = listener
             if (locationManager.isProviderEnabled(GPS_PROVIDER)) {
                 locationManager.requestLocationUpdates(GPS_PROVIDER, MIN_UPDATE_TIME, 0f, this)
