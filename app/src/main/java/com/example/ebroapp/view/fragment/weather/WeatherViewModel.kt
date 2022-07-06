@@ -7,6 +7,7 @@ import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.remote.entity.weather.FullWeather
 import com.example.ebroapp.remote.repository.RemoteRepository
 import com.example.ebroapp.utils.launchIO
+import com.example.ebroapp.utils.withMain
 import kotlinx.coroutines.GlobalScope
 import timber.log.Timber
 
@@ -20,7 +21,8 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     fun getCurrentLocation() {
         GlobalScope.launchIO({
             domainRepository.getCurrentLocation()?.let { point ->
-                weather.value = remoteRepository.getWeatherFull(point.latitude(), point.longitude())
+                val response = remoteRepository.getWeatherFull(point.latitude(), point.longitude())
+                withMain { weather.value = response }
             }
         }, { Timber.e(it) })
     }
