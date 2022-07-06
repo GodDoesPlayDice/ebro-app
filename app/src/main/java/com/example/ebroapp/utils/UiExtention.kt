@@ -13,7 +13,6 @@ import com.example.ebroapp.R
 import com.example.ebroapp.utils.CacheUtil.addBitmapToMemoryCache
 import com.example.ebroapp.utils.CacheUtil.getBitmapFromMemCache
 import com.google.android.material.imageview.ShapeableImageView
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 
 
@@ -47,7 +46,6 @@ fun SeekBar.setOnSeekBarListener(addOp: (Int) -> Unit) {
     )
 }
 
-@OptIn(DelicateCoroutinesApi::class)
 fun ShapeableImageView.setImageFromUri(
     uri: Uri,
     placeholder: Int = R.drawable.ic_logo,

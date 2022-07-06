@@ -7,12 +7,10 @@ import android.net.Uri
 import android.os.PowerManager
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.repository.DomainRepository
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
-@OptIn(DelicateCoroutinesApi::class)
 class PlayerUtil(private val context: Context) {
 
     var currentSong: Song? = null
