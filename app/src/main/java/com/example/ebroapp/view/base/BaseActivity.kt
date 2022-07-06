@@ -28,7 +28,7 @@ abstract class BaseActivity<Binding : ViewBinding, ViewModel : AndroidViewModel>
         super.onCreate(savedInstanceState)
         _binding = bindingInflater.invoke(layoutInflater)
         setContentView(requireNotNull(_binding).root)
-        _viewModel = ViewModelProvider(this).get(viewModelType)
+        _viewModel = ViewModelProvider(this)[viewModelType]
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
