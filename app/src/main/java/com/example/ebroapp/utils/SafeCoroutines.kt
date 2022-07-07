@@ -2,22 +2,6 @@ package com.example.ebroapp.utils
 
 import kotlinx.coroutines.*
 
-//inline fun CoroutineScope.launchIO(
-//    crossinline safeAction: suspend () -> Unit,
-//    crossinline onError: suspend (Throwable) -> Unit,
-//    errorDispatcher: CoroutineDispatcher = Dispatchers.Main
-//): Job {
-//    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-//        launch(errorDispatcher) {
-//            onError.invoke(throwable)
-//        }
-//    }
-//
-//    return this.launch(exceptionHandler + Dispatchers.IO) {
-//        safeAction.invoke()
-//    }
-//}
-
 inline fun CoroutineScope.launchIO(
     crossinline safeAction: suspend () -> Unit,
     crossinline onError: suspend (Throwable) -> Unit
@@ -33,22 +17,6 @@ inline fun CoroutineScope.launchIO(
     }
 }
 
-//inline fun CoroutineScope.launchMain(
-//    crossinline safeAction: suspend () -> Unit,
-//    crossinline onError: suspend (Throwable) -> Unit,
-//    errorDispatcher: CoroutineDispatcher = Dispatchers.Main
-//): Job {
-//    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-//        launch(errorDispatcher) {
-//            onError.invoke(throwable)
-//        }
-//    }
-//
-//    return this.launch(exceptionHandler + Dispatchers.Main) {
-//        safeAction.invoke()
-//    }
-//}
-
 inline fun CoroutineScope.launchMain(
     crossinline safeAction: suspend () -> Unit,
     crossinline onError: suspend (Throwable) -> Unit
@@ -63,23 +31,6 @@ inline fun CoroutineScope.launchMain(
         safeAction.invoke()
     }
 }
-
-//inline fun CoroutineScope.launchSafe(
-//    crossinline safeAction: suspend () -> Unit,
-//    crossinline onError: suspend (Throwable) -> Unit,
-//    dispatcher: CoroutineDispatcher,
-//    errorDispatcher: CoroutineDispatcher = Dispatchers.Main,
-//): Job {
-//    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-//        launch(errorDispatcher) {
-//            onError.invoke(throwable)
-//        }
-//    }
-//
-//    return this.launch(exceptionHandler + dispatcher) {
-//        safeAction.invoke()
-//    }
-//}
 
 @Suppress("NeedToUseCustomWithContextRule")
 suspend inline fun <T> withIO(noinline block: suspend CoroutineScope.() -> T): T {
