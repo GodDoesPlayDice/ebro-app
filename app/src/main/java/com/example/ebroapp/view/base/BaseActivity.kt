@@ -18,11 +18,12 @@ abstract class BaseActivity<Binding : ViewBinding, ViewModel : androidx.lifecycl
     private var _binding: Binding? = null
     abstract val bindingInflater: (LayoutInflater) -> Binding
 
+    protected val binding: Binding
+        get() = _binding as Binding
+
     protected val viewModel: ViewModel by lazy {
         Injector.provideViewModel(this, viewModelType)
     }
-    protected val binding: Binding
-        get() = _binding as Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

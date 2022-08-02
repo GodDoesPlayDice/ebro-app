@@ -20,6 +20,7 @@ abstract class BaseFragment<Binding : ViewBinding, ViewModel : androidx.lifecycl
 
     protected val binding: Binding
         get() = _binding as Binding
+
     protected val viewModel: ViewModel by lazy {
         Injector.provideViewModel(this, viewModelType)
     }
