@@ -2,8 +2,6 @@ package com.example.ebroapp.view.activity
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
@@ -18,8 +16,7 @@ import androidx.fragment.app.setFragmentResultListener
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
 import com.example.ebroapp.di.Injector
-import com.example.ebroapp.view.activity.black.BlackActivity
-import com.example.ebroapp.view.activity.splash.SplashActivity
+import com.example.ebroapp.receiver.ActionPowerReceiver
 import com.example.ebroapp.view.base.BaseActivity
 import com.example.ebroapp.view.fragment.MainFragment
 import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
@@ -32,19 +29,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class.java) {
 
     private val btnToggleGroup by lazy { findViewById<MaterialButtonToggleGroup>(R.id.btnToggleGroup) }
-    private val actionPowerReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent?) {
-            when (intent?.action) {
-                Intent.ACTION_POWER_CONNECTED -> {
-                    startActivity(SplashActivity::class.java)
-                }
-                Intent.ACTION_POWER_DISCONNECTED -> {
-                    viewModel.stopMusic()
-                    startActivity(BlackActivity::class.java)
-                }
-            }
-        }
-    }
+    private val actionPowerReceiver by lazy { ActionPowerReceiver() }
 
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding =
         ActivityMainBinding::inflate
@@ -166,12 +151,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
             }
             else -> super.onKeyDown(keyCode, event)
         }
-    }
-
-    private fun startActivity(clazz: Class<*>) {
-        startActivity(Intent(this, clazz).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
     }
 
     private fun requestPermissions() {

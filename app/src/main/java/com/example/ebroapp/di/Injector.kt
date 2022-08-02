@@ -10,6 +10,7 @@ import com.example.ebroapp.di.component.DaggerAppComponent
 import com.example.ebroapp.di.component.IAppComponent
 import com.example.ebroapp.di.module.ActivityModule
 import com.example.ebroapp.di.module.AppModule
+import com.example.ebroapp.receiver.ActionPowerReceiver
 import com.example.ebroapp.view.activity.MainActivity
 
 object Injector {
@@ -24,6 +25,8 @@ object Injector {
     fun initAndInjectActivityComponent(activity: MainActivity) {
         activityComponent = appComponent.plus(ActivityModule(activity))
     }
+
+    fun injectActionPowerReceiver(receiver: ActionPowerReceiver) = appComponent.inject(receiver)
 
     fun <VM : ViewModel> provideViewModel(activity: AppCompatActivity, type: Class<VM>): VM =
         ViewModelProvider(activity, activityComponent.getViewModelFactory())[type]
