@@ -15,7 +15,7 @@ import com.example.ebroapp.view.activity.MainActivity
 
 object Injector {
 
-    lateinit var appComponent: IAppComponent
+    private lateinit var appComponent: IAppComponent
     private lateinit var activityComponent: ActivityComponent
 
     fun initAppComponent(application: Application) {

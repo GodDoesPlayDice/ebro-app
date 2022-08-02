@@ -9,10 +9,6 @@ class MainViewModel @Inject constructor(
     private val player: Player
 ) : ViewModel() {
 
-    fun stopMusic() {
-        player.stopMusic()
-    }
-
     fun setPlayList(context: Context) {
         player.setPlayList(context)
     }
