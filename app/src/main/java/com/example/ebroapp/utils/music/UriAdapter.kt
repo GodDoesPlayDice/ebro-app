@@ -1,4 +1,4 @@
-package com.example.ebroapp.utils
+package com.example.ebroapp.utils.music
 
 import android.net.Uri
 import com.google.gson.TypeAdapter

@@ -1,4 +1,4 @@
-package com.example.ebroapp.utils
+package com.example.ebroapp.utils.music
 
 import com.example.ebroapp.domain.entity.song.Separator
 import com.example.ebroapp.domain.entity.song.Song

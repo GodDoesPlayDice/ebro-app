@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.example.ebroapp.di.Injector
-import com.example.ebroapp.utils.Player
+import com.example.ebroapp.utils.music.Player
 import com.example.ebroapp.view.activity.black.BlackActivity
 import com.example.ebroapp.view.activity.splash.SplashActivity
 import javax.inject.Inject
@@ -30,7 +30,5 @@ class ActionPowerReceiver : BroadcastReceiver() {
 }
 
 private fun startActivity(context: Context, clazz: Class<*>) {
-    context.startActivity(Intent(context, clazz).apply {
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    })
+    context.startActivity(Intent(context, clazz).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) })
 }

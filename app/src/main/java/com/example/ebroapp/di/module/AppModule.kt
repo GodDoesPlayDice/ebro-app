@@ -6,7 +6,12 @@ import android.content.SharedPreferences
 import com.example.ebroapp.di.module.data.RepositoryModule
 import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.remote.repository.RemoteService
-import com.example.ebroapp.utils.*
+import com.example.ebroapp.utils.map.LocationListener
+import com.example.ebroapp.utils.music.Player
+import com.example.ebroapp.utils.provider.GsonProvider
+import com.example.ebroapp.utils.provider.GsonProviderImpl
+import com.example.ebroapp.utils.provider.RetrofitProvider
+import com.example.ebroapp.utils.provider.RetrofitProviderImpl
 import com.google.gson.Gson
 import dagger.Binds
 import dagger.Module
@@ -39,12 +44,16 @@ internal open class AppModule(private val application: Application) {
         LocationListener(context)
 
     @Provides
-    internal fun provideRemoteService(): RemoteService = RetrofitService.getService()
+    internal fun provideRemoteService(retrofitProvider: RetrofitProvider): RemoteService =
+        retrofitProvider.provideRetrofit()
 
     @Module
     interface Bindings {
         @Binds
         fun bindGsonProvider(impl: GsonProviderImpl): GsonProvider
+
+        @Binds
+        fun bindRetrofitProvider(impl: RetrofitProviderImpl): RetrofitProvider
     }
 
     companion object {

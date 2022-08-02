@@ -2,7 +2,7 @@ package com.example.ebroapp.view.activity
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.example.ebroapp.utils.Player
+import com.example.ebroapp.utils.music.Player
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(

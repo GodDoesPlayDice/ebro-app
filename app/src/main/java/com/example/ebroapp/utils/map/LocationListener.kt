@@ -1,4 +1,4 @@
-package com.example.ebroapp.utils
+package com.example.ebroapp.utils.map
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,7 +7,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.location.LocationManager.GPS_PROVIDER
 import android.location.LocationManager.NETWORK_PROVIDER
-import com.example.ebroapp.utils.PermissionUtil.checkLocationPermission
+import com.example.ebroapp.utils.map.PermissionUtil.checkLocationPermission
 
 class LocationListener(private val context: Context) :
     LocationListener {

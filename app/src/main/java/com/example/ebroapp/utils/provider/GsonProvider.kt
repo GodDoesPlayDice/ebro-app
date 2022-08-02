@@ -1,4 +1,4 @@
-package com.example.ebroapp.utils
+package com.example.ebroapp.utils.provider
 
 import com.google.gson.Gson
 

@@ -2,8 +2,8 @@ package com.example.ebroapp.view.fragment
 
 import androidx.lifecycle.ViewModel
 import com.example.ebroapp.domain.repository.DomainRepository
-import com.example.ebroapp.utils.LocationListener
-import com.example.ebroapp.utils.Player
+import com.example.ebroapp.utils.map.LocationListener
+import com.example.ebroapp.utils.music.Player
 import com.mapbox.geojson.Point
 import javax.inject.Inject
 

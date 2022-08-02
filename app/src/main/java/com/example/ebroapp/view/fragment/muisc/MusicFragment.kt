@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMusicBinding
-import com.example.ebroapp.utils.VolumeObserver
+import com.example.ebroapp.utils.music.VolumeObserver
 import com.example.ebroapp.utils.setImageFromUri
 import com.example.ebroapp.utils.setOnVolumeChangeListener
 import com.example.ebroapp.utils.setTime

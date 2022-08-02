@@ -2,7 +2,7 @@ package com.example.ebroapp.view.fragment.muisc
 
 import androidx.lifecycle.ViewModel
 import com.example.ebroapp.domain.entity.song.Song
-import com.example.ebroapp.utils.Player
+import com.example.ebroapp.utils.music.Player
 import javax.inject.Inject
 
 class MusicViewModel @Inject constructor(

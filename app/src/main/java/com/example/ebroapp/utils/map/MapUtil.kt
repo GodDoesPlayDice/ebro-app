@@ -1,4 +1,4 @@
-package com.example.ebroapp.utils
+package com.example.ebroapp.utils.map
 
 import android.content.res.Resources
 import com.mapbox.maps.EdgeInsets

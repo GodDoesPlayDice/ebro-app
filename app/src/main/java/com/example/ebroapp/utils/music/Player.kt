@@ -1,4 +1,4 @@
-package com.example.ebroapp.utils
+package com.example.ebroapp.utils.music
 
 import android.content.Context
 import android.media.AudioManager
@@ -7,6 +7,9 @@ import android.net.Uri
 import android.os.PowerManager
 import com.example.ebroapp.domain.entity.song.Song
 import com.example.ebroapp.domain.repository.DomainRepository
+import com.example.ebroapp.utils.launchIO
+import com.example.ebroapp.utils.launchMain
+import com.example.ebroapp.utils.withMain
 import kotlinx.coroutines.GlobalScope
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
