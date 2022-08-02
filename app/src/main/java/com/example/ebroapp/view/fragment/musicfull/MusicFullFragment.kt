@@ -5,11 +5,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
-import com.example.ebroapp.App
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
 import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
-import com.example.ebroapp.domain.repository.DomainRepository
 import com.example.ebroapp.utils.setImageFromUri
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter
@@ -19,11 +17,9 @@ import com.example.ebroapp.view.base.BaseFragment
 class MusicFullFragment :
     BaseFragment<FragmentMusicFullBinding, MusicFullViewModel>(MusicFullViewModel::class.java) {
 
-    private val player = App.get().player
-
     private val songAdapter by lazy {
         MusicAdapter { song ->
-            player.nextSong(song)
+            viewModel.nextSong(song)
             binding.btnPlay.isChecked = true
             fillCurrentSong()
         }
@@ -43,33 +39,33 @@ class MusicFullFragment :
 
         initAdapter()
 
-        player.setOnPlayerStateChangeListener { progress, duration ->
+        viewModel.setOnPlayerStateChangeListener { progress, duration ->
             binding.pbMusic.progress = if (duration != 0) progress * PERCENT / duration else 0
             binding.tvTimer.setTime(duration / PERCENT * progress)
         }
 
         binding.btnFavorite.setOnClickListener {
-            player.currentSong?.let {
-                DomainRepository.obtain().setSongIsFavorite(it.id, binding.btnFavorite.isChecked)
+            viewModel.getCurrentSong {
+                viewModel.setSongIsFavorite(it.id, binding.btnFavorite.isChecked)
                 it.isFavorites = binding.btnFavorite.isChecked
                 viewModel.getInsertedSong(it.id)
             }
         }
 
         binding.btnPlay.apply {
-            isChecked = player.isPlaying()
+            isChecked = viewModel.isPlaying()
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) player.playMusic()
-                else player.pauseMusic()
+                if (isChecked) viewModel.playMusic()
+                else viewModel.pauseMusic()
             }
         }
 
         binding.btnNextSong.setOnClickListener {
-            player.nextSong()
+            viewModel.nextSong()
             fillCurrentSong()
         }
         binding.btnPreviousSong.setOnClickListener {
-            player.previousSong()
+            viewModel.previousSong()
             fillCurrentSong()
         }
 
@@ -103,7 +99,7 @@ class MusicFullFragment :
     }
 
     private fun fillCurrentSong() {
-        player.currentSong?.let { song ->
+        viewModel.getCurrentSong { song ->
             binding.ivAlbumCover.setImageFromUri(song.uri)
             binding.tvName.text = song.name
             binding.tvSinger.text = song.singer

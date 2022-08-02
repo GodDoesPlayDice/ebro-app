@@ -29,16 +29,4 @@ interface DomainRepository {
     fun removeDestinationLocation()
 
     fun getDestinationLocation(): Point?
-
-    companion object {
-        @Volatile
-        private var instance: DomainRepository? = null
-
-        fun obtain(): DomainRepository {
-            instance = instance ?: synchronized(this) {
-                DomainRepositoryImpl()
-            }
-            return instance!!
-        }
-    }
 }

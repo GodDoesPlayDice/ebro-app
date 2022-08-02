@@ -2,20 +2,24 @@ package com.example.ebroapp.view.activity
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.media.AudioManager
+import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
-import com.example.ebroapp.App
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
-import com.example.ebroapp.receiver.ActionPowerReceiver
+import com.example.ebroapp.di.Injector
+import com.example.ebroapp.view.activity.black.BlackActivity
+import com.example.ebroapp.view.activity.splash.SplashActivity
 import com.example.ebroapp.view.base.BaseActivity
 import com.example.ebroapp.view.fragment.MainFragment
 import com.example.ebroapp.view.fragment.lowertoolbar.LowerToolbarFragment
@@ -28,10 +32,27 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class.java) {
 
     private val btnToggleGroup by lazy { findViewById<MaterialButtonToggleGroup>(R.id.btnToggleGroup) }
-    private val actionPowerReceiver by lazy { ActionPowerReceiver() }
+    private val actionPowerReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            when (intent?.action) {
+                Intent.ACTION_POWER_CONNECTED -> {
+                    startActivity(SplashActivity::class.java)
+                }
+                Intent.ACTION_POWER_DISCONNECTED -> {
+                    viewModel.stopMusic()
+                    startActivity(BlackActivity::class.java)
+                }
+            }
+        }
+    }
 
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding =
         ActivityMainBinding::inflate
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Injector.initAndInjectActivityComponent(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun setupUI() {
         supportFragmentManager.commit { replace(R.id.fragmentLowerToolbar, LowerToolbarFragment()) }
@@ -96,7 +117,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
             && grantResults[0] == PackageManager.PERMISSION_GRANTED
             && grantResults[1] == PackageManager.PERMISSION_GRANTED
         ) {
-            App.get().player.setPlayList(this)
+            viewModel.setPlayList(this)
             recreate()
         } else {
             requestPermissions()
@@ -113,7 +134,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
     override fun onPause() {
         super.onPause()
 
-        App.get().player.pauseMusic()
+        viewModel.pauseMusic()
     }
 
     override fun onDestroy() {
@@ -145,6 +166,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
             }
             else -> super.onKeyDown(keyCode, event)
         }
+    }
+
+    private fun startActivity(clazz: Class<*>) {
+        startActivity(Intent(this, clazz).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
     }
 
     private fun requestPermissions() {

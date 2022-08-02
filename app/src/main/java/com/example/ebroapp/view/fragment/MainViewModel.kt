@@ -1,18 +1,28 @@
 package com.example.ebroapp.view.fragment
 
-import android.app.Application
-import android.location.Location
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import com.example.ebroapp.domain.repository.DomainRepository
+import com.example.ebroapp.utils.LocationListener
+import com.example.ebroapp.utils.Player
 import com.mapbox.geojson.Point
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel @Inject constructor(
+    private val domainRepository: DomainRepository,
+    private val player: Player,
+    private val locationListener: LocationListener
+) : ViewModel() {
 
-    private val repository = DomainRepository.obtain()
+    fun setOnMusicLoadingCompleteListener(listener: () -> Unit) {
+        player.setOnMusicLoadingComplete { listener.invoke() }
+    }
 
-    fun addCurrentLocation(location: Location) {
-        repository.addCurrentLocation(
-            Point.fromLngLat(location.longitude, location.latitude)
-        )
+    fun setOnLocationListener(listener: () -> Unit) {
+        locationListener.setOnLocationListener { location ->
+            domainRepository.addCurrentLocation(
+                Point.fromLngLat(location.longitude, location.latitude)
+            )
+            listener.invoke()
+        }
     }
 }

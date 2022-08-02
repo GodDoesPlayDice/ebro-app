@@ -1,6 +1,5 @@
 package com.example.ebroapp.view.fragment.settings
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 
-class SettingsViewModel(application: Application) : AndroidViewModel(application)
+class SettingsViewModel : ViewModel()

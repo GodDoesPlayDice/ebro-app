@@ -71,16 +71,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.EbroApp.NoActionBarAndStatusBar" />
-
-        <receiver
-            android:name=".receiver.ActionPowerReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package com.example.ebroapp.view.fragment.lowertoolbar
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 
-class LowerToolbarViewModel(application: Application) : AndroidViewModel(application)
+class LowerToolbarViewModel : ViewModel()

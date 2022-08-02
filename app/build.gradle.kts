@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
@@ -55,6 +56,7 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         freeCompilerArgs =
             freeCompilerArgs + "-Xuse-experimental=kotlinx.coroutines.DelicateCoroutinesApi"
+        freeCompilerArgs = freeCompilerArgs + "-Xjvm-default=all"
     }
     viewBinding {
         isEnabled = true
@@ -77,6 +79,9 @@ dependencies {
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("com.google.android.gms:play-services-location:20.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
+
+    implementation("com.google.dagger:dagger:2.16")
+    kapt("com.google.dagger:dagger-compiler:2.16")
 
     implementation("com.squareup.picasso:picasso:2.71828")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

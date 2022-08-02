@@ -1,6 +1,5 @@
 package com.example.ebroapp.view.activity.splash
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 
-class SplashViewModel(application: Application) : AndroidViewModel(application)
+class SplashViewModel : ViewModel()

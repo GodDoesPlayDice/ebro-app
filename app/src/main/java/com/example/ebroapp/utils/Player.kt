@@ -10,18 +10,21 @@ import com.example.ebroapp.domain.repository.DomainRepository
 import kotlinx.coroutines.GlobalScope
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Inject
 
-class PlayerUtil(private val context: Context) {
+class Player @Inject constructor(
+    private val context: Context,
+    private val domainRepository: DomainRepository
+) {
 
     var currentSong: Song? = null
     private val player by lazy { MediaPlayer() }
     private var observer: MediaObserver? = null
     private var onMusicLoadingComplete: (() -> Unit)? = null
-    private val domainRepository = DomainRepository.obtain()
 
     fun setPlayList(context: Context) {
         GlobalScope.launchIO({
-            DomainRepository.obtain().setSongs(getMusicList(context))
+            domainRepository.setSongs(getMusicList(context, domainRepository))
             withMain {
                 init()
                 onMusicLoadingComplete?.invoke()

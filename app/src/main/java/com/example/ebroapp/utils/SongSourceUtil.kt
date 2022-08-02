@@ -19,7 +19,7 @@ val projection = arrayOf(
     Audio.Media.ARTIST
 )
 
-fun getMusicList(context: Context): List<Song> {
+fun getMusicList(context: Context, domainRepository: DomainRepository): List<Song> {
     val songs: MutableList<Song> = mutableListOf()
     context.contentResolver.query(
         uri, projection, selection, null, null
@@ -35,7 +35,7 @@ fun getMusicList(context: Context): List<Song> {
             val album = cursor.getString(albumColumn)
             val artist = cursor.getString(artistColumn)
             val uri: Uri = ContentUris.withAppendedId(uri, id)
-            val isFavorite = DomainRepository.obtain().isFavoriteSong(id)
+            val isFavorite = domainRepository.isFavoriteSong(id)
             songs.add(Song(id, uri, title, album, artist, TYPE_SONG, isFavorite))
         }
     }
