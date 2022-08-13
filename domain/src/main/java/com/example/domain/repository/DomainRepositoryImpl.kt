@@ -1,9 +1,9 @@
-package com.example.ebroapp.domain.repository
+package com.example.domain.repository
 
 import android.content.SharedPreferences
-import com.example.ebroapp.domain.entity.song.Song
+import com.example.domain.entity.LocalPoint
+import com.example.domain.entity.Song
 import com.google.gson.Gson
-import com.mapbox.geojson.Point
 import javax.inject.Inject
 
 
@@ -57,20 +57,20 @@ class DomainRepositoryImpl @Inject constructor(
         this.onAddressChangeListener = onAddressChangeListener
     }
 
-    override fun addCurrentLocation(point: Point) {
+    override fun addCurrentLocation(point: LocalPoint) {
         preferences.edit().putString(CURRENT_LOCATION, gson.toJson(point)).apply()
     }
 
-    override fun getCurrentLocation(): Point? {
+    override fun getCurrentLocation(): LocalPoint? {
         val json = preferences.getString(CURRENT_LOCATION, "")
         return if (json != "") {
-            gson.fromJson(json, Point::class.java)
+            gson.fromJson(json, LocalPoint::class.java)
         } else {
             null
         }
     }
 
-    override fun addDestinationLocation(point: Point) {
+    override fun addDestinationLocation(point: LocalPoint) {
         preferences.edit().putString(DESTINATION_LOCATION, gson.toJson(point)).apply()
     }
 
@@ -79,10 +79,10 @@ class DomainRepositoryImpl @Inject constructor(
         preferences.edit().putString(DESTINATION_LOCATION, "").apply()
     }
 
-    override fun getDestinationLocation(): Point? {
+    override fun getDestinationLocation(): LocalPoint? {
         val json = preferences.getString(DESTINATION_LOCATION, "")
         return if (json != "") {
-            gson.fromJson(json, Point::class.java)
+            gson.fromJson(json, LocalPoint::class.java)
         } else {
             null
         }

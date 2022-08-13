@@ -5,8 +5,8 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.PowerManager
-import com.example.ebroapp.domain.entity.song.Song
-import com.example.ebroapp.domain.repository.DomainRepository
+import com.example.domain.entity.Song
+import com.example.domain.repository.DomainRepository
 import com.example.ebroapp.utils.launchIO
 import com.example.ebroapp.utils.launchMain
 import com.example.ebroapp.utils.withMain

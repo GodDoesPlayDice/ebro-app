@@ -1,7 +1,6 @@
-package com.example.ebroapp.utils.provider
+package com.example.network.provider
 
-import com.example.ebroapp.BuildConfig
-import com.example.ebroapp.remote.repository.RemoteService
+import com.example.network.repository.RemoteService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,8 +12,7 @@ import javax.inject.Inject
 class RetrofitProviderImpl @Inject constructor() : RetrofitProvider {
     override fun provideRetrofit(): RemoteService {
         val logging = HttpLoggingInterceptor()
-        logging.level =
-            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+        logging.level = HttpLoggingInterceptor.Level.BODY
 
         val client = OkHttpClient.Builder()
             .connectTimeout(5, TimeUnit.MINUTES)

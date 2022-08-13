@@ -1,14 +1,14 @@
-package com.example.ebroapp.remote.repository
+package com.example.network.repository
 
-import com.example.ebroapp.remote.entity.weather.FullWeather
+import com.example.network.entity.FullWeather
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface RemoteService {
     @GET("data/2.5/onecall")
     suspend fun getWeatherFull(
-        @Query("lat") latitude: Double?,
         @Query("lon") longitude: Double?,
+        @Query("lat") latitude: Double?,
         @Query("units") units: String = UNITS,
         @Query("appid") appId: String = TOKEN,
         @Query("exclude") exclude: String = EXCLUDE

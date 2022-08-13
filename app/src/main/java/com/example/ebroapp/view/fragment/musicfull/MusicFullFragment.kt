@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
+import com.example.domain.entity.SongListItem.Companion.TYPE_SEPARATOR
+import com.example.domain.entity.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.databinding.FragmentMusicFullBinding
-import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
-import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.utils.setImageFromUri
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter

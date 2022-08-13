@@ -2,7 +2,7 @@ package com.example.ebroapp.view.fragment.addresses
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.ebroapp.domain.repository.DomainRepository
+import com.example.domain.repository.DomainRepository
 import javax.inject.Inject
 
 class AddressesViewModel @Inject constructor(

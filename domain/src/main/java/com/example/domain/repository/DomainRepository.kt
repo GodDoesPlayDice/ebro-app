@@ -1,7 +1,7 @@
-package com.example.ebroapp.domain.repository
+package com.example.domain.repository
 
-import com.example.ebroapp.domain.entity.song.Song
-import com.mapbox.geojson.Point
+import com.example.domain.entity.LocalPoint
+import com.example.domain.entity.Song
 
 
 interface DomainRepository {
@@ -14,19 +14,19 @@ interface DomainRepository {
 
     fun setSongIsFavorite(id: Long, isFavorite: Boolean)
 
-    fun addAddress(it: String)
+    fun addAddress(address: String)
 
     fun getAddresses(): List<String>
 
     fun setOnAddressesChangeListener(onAddressChangeListener: (String) -> Unit)
 
-    fun addCurrentLocation(point: Point)
+    fun addCurrentLocation(point: LocalPoint)
 
-    fun getCurrentLocation(): Point?
+    fun getCurrentLocation(): LocalPoint?
 
-    fun addDestinationLocation(point: Point)
+    fun addDestinationLocation(point: LocalPoint)
 
     fun removeDestinationLocation()
 
-    fun getDestinationLocation(): Point?
+    fun getDestinationLocation(): LocalPoint?
 }

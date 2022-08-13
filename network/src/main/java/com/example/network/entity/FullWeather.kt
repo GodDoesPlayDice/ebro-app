@@ -1,4 +1,4 @@
-package com.example.ebroapp.remote.entity.weather
+package com.example.network.entity
 
 data class FullWeather(
     val current: Current,

@@ -24,3 +24,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ebro app"
 include ':app'
+include ':domain'
+include ':network'

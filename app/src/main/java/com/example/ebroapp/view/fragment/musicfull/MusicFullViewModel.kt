@@ -2,9 +2,9 @@ package com.example.ebroapp.view.fragment.musicfull
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.ebroapp.domain.entity.song.Song
-import com.example.ebroapp.domain.entity.song.SongListItem
-import com.example.ebroapp.domain.repository.DomainRepository
+import com.example.domain.entity.Song
+import com.example.domain.entity.SongListItem
+import com.example.domain.repository.DomainRepository
 import com.example.ebroapp.utils.music.Player
 import com.example.ebroapp.utils.music.SongMapper.toAdapter
 import javax.inject.Inject

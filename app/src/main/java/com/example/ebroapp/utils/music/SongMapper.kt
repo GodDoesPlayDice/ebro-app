@@ -1,9 +1,9 @@
 package com.example.ebroapp.utils.music
 
-import com.example.ebroapp.domain.entity.song.Separator
-import com.example.ebroapp.domain.entity.song.Song
-import com.example.ebroapp.domain.entity.song.SongListItem
-import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SEPARATOR
+import com.example.domain.entity.Separator
+import com.example.domain.entity.Song
+import com.example.domain.entity.SongListItem
+import com.example.domain.entity.SongListItem.Companion.TYPE_SEPARATOR
 
 object SongMapper {
 

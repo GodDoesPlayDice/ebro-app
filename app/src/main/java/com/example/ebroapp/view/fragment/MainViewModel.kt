@@ -1,10 +1,10 @@
 package com.example.ebroapp.view.fragment
 
 import androidx.lifecycle.ViewModel
-import com.example.ebroapp.domain.repository.DomainRepository
+import com.example.domain.entity.LocalPoint
+import com.example.domain.repository.DomainRepository
 import com.example.ebroapp.utils.map.LocationListener
 import com.example.ebroapp.utils.music.Player
-import com.mapbox.geojson.Point
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -19,9 +19,7 @@ class MainViewModel @Inject constructor(
 
     fun setOnLocationListener(listener: () -> Unit) {
         locationListener.setOnLocationListener { location ->
-            domainRepository.addCurrentLocation(
-                Point.fromLngLat(location.longitude, location.latitude)
-            )
+            domainRepository.addCurrentLocation(LocalPoint(location.longitude, location.latitude))
             listener.invoke()
         }
     }

@@ -70,7 +70,9 @@ android {
 dependencies {
     val navigationVersion = "2.5.1"
     val daggerVersion = "2.40"
-    val retrofitVersion = "2.9.0"
+
+    api(project(":domain"))
+    api(project(":network"))
 
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.4.2")
@@ -89,9 +91,6 @@ dependencies {
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 
     implementation("com.squareup.picasso:picasso:2.71828")
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     implementation("com.mapbox.navigation:android:2.3.0")
 
