@@ -6,7 +6,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.setFragmentResult
-import com.example.ebroapp.App
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMainBinding
 import com.example.ebroapp.view.activity.MainActivity.Companion.FRAGMENT_ID
@@ -37,12 +36,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(MainViewMo
             setFragmentResult(REQUEST_KEY, bundleOf(FRAGMENT_ID to it.id))
         }
 
-        App.get().player.setOnMusicLoadingComplete {
+        viewModel.setOnMusicLoadingCompleteListener {
             childFragmentManager.commit { replace<MusicFragment>(R.id.fragmentMusic) }
         }
 
-        App.get().locationListener.setOnLocationListener { location ->
-            viewModel.addCurrentLocation(location)
+        viewModel.setOnLocationListener {
             childFragmentManager.commit { replace<WeatherFragment>(R.id.fragmentWeather) }
         }
     }

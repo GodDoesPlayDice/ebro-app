@@ -6,15 +6,16 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.media.AudioManager
+import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
-import com.example.ebroapp.App
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.ActivityMainBinding
+import com.example.ebroapp.di.Injector
 import com.example.ebroapp.receiver.ActionPowerReceiver
 import com.example.ebroapp.view.base.BaseActivity
 import com.example.ebroapp.view.fragment.MainFragment
@@ -32,6 +33,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
 
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding =
         ActivityMainBinding::inflate
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Injector.initAndInjectActivityComponent(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun setupUI() {
         supportFragmentManager.commit { replace(R.id.fragmentLowerToolbar, LowerToolbarFragment()) }
@@ -96,7 +102,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
             && grantResults[0] == PackageManager.PERMISSION_GRANTED
             && grantResults[1] == PackageManager.PERMISSION_GRANTED
         ) {
-            App.get().player.setPlayList(this)
+            viewModel.setPlayList(this)
             recreate()
         } else {
             requestPermissions()
@@ -113,7 +119,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
     override fun onPause() {
         super.onPause()
 
-        App.get().player.pauseMusic()
+        viewModel.pauseMusic()
     }
 
     override fun onDestroy() {

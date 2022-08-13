@@ -9,13 +9,12 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentMapBinding
-import com.example.ebroapp.domain.repository.DomainRepository
-import com.example.ebroapp.utils.MapUtil.BUTTON_ANIMATION_DURATION
-import com.example.ebroapp.utils.MapUtil.followingPadding
-import com.example.ebroapp.utils.MapUtil.landscapeFollowingPadding
-import com.example.ebroapp.utils.MapUtil.landscapeOverviewPadding
-import com.example.ebroapp.utils.MapUtil.overviewPadding
-import com.example.ebroapp.utils.PermissionUtil.checkLocationPermission
+import com.example.ebroapp.utils.map.MapUtil.BUTTON_ANIMATION_DURATION
+import com.example.ebroapp.utils.map.MapUtil.followingPadding
+import com.example.ebroapp.utils.map.MapUtil.landscapeFollowingPadding
+import com.example.ebroapp.utils.map.MapUtil.landscapeOverviewPadding
+import com.example.ebroapp.utils.map.MapUtil.overviewPadding
+import com.example.ebroapp.utils.map.PermissionUtil.checkLocationPermission
 import com.example.ebroapp.view.base.BaseFragment
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.DirectionsRoute
@@ -75,8 +74,6 @@ import java.util.*
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel::class.java) {
 
-    private val repository by lazy { DomainRepository.obtain() }
-
     private val mapboxReplayer = MapboxReplayer()
     private val replayLocationEngine = ReplayLocationEngine(mapboxReplayer)
     private val replayProgressObserver = ReplayProgressObserver(mapboxReplayer)
@@ -132,7 +129,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
     private val locationObserver = object : LocationObserver {
         var firstLocationUpdateReceived = false
         override fun onNewRawLocation(rawLocation: Location) {
-            repository.addCurrentLocation(
+            viewModel.addCurrentLocation(
                 Point.fromLngLat(
                     rawLocation.longitude,
                     rawLocation.latitude
@@ -336,7 +333,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
         mapboxNavigation.registerVoiceInstructionsObserver(voiceInstructionsObserver)
         mapboxNavigation.registerRouteProgressObserver(replayProgressObserver)
 
-        repository.getCurrentLocation()?.let {
+        viewModel.getCurrentLocation()?.let {
             mapboxMap.setCamera(CameraOptions.Builder().center(it).zoom(16.0).build())
         }
     }
@@ -346,7 +343,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
 
         if (checkLocationPermission(requireContext())) {
             val points = mutableListOf<ReplayEventBase>()
-            repository.getCurrentLocation()?.let { current ->
+            viewModel.getCurrentLocation()?.let { current ->
                 points.add(
                     ReplayRouteMapper.mapToUpdateLocation(
                         eventTimestamp = 0.0,
@@ -358,7 +355,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
             mapboxReplayer.playFirstLocation()
         }
 
-        repository.getDestinationLocation()?.let {
+        viewModel.getDestinationLocation()?.let {
             findRoute(it, false)
         }
     }
@@ -383,8 +380,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
     }
 
     private fun findRoute(destination: Point, isNewPoint: Boolean) {
-        repository.addDestinationLocation(destination)
-        val originPoint = repository.getCurrentLocation() ?: return
+        viewModel.addDestinationLocation(destination)
+        val originPoint = viewModel.getCurrentLocation() ?: return
         val originLocation = Location("").apply {
             latitude = originPoint.latitude()
             longitude = originPoint.longitude()
@@ -439,13 +436,13 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
 
         if (isNewPoint && routes.isNotEmpty()) {
             routes.first().legs()?.first()?.summary()?.let {
-                repository.addAddress(it)
+                viewModel.addAddress(it)
             }
         }
     }
 
     private fun clearRouteAndStopNavigation() {
-        repository.removeDestinationLocation()
+        viewModel.removeDestinationLocation()
         mapboxNavigation.setRoutes(listOf())
         mapboxReplayer.stop()
         binding.soundButton.visibility = View.INVISIBLE

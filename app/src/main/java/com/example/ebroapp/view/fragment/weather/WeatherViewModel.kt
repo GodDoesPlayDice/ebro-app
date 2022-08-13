@@ -1,27 +1,27 @@
 package com.example.ebroapp.view.fragment.weather
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ebroapp.domain.repository.DomainRepository
-import com.example.ebroapp.remote.entity.weather.FullWeather
-import com.example.ebroapp.remote.repository.RemoteRepository
+import com.example.domain.repository.DomainRepository
 import com.example.ebroapp.utils.launchIO
 import com.example.ebroapp.utils.withMain
+import com.example.network.entity.FullWeather
+import com.example.network.repository.RemoteRepository
 import timber.log.Timber
+import javax.inject.Inject
 
-class WeatherViewModel(application: Application) : AndroidViewModel(application) {
+class WeatherViewModel @Inject constructor(
+    private val domainRepository: DomainRepository,
+    private val remoteRepository: RemoteRepository
+) : ViewModel() {
 
     val weather = MutableLiveData<FullWeather>()
-
-    private val remoteRepository = RemoteRepository.obtain()
-    private val domainRepository = DomainRepository.obtain()
 
     fun getCurrentLocation() {
         viewModelScope.launchIO({
             domainRepository.getCurrentLocation()?.let { point ->
-                val response = remoteRepository.getWeatherFull(point.latitude(), point.longitude())
+                val response = remoteRepository.getWeatherFull(point.longitude, point.latitude)
                 withMain { weather.value = response }
             }
         }, { Timber.e(it) })

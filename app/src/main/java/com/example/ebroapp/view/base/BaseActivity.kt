@@ -7,28 +7,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
+import com.example.ebroapp.di.Injector
 
-abstract class BaseActivity<Binding : ViewBinding, ViewModel : AndroidViewModel>(
+abstract class BaseActivity<Binding : ViewBinding, ViewModel : androidx.lifecycle.ViewModel>(
     private val viewModelType: Class<ViewModel>
 ) : AppCompatActivity() {
 
-    private var _viewModel: ViewModel? = null
     private var _binding: Binding? = null
     abstract val bindingInflater: (LayoutInflater) -> Binding
 
-    protected val viewModel: ViewModel
-        get() = _viewModel as ViewModel
     protected val binding: Binding
         get() = _binding as Binding
+
+    protected val viewModel: ViewModel by lazy {
+        Injector.provideViewModel(this, viewModelType)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = bindingInflater.invoke(layoutInflater)
         setContentView(requireNotNull(_binding).root)
-        _viewModel = ViewModelProvider(this)[viewModelType]
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,

@@ -1,16 +1,16 @@
 package com.example.ebroapp.view.fragment.addresses
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.ebroapp.domain.repository.DomainRepository
+import androidx.lifecycle.ViewModel
+import com.example.domain.repository.DomainRepository
+import javax.inject.Inject
 
-class AddressesViewModel(application: Application) : AndroidViewModel(application) {
+class AddressesViewModel @Inject constructor(
+    private val domainRepository: DomainRepository
+) : ViewModel() {
 
     val address = MutableLiveData<String>()
     val addresses = MutableLiveData<List<String>>()
-
-    private val domainRepository = DomainRepository.obtain()
 
     fun getAddresses() {
         addresses.value = domainRepository.getAddresses()

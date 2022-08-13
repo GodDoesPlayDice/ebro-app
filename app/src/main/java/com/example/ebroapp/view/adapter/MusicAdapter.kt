@@ -3,12 +3,12 @@ package com.example.ebroapp.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.entity.Separator
+import com.example.domain.entity.Song
+import com.example.domain.entity.SongListItem
+import com.example.domain.entity.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.databinding.ItemSeparatorBinding
 import com.example.ebroapp.databinding.ItemSongBinding
-import com.example.ebroapp.domain.entity.song.Separator
-import com.example.ebroapp.domain.entity.song.Song
-import com.example.ebroapp.domain.entity.song.SongListItem
-import com.example.ebroapp.domain.entity.song.SongListItem.Companion.TYPE_SONG
 import com.example.ebroapp.utils.setImageFromUri
 
 class MusicAdapter(private val onClick: (Song) -> Unit) :

@@ -10,8 +10,9 @@ import android.provider.Settings.System.CONTENT_URI
 import android.widget.SeekBar
 import android.widget.TextView
 import com.example.ebroapp.R
-import com.example.ebroapp.utils.CacheUtil.addBitmapToMemoryCache
-import com.example.ebroapp.utils.CacheUtil.getBitmapFromMemCache
+import com.example.ebroapp.utils.music.CacheUtil.addBitmapToMemoryCache
+import com.example.ebroapp.utils.music.CacheUtil.getBitmapFromMemCache
+import com.example.ebroapp.utils.music.VolumeObserver
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.GlobalScope
 
