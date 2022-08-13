@@ -11,18 +11,16 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            setUrl("https://api.mapbox.com/downloads/v2/releases/maven")
             authentication {
-                basic(BasicAuthentication)
+                create<BasicAuthentication>("basic")
             }
             credentials {
                 username = "mapbox"
-                password = MAPBOX_DOWNLOADS_TOKEN
+                password = System.getenv("MAPBOX_DOWNLOADS_TOKEN")
             }
         }
     }
 }
 rootProject.name = "ebro app"
-include ':app'
-include ':domain'
-include ':network'
+include(":app", ":domain", ":network")
