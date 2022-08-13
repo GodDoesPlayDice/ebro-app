@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Deps.compileSdk
 
     defaultConfig {
-        minSdk = 21
-        targetSdk = 32
+        minSdk = Deps.minSdk
+        targetSdk = Deps.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -33,9 +33,7 @@ android {
 }
 
 dependencies {
-    val daggerVersion = "2.40"
-
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("com.google.code.gson:gson:2.9.0")
-    implementation("com.google.dagger:dagger:$daggerVersion")
+    implementation(Deps.core)
+    implementation(Deps.gson)
+    implementation(Deps.dagger)
 }

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Deps.compileSdk
 
     defaultConfig {
-        minSdk = 21
-        targetSdk = 32
+        minSdk = Deps.minSdk
+        targetSdk = Deps.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -33,14 +33,11 @@ android {
 }
 
 dependencies {
-    val daggerVersion = "2.40"
-    val retrofitVersion = "2.9.0"
+    implementation(Deps.core)
 
-    implementation("androidx.core:core-ktx:1.8.0")
+    implementation(Deps.dagger)
 
-    implementation("com.google.dagger:dagger:$daggerVersion")
-
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation(Deps.retrofit)
+    implementation(Deps.retrofitConverter)
+    implementation(Deps.loggingInterceptor)
 }

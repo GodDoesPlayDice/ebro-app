@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Deps.compileSdk
 
     defaultConfig {
-        applicationId = "com.example.ebroapp"
-        minSdk = 24
-        targetSdk = 31
-        versionCode = 10014
-        versionName = "1.0.14"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = Deps.applicationId
+        minSdk = Deps.minSdk
+        targetSdk = Deps.targetSdk
+        versionCode = Deps.versionCode
+        versionName = Deps.versionName
+        testInstrumentationRunner = Deps.testAndroidInstrumentationRunner
     }
 
     signingConfigs {
@@ -68,31 +68,28 @@ android {
 }
 
 dependencies {
-    val navigationVersion = "2.5.1"
-    val daggerVersion = "2.40"
-
     api(project(":domain"))
     api(project(":network"))
 
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.fragment:fragment-ktx:1.5.1")
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+    implementation(Deps.core)
+    implementation(Deps.appCompat)
+    implementation(Deps.constraintLayout)
+    implementation(Deps.legacy)
+    implementation(Deps.fragment)
+    implementation(Deps.navigationFragment)
+    implementation(Deps.navigationUi)
 
-    implementation("com.google.android.material:material:1.6.1")
-    implementation("com.google.code.gson:gson:2.9.0")
-    implementation("com.google.android.gms:play-services-location:20.0.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
+    implementation(Deps.material)
+    implementation(Deps.gson)
+    implementation(Deps.gms)
+    implementation(Deps.coroutines)
 
-    implementation("com.google.dagger:dagger:$daggerVersion")
-    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
+    implementation(Deps.dagger)
+    kapt(Deps.daggerCompiler)
 
-    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation(Deps.picasso)
 
-    implementation("com.mapbox.navigation:android:2.3.0")
+    implementation(Deps.navigationMapbox)
 
-    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation(Deps.timber)
 }
