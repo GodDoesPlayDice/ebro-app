@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("io.gitlab.arturbosch.detekt")
     kotlin("kapt")
 }
 
@@ -22,14 +23,6 @@ android {
             storePassword = "123456"
             keyAlias = "key0"
             keyPassword = "123456"
-        }
-    }
-
-    android.applicationVariants.all {
-        outputs.all {
-            val variantOutputImpl =
-                this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            variantOutputImpl.outputFileName = "Ebro $versionName ${buildType.name}.apk"
         }
     }
 
@@ -64,6 +57,14 @@ android {
     }
     buildFeatures {
         dataBinding = true
+    }
+
+    android.applicationVariants.all {
+        outputs.all {
+            val variantOutputImpl =
+                this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            variantOutputImpl.outputFileName = "Ebro $versionName ${buildType.name}.apk"
+        }
     }
 }
 

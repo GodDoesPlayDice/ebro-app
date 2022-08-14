@@ -5,6 +5,7 @@ pluginManagement {
         mavenCentral()
     }
 }
+@Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -22,5 +23,5 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "ebro app"
+rootProject.name = "ebroapp"
 include(":app", ":domain", ":network")

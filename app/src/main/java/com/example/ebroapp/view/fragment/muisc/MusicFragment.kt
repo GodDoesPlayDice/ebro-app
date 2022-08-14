@@ -2,7 +2,10 @@ package com.example.ebroapp.view.fragment.muisc
 
 import android.content.Context.AUDIO_SERVICE
 import android.media.AudioManager
-import android.media.AudioManager.*
+import android.media.AudioManager.ADJUST_LOWER
+import android.media.AudioManager.ADJUST_RAISE
+import android.media.AudioManager.FLAG_PLAY_SOUND
+import android.media.AudioManager.STREAM_MUSIC
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
