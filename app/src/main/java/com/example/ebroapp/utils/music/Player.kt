@@ -21,7 +21,7 @@ class Player @Inject constructor(
 ) {
 
     var currentSong: Song? = null
-    private val player by lazy { MediaPlayer() }
+    private val mediaPlayer by lazy { MediaPlayer() }
     private var observer: MediaObserver? = null
     private var onMusicLoadingComplete: (() -> Unit)? = null
 
@@ -41,23 +41,23 @@ class Player @Inject constructor(
 
     fun stopMusic() {
         currentSong?.let {
-            player.stop()
+            mediaPlayer.stop()
             setDataSource(it.uri)
         }
 
     }
 
-    fun isPlaying() = player.isPlaying
+    fun isPlaying() = mediaPlayer.isPlaying
 
     fun playMusic() {
-        if (!player.isPlaying) {
-            player.start()
+        if (!mediaPlayer.isPlaying) {
+            mediaPlayer.start()
         }
     }
 
     fun pauseMusic() {
-        if (player.isPlaying) {
-            player.pause()
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.pause()
         }
     }
 
@@ -93,7 +93,7 @@ class Player @Inject constructor(
 
     fun setOnPlayerStateChangeListener(listener: (Int, Int) -> Unit) {
         observer?.stop()
-        player.setOnCompletionListener {
+        mediaPlayer.setOnCompletionListener {
             observer?.stop()
             listener(0, 0)
         }
@@ -109,7 +109,7 @@ class Player @Inject constructor(
     private fun init() {
         currentSong = domainRepository.getSongs().firstOrNull()
         currentSong?.let {
-            player.apply {
+            mediaPlayer.apply {
                 setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
                 setAudioStreamType(AudioManager.STREAM_MUSIC)
                 setDataSource(context, it.uri)
@@ -119,7 +119,7 @@ class Player @Inject constructor(
     }
 
     private fun setDataSource(uri: Uri) {
-        player.apply {
+        mediaPlayer.apply {
             reset()
             setDataSource(context, uri)
             prepare()
@@ -136,10 +136,10 @@ class Player @Inject constructor(
         override fun run() {
             while (!stop.get()) {
                 GlobalScope.launchMain({
-                    if (player.isPlaying) {
+                    if (mediaPlayer.isPlaying) {
                         listener(
-                            player.currentPosition / 1000,
-                            player.duration / 1000
+                            mediaPlayer.currentPosition / 1000,
+                            mediaPlayer.duration / 1000
                         )
                     }
                 }, { Timber.e(it) })
