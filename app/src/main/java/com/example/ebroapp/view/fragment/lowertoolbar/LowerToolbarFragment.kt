@@ -126,7 +126,9 @@ class LowerToolbarFragment :
 
     private fun onToggleButtonClick(view: View, newValue: Boolean): Boolean {
         if (view is ViewGroup) {
-            getImageView(view).setColorFilter(requireContext().getColor(if (newValue) R.color.text_white else R.color.text_gray))
+            getImageView(view).setColorFilter(
+                requireContext().getColor(if (newValue) R.color.text_white else R.color.text_gray)
+            )
             return true
         }
         return false

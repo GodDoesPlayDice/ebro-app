@@ -37,13 +37,10 @@ fun SeekBar.setOnSeekBarListener(addOp: (Int) -> Unit) {
             addOp(15 + progress)
         }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {
-        }
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {
-        }
-    }
-    )
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+    })
 }
 
 fun ShapeableImageView.setImageFromUri(

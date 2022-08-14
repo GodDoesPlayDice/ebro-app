@@ -9,7 +9,7 @@ import com.example.domain.entity.SongListItem.Companion.TYPE_SONG
 import com.example.domain.repository.DomainRepository
 
 
-const val selection = "${Audio.Media.IS_MUSIC}!=0"
+const val SELECTION = "${Audio.Media.IS_MUSIC}!=0"
 val uri: Uri = Audio.Media.EXTERNAL_CONTENT_URI
 
 val projection = arrayOf(
@@ -22,7 +22,7 @@ val projection = arrayOf(
 fun getMusicList(context: Context, domainRepository: DomainRepository): List<Song> {
     val songs: MutableList<Song> = mutableListOf()
     context.contentResolver.query(
-        uri, projection, selection, null, null
+        uri, projection, SELECTION, null, null
     )?.use { cursor ->
         val idColumn = cursor.getColumnIndexOrThrow(Audio.Media._ID)
         val titleColumn = cursor.getColumnIndexOrThrow(Audio.Media.TITLE)
