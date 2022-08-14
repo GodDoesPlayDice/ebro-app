@@ -1,5 +1,6 @@
 package com.example.network.provider
 
+import com.example.network.BuildConfig
 import com.example.network.repository.RemoteService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -12,7 +13,8 @@ import javax.inject.Inject
 class RetrofitProviderImpl @Inject constructor() : RetrofitProvider {
     override fun provideRetrofit(): RemoteService {
         val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        logging.level =
+            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
 
         val client = OkHttpClient.Builder()
             .connectTimeout(5, TimeUnit.MINUTES)

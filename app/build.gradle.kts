@@ -25,14 +25,6 @@ android {
         }
     }
 
-    android.applicationVariants.all {
-        outputs.all {
-            val variantOutputImpl =
-                this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            variantOutputImpl.outputFileName = "Ebro $versionName ${buildType.name}.apk"
-        }
-    }
-
     buildTypes {
         getByName("release").apply {
             isDebuggable = false
@@ -64,6 +56,14 @@ android {
     }
     buildFeatures {
         dataBinding = true
+    }
+
+    android.applicationVariants.all {
+        outputs.all {
+            val variantOutputImpl =
+                this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            variantOutputImpl.outputFileName = "Ebro $versionName ${buildType.name}.apk"
+        }
     }
 }
 
