@@ -20,4 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.example.ebroapp.remote.entity.** { *; }
+-keep class com.example.network.entity.** { *; }
