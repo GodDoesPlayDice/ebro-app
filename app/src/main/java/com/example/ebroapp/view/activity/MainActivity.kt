@@ -25,7 +25,6 @@ import com.example.ebroapp.view.fragment.musicfull.MusicFullFragment
 import com.example.ebroapp.view.fragment.settings.SettingsFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 
-
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class.java) {
 
     private val btnToggleGroup by lazy { findViewById<MaterialButtonToggleGroup>(R.id.btnToggleGroup) }
@@ -91,6 +90,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
         }
     }
 
+    @SuppressWarnings("ComplexCondition")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

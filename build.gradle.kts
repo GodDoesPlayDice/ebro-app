@@ -7,13 +7,15 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version ("1.21.0")
 }
 
-detekt {
-    parallel = true
-    buildUponDefaultConfig = true
-    allRules = false
-    config.setFrom(files("$projectDir/detekt.yml"))
-}
+tasks {
+    register("detektAll", io.gitlab.arturbosch.detekt.Detekt::class) {
+        parallel = true
+        setSource(files(projectDir))
+        config.setFrom(files("${rootProject.projectDir}/detekt.yml"))
+        buildUponDefaultConfig = true
+    }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    register("clean", Delete::class) {
+        delete(rootProject.buildDir)
+    }
 }

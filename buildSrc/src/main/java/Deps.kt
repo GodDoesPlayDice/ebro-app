@@ -5,7 +5,7 @@ object Deps {
     const val minSdk = 24
     const val targetSdk = 31
 
-    //Sem Ver: Major.Minor.Patch. If you update major or minor version you must check AppUpdatedDialog for correct updates info (more in README.md)
+    //Sem Ver: Major.Minor.Patch
     const val versionCode = 10014
     const val versionName = "1.0.14"
 

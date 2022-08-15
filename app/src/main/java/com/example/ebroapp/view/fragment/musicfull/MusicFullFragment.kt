@@ -13,7 +13,6 @@ import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.adapter.MusicAdapter
 import com.example.ebroapp.view.base.BaseFragment
 
-
 class MusicFullFragment :
     BaseFragment<FragmentMusicFullBinding, MusicFullViewModel>(MusicFullViewModel::class.java) {
 
@@ -55,8 +54,7 @@ class MusicFullFragment :
         binding.btnPlay.apply {
             isChecked = viewModel.isPlaying()
             setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) viewModel.playMusic()
-                else viewModel.pauseMusic()
+                if (isChecked) viewModel.playMusic() else viewModel.pauseMusic()
             }
         }
 
