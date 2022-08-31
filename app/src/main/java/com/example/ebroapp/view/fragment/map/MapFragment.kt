@@ -227,6 +227,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
             enabled = true
         }
 
+        initMapBox()
+        
         navigationCamera =
             NavigationCamera(mapboxMap, binding.mapView.camera, viewportDataSource).apply {
                 binding.mapView.camera.addCameraAnimationsLifecycleListener(
@@ -242,9 +244,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
                     }
                 }
             }
-
-        initMapBox()
-
+            
         mapboxMap.loadStyleUri(Style.DARK)
 
         binding.mapView.gestures.addOnMapLongClickListener { point ->
