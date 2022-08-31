@@ -6,7 +6,6 @@ import com.example.domain.entity.Song
 import com.google.gson.Gson
 import javax.inject.Inject
 
-
 class DomainRepositoryImpl @Inject constructor(
     private val preferences: SharedPreferences,
     private val gson: Gson

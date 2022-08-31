@@ -15,6 +15,7 @@ import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
+@SuppressWarnings("TooManyFunctions")
 class Player @Inject constructor(
     private val context: Context,
     private val domainRepository: DomainRepository

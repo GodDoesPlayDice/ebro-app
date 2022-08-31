@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk = Deps.compileSdk
+    compileSdk = Deps.COMPILE_SDK
 
     defaultConfig {
-        minSdk = Deps.minSdk
-        targetSdk = Deps.targetSdk
+        minSdk = Deps.MIN_SDK
+        targetSdk = Deps.TARGET_SDK
 
-        testInstrumentationRunner = Deps.testAndroidInstrumentationRunner
+        testInstrumentationRunner = Deps.TEST_ANDROID_INSTRUMENTATION_RUNNER
     }
 
     buildTypes {
@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    implementation(Deps.core)
-    implementation(Deps.gson)
-    implementation(Deps.dagger)
+    implementation(Deps.CORE)
+    implementation(Deps.GSON)
+    implementation(Deps.DAGGER)
 }

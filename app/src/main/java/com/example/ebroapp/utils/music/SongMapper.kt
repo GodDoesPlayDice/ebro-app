@@ -10,6 +10,7 @@ object SongMapper {
     private const val FAVORITES = "FAVORITES"
     private const val TOP_STATIONS = "TOP STATIONS"
 
+    @SuppressWarnings("NestedBlockDepth")
     fun List<Song>.toAdapter(): List<SongListItem> {
         val items: MutableList<SongListItem> = mutableListOf()
         if (this.isNotEmpty()) {
