@@ -134,9 +134,8 @@ class LowerToolbarFragment :
         return false
     }
 
-    private fun getImageView(viewGroup: ViewGroup): ImageView {
-        return viewGroup.children.first { it is ImageView } as ImageView
-    }
+    private fun getImageView(viewGroup: ViewGroup): ImageView =
+        viewGroup.children.first { it is ImageView } as ImageView
 
     private fun setActiveDots(viewGroup: ViewGroup, value: Int): Boolean {
         val layout = viewGroup.children.first { it is LinearLayout } as LinearLayout

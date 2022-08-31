@@ -9,20 +9,14 @@ object CacheUtil {
     private val cacheSize = maxMemory / 8
 
     fun addBitmapToMemoryCache(key: String, bitmap: Bitmap?) {
-        if (bitmap != null) {
-            if (getBitmapFromMemCache(key) == null) {
-                memoryCache.put(key, bitmap)
-            }
+        if (bitmap != null && getBitmapFromMemCache(key) == null) {
+            memoryCache.put(key, bitmap)
         }
     }
 
-    fun getBitmapFromMemCache(key: String): Bitmap? {
-        return memoryCache.get(key)
-    }
+    fun getBitmapFromMemCache(key: String): Bitmap? = memoryCache.get(key)
 
     private val memoryCache = object : LruCache<String, Bitmap>(cacheSize) {
-        override fun sizeOf(key: String?, value: Bitmap): Int {
-            return value.byteCount / 1024
-        }
+        override fun sizeOf(key: String?, value: Bitmap): Int = value.byteCount / 1024
     }
 }

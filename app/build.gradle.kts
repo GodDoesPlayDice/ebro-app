@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    compileSdk = Deps.compileSdk
+    compileSdk = Deps.COMPILE_SDK
 
     defaultConfig {
-        applicationId = Deps.applicationId
-        minSdk = Deps.minSdk
-        targetSdk = Deps.targetSdk
-        versionCode = Deps.versionCode
-        versionName = Deps.versionName
-        testInstrumentationRunner = Deps.testAndroidInstrumentationRunner
+        applicationId = Deps.APPLICATION_ID
+        minSdk = Deps.MIN_SDK
+        targetSdk = Deps.TARGET_SDK
+        versionCode = Deps.VERSION_CODE
+        versionName = Deps.VERSION_NAME
+        testInstrumentationRunner = Deps.TEST_ANDROID_INSTRUMENTATION_RUNNER
     }
 
     signingConfigs {
@@ -72,25 +72,25 @@ dependencies {
     api(project(":domain"))
     api(project(":network"))
 
-    implementation(Deps.core)
-    implementation(Deps.appCompat)
-    implementation(Deps.constraintLayout)
-    implementation(Deps.legacy)
-    implementation(Deps.fragment)
-    implementation(Deps.navigationFragment)
-    implementation(Deps.navigationUi)
+    implementation(Deps.CORE)
+    implementation(Deps.APP_COMPAT)
+    implementation(Deps.CONSTRAINT_LAYOUT)
+    implementation(Deps.LEGACY)
+    implementation(Deps.FRAGMENT)
+    implementation(Deps.NAVIGATION_FRAGMENT)
+    implementation(Deps.NAVIGATION_UI)
 
-    implementation(Deps.material)
-    implementation(Deps.gson)
-    implementation(Deps.gms)
-    implementation(Deps.coroutines)
+    implementation(Deps.MATERIAL)
+    implementation(Deps.GSON)
+    implementation(Deps.GMS)
+    implementation(Deps.COROUTINES)
 
-    implementation(Deps.dagger)
-    kapt(Deps.daggerCompiler)
+    implementation(Deps.DAGGER)
+    kapt(Deps.DAGGER_COMPILER)
 
-    implementation(Deps.picasso)
+    implementation(Deps.PICASSO)
 
-    implementation(Deps.navigationMapbox)
+    implementation(Deps.NAVIGATION_MAPBOX)
 
-    implementation(Deps.timber)
+    implementation(Deps.TIMBER)
 }

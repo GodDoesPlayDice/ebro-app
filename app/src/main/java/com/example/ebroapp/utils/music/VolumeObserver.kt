@@ -5,7 +5,6 @@ import android.database.ContentObserver
 import android.media.AudioManager
 import android.os.Handler
 
-
 class VolumeObserver(context: Context, handler: Handler?, private val onChange: (Int) -> Unit) :
     ContentObserver(handler) {
     private var audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager

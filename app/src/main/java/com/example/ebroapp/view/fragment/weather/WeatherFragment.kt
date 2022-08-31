@@ -8,7 +8,6 @@ import com.example.ebroapp.utils.TimeUtil.getLongDay
 import com.example.ebroapp.view.base.BaseFragment
 import com.squareup.picasso.Picasso
 
-
 class WeatherFragment :
     BaseFragment<FragmentWeatherBinding, WeatherViewModel>(WeatherViewModel::class.java) {
 

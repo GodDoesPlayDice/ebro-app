@@ -3,7 +3,6 @@ package com.example.domain.repository
 import com.example.domain.entity.LocalPoint
 import com.example.domain.entity.Song
 
-
 interface DomainRepository {
 
     fun setSongs(songs: List<Song>)

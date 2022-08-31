@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 import java.io.IOException
 
-
 class UriAdapter : TypeAdapter<Uri?>() {
 
     @Throws(IOException::class)
