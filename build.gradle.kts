@@ -1,10 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.application") version "7.1.1" apply false
-    id("com.android.library") version "7.1.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.6.21" apply false
-    id("org.jetbrains.kotlin.jvm") version "1.6.21" apply false
-    id("io.gitlab.arturbosch.detekt") version ("1.21.0")
+    id(Deps.ANDROID_APPLICATION) version Deps.ANDROID_VERSION apply false
+    id(Deps.ANDROID_LIBRARY) version Deps.ANDROID_VERSION apply false
+    id(Deps.KOTLIN_ANDROID) version Deps.KOTLIN_VERSION apply false
+    id(Deps.KOTLIN_JVM) version Deps.KOTLIN_VERSION apply false
+    id(Deps.DETEKT) version Deps.DETEKT_VERSION
 }
 
 tasks {
