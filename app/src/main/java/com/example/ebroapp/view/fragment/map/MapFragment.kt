@@ -31,7 +31,6 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.navigation.base.TimeFormat
 import com.mapbox.navigation.base.extensions.applyDefaultNavigationOptions
 import com.mapbox.navigation.base.extensions.applyLanguageAndVoiceUnitOptions
-import com.mapbox.navigation.base.formatter.DistanceFormatterOptions
 import com.mapbox.navigation.base.options.NavigationOptions
 import com.mapbox.navigation.base.route.RouterCallback
 import com.mapbox.navigation.base.route.RouterFailure
@@ -54,11 +53,7 @@ import com.mapbox.navigation.ui.maneuver.api.MapboxManeuverApi
 import com.mapbox.navigation.ui.maps.camera.NavigationCamera
 import com.mapbox.navigation.ui.maps.camera.data.MapboxNavigationViewportDataSource
 import com.mapbox.navigation.ui.maps.camera.lifecycle.NavigationBasicGesturesHandler
-import com.mapbox.navigation.ui.maps.camera.state.NavigationCameraState.FOLLOWING
-import com.mapbox.navigation.ui.maps.camera.state.NavigationCameraState.IDLE
-import com.mapbox.navigation.ui.maps.camera.state.NavigationCameraState.OVERVIEW
-import com.mapbox.navigation.ui.maps.camera.state.NavigationCameraState.TRANSITION_TO_FOLLOWING
-import com.mapbox.navigation.ui.maps.camera.state.NavigationCameraState.TRANSITION_TO_OVERVIEW
+import com.mapbox.navigation.ui.maps.camera.state.NavigationCameraState
 import com.mapbox.navigation.ui.maps.location.NavigationLocationProvider
 import com.mapbox.navigation.ui.maps.route.arrow.api.MapboxRouteArrowApi
 import com.mapbox.navigation.ui.maps.route.arrow.api.MapboxRouteArrowView
@@ -220,109 +215,17 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
         mapboxMap = binding.mapView.getMapboxMap()
 
         binding.mapView.location.apply {
-            locationPuck = LocationPuck2D(
-                bearingImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_navigation)
+            this.locationPuck = LocationPuck2D(
+                bearingImage = ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_navigation
+                )
             )
             setLocationProvider(navigationLocationProvider)
             enabled = true
         }
 
-        initMapBox()
-
-        navigationCamera =
-            NavigationCamera(mapboxMap, binding.mapView.camera, viewportDataSource).apply {
-                binding.mapView.camera.addCameraAnimationsLifecycleListener(
-                    NavigationBasicGesturesHandler(this)
-                )
-                registerNavigationCameraStateChangeObserver { navigationCameraState ->
-                    when (navigationCameraState) {
-                        TRANSITION_TO_FOLLOWING,
-                        FOLLOWING -> binding.recenter.visibility = View.INVISIBLE
-                        TRANSITION_TO_OVERVIEW,
-                        OVERVIEW,
-                        IDLE -> binding.recenter.visibility = View.VISIBLE
-                    }
-                }
-            }
-
-        mapboxMap.loadStyleUri(Style.DARK)
-
-        binding.mapView.gestures.addOnMapLongClickListener { point ->
-            findRoute(point, true)
-            true
-        }
-        binding.stop.setOnClickListener {
-            clearRouteAndStopNavigation()
-        }
-        binding.recenter.setOnClickListener {
-            navigationCamera?.requestNavigationCameraToFollowing()
-            binding.routeOverview.showTextAndExtend(BUTTON_ANIMATION_DURATION)
-        }
-        binding.routeOverview.setOnClickListener {
-            navigationCamera?.requestNavigationCameraToOverview()
-            binding.recenter.showTextAndExtend(BUTTON_ANIMATION_DURATION)
-        }
-        binding.soundButton.setOnClickListener {
-            isVoiceInstructionsMuted = !isVoiceInstructionsMuted
-        }
-        binding.soundButton.unmute()
-
-        viewModel.getCurrentLocation()?.let {
-            mapboxMap.setCamera(CameraOptions.Builder().center(it).zoom(16.0).build())
-        }
-    }
-
-    private fun initMapBox() {
-        mapboxNavigation = getNavigator()
-        viewportDataSource = MapboxNavigationViewportDataSource(mapboxMap)
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            viewportDataSource.overviewPadding = landscapeOverviewPadding
-        } else {
-            viewportDataSource.overviewPadding = overviewPadding
-        }
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            viewportDataSource.followingPadding = landscapeFollowingPadding
-        } else {
-            viewportDataSource.followingPadding = followingPadding
-        }
-        val distanceFormatterOptions =
-            mapboxNavigation.navigationOptions.distanceFormatterOptions
-        maneuverApi = MapboxManeuverApi(MapboxDistanceFormatter(distanceFormatterOptions))
-        tripProgressApi = getTripProgressApi(distanceFormatterOptions)
-
-        speechApi = MapboxSpeechApi(
-            requireContext(),
-            getString(R.string.mapbox_access_token),
-            Locale.US.language
-        )
-        voiceInstructionsPlayer = MapboxVoiceInstructionsPlayer(
-            requireContext(),
-            getString(R.string.mapbox_access_token),
-            Locale.US.language
-        )
-        val mapboxRouteLineOptions = MapboxRouteLineOptions.Builder(requireContext())
-            .withRouteLineBelowLayerId("road-label")
-            .build()
-        routeLineApi = MapboxRouteLineApi(mapboxRouteLineOptions)
-        routeLineView = MapboxRouteLineView(mapboxRouteLineOptions)
-
-        val routeArrowOptions = RouteArrowOptions.Builder(requireContext()).build()
-        routeArrowView = MapboxRouteArrowView(routeArrowOptions)
-
-        mapboxNavigation.apply {
-            if (checkLocationPermission(requireContext())) {
-                startTripSession()
-            }
-            registerRoutesObserver(routesObserver)
-            registerRouteProgressObserver(routeProgressObserver)
-            registerLocationObserver(locationObserver)
-            registerVoiceInstructionsObserver(voiceInstructionsObserver)
-            registerRouteProgressObserver(replayProgressObserver)
-        }
-    }
-
-    private fun getNavigator(): MapboxNavigation =
-        if (MapboxNavigationProvider.isCreated()) {
+        mapboxNavigation = if (MapboxNavigationProvider.isCreated()) {
             MapboxNavigationProvider.retrieve()
         } else {
             MapboxNavigationProvider.create(
@@ -332,9 +235,38 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
                     .build()
             )
         }
+        viewportDataSource = MapboxNavigationViewportDataSource(mapboxMap)
+        navigationCamera = NavigationCamera(mapboxMap, binding.mapView.camera, viewportDataSource)
+        navigationCamera?.apply {
+            binding.mapView.camera.addCameraAnimationsLifecycleListener(
+                NavigationBasicGesturesHandler(this)
+            )
+            registerNavigationCameraStateChangeObserver { navigationCameraState ->
+                when (navigationCameraState) {
+                    NavigationCameraState.TRANSITION_TO_FOLLOWING,
+                    NavigationCameraState.FOLLOWING -> binding.recenter.visibility = View.INVISIBLE
+                    NavigationCameraState.TRANSITION_TO_OVERVIEW,
+                    NavigationCameraState.OVERVIEW,
+                    NavigationCameraState.IDLE -> binding.recenter.visibility = View.VISIBLE
+                }
+            }
+        }
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            viewportDataSource.overviewPadding = landscapeOverviewPadding
+        } else {
+            viewportDataSource.overviewPadding = overviewPadding
+        }
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            viewportDataSource.followingPadding = landscapeFollowingPadding
+        } else {
+            viewportDataSource.followingPadding = followingPadding
+        }
+        val distanceFormatterOptions =
+            mapboxNavigation.navigationOptions.distanceFormatterOptions
 
-    private fun getTripProgressApi(distanceFormatterOptions: DistanceFormatterOptions): MapboxTripProgressApi =
-        MapboxTripProgressApi(
+        maneuverApi = MapboxManeuverApi(MapboxDistanceFormatter(distanceFormatterOptions))
+
+        tripProgressApi = MapboxTripProgressApi(
             TripProgressUpdateFormatter.Builder(requireContext())
                 .distanceRemainingFormatter(
                     DistanceRemainingFormatter(distanceFormatterOptions)
@@ -350,6 +282,65 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
                 )
                 .build()
         )
+
+        speechApi = MapboxSpeechApi(
+            requireContext(),
+            getString(R.string.mapbox_access_token),
+            Locale.US.language
+        )
+        voiceInstructionsPlayer = MapboxVoiceInstructionsPlayer(
+            requireContext(),
+            getString(R.string.mapbox_access_token),
+            Locale.US.language
+        )
+
+        val mapboxRouteLineOptions = MapboxRouteLineOptions.Builder(requireContext())
+            .withRouteLineBelowLayerId("road-label")
+            .build()
+        routeLineApi = MapboxRouteLineApi(mapboxRouteLineOptions)
+        routeLineView = MapboxRouteLineView(mapboxRouteLineOptions)
+
+        val routeArrowOptions = RouteArrowOptions.Builder(requireContext()).build()
+        routeArrowView = MapboxRouteArrowView(routeArrowOptions)
+
+        mapboxMap.loadStyleUri(Style.DARK)
+
+        binding.mapView.gestures.addOnMapLongClickListener { point ->
+            findRoute(point, true)
+            true
+        }
+
+        binding.stop.setOnClickListener {
+            clearRouteAndStopNavigation()
+        }
+        binding.recenter.setOnClickListener {
+            navigationCamera?.requestNavigationCameraToFollowing()
+            binding.routeOverview.showTextAndExtend(BUTTON_ANIMATION_DURATION)
+        }
+        binding.routeOverview.setOnClickListener {
+            navigationCamera?.requestNavigationCameraToOverview()
+            binding.recenter.showTextAndExtend(BUTTON_ANIMATION_DURATION)
+        }
+        binding.soundButton.setOnClickListener {
+            isVoiceInstructionsMuted = !isVoiceInstructionsMuted
+        }
+
+        binding.soundButton.unmute()
+
+        if (checkLocationPermission(requireContext())) {
+            mapboxNavigation.startTripSession()
+        }
+
+        mapboxNavigation.registerRoutesObserver(routesObserver)
+        mapboxNavigation.registerRouteProgressObserver(routeProgressObserver)
+        mapboxNavigation.registerLocationObserver(locationObserver)
+        mapboxNavigation.registerVoiceInstructionsObserver(voiceInstructionsObserver)
+        mapboxNavigation.registerRouteProgressObserver(replayProgressObserver)
+
+        viewModel.getCurrentLocation()?.let {
+            mapboxMap.setCamera(CameraOptions.Builder().center(it).zoom(16.0).build())
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -427,12 +418,14 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
                 override fun onFailure(
                     reasons: List<RouterFailure>,
                     routeOptions: RouteOptions
-                ) {}
+                ) {
+                }
 
                 override fun onCanceled(
                     routeOptions: RouteOptions,
                     routerOrigin: RouterOrigin
-                ) {}
+                ) {
+                }
             }
         )
     }
