@@ -15,7 +15,6 @@ import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentSettingsBinding
 import com.example.ebroapp.view.base.BaseFragment
 
-
 class SettingsFragment :
     BaseFragment<FragmentSettingsBinding, SettingsViewModel>(SettingsViewModel::class.java) {
 
@@ -67,11 +66,9 @@ class SettingsFragment :
                 seekBar.thumbOffset = 60
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
         binding.sbDisplayBrightness.thumb = getThumb(0)
         binding.sbDisplayBrightness.thumbOffset = 60
@@ -79,7 +76,7 @@ class SettingsFragment :
 
     private fun getThumb(progress: Int): Drawable {
         (thumbView.findViewById(R.id.tvProgress) as TextView).text =
-            requireContext().getString(R.string.volume_percentage, progress + 10)
+            requireContext().getString(R.string.volume_percentage, progress + PERCENTAGE_STEP)
         thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         val bitmap = Bitmap.createBitmap(
             thumbView.measuredWidth,
@@ -90,5 +87,9 @@ class SettingsFragment :
         thumbView.layout(0, 0, thumbView.measuredWidth, thumbView.measuredHeight)
         thumbView.draw(canvas)
         return BitmapDrawable(resources, bitmap)
+    }
+
+    companion object {
+        private const val PERCENTAGE_STEP = 10
     }
 }

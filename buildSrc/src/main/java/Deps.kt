@@ -1,45 +1,55 @@
 object Deps {
 
-    const val applicationId = "com.example.ebroapp"
-    const val compileSdk = 31
-    const val minSdk = 24
-    const val targetSdk = 31
+    const val APPLICATION_ID = "com.example.ebroapp"
+    const val COMPILE_SDK = 31
+    const val MIN_SDK = 24
+    const val TARGET_SDK = 31
 
-    //Sem Ver: Major.Minor.Patch. If you update major or minor version you must check AppUpdatedDialog for correct updates info (more in README.md)
-    const val versionCode = 10014
-    const val versionName = "1.0.14"
+    //Sem Ver: Major.Minor.Patch
+    const val VERSION_CODE = 10014
+    const val VERSION_NAME = "1.0.14"
 
-    const val testAndroidInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    const val TEST_ANDROID_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 
     // Dependencies
-    private const val navigationVersion = "2.5.1"
-    private const val daggerVersion = "2.40"
-    private const val retrofitVersion = "2.9.0"
+    const val ANDROID_VERSION = "7.1.1"
+    const val KOTLIN_VERSION = "1.6.21"
+    const val DETEKT_VERSION = "1.21.0"
 
-    const val core = "androidx.core:core-ktx:1.8.0"
-    const val appCompat = "androidx.appcompat:appcompat:1.4.2"
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
-    const val legacy = "androidx.legacy:legacy-support-v4:1.0.0"
-    const val fragment = "androidx.fragment:fragment-ktx:1.5.1"
+    private const val NAVIGATION_VERSION = "2.5.1"
+    private const val DAGGER_VERSION = "2.40"
+    private const val RETROFIT_VERSION = "2.9.0"
 
-    const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
-    const val navigationUi = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    const val ANDROID_APPLICATION = "com.android.application"
+    const val ANDROID_LIBRARY = "com.android.library"
+    const val KOTLIN_ANDROID = "org.jetbrains.kotlin.android"
+    const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
+    const val DETEKT = "io.gitlab.arturbosch.detekt"
 
-    const val material = "com.google.android.material:material:1.6.1"
-    const val gson = "com.google.code.gson:gson:2.9.0"
-    const val gms = "com.google.android.gms:play-services-location:20.0.0"
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+    const val CORE = "androidx.core:core-ktx:1.8.0"
+    const val APP_COMPAT = "androidx.appcompat:appcompat:1.4.2"
+    const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.4"
+    const val LEGACY = "androidx.legacy:legacy-support-v4:1.0.0"
+    const val FRAGMENT = "androidx.fragment:fragment-ktx:1.5.1"
 
-    const val dagger = "com.google.dagger:dagger:$daggerVersion"
-    const val daggerCompiler = "com.google.dagger:dagger-compiler:$daggerVersion"
+    const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment-ktx:$NAVIGATION_VERSION"
+    const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:$NAVIGATION_VERSION"
 
-    const val picasso = "com.squareup.picasso:picasso:2.71828"
+    const val MATERIAL = "com.google.android.material:material:1.6.1"
+    const val GSON = "com.google.code.gson:gson:2.9.0"
+    const val GMS = "com.google.android.gms:play-services-location:20.0.0"
+    const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
 
-    const val navigationMapbox = "com.mapbox.navigation:android:2.3.0"
+    const val DAGGER = "com.google.dagger:dagger:$DAGGER_VERSION"
+    const val DAGGER_COMPILER = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 
-    const val timber = "com.jakewharton.timber:timber:5.0.1"
+    const val PICASSO = "com.squareup.picasso:picasso:2.71828"
 
-    const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    const val retrofitConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    const val NAVIGATION_MAPBOX = "com.mapbox.navigation:android:2.3.0"
+
+    const val TIMBER = "com.jakewharton.timber:timber:5.0.1"
+
+    const val RETROFIT = "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    const val RETROFIT_CONVERTER = "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:4.9.0"
 }

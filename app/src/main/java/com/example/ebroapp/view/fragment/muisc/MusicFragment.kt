@@ -17,7 +17,6 @@ import com.example.ebroapp.utils.setOnVolumeChangeListener
 import com.example.ebroapp.utils.setTime
 import com.example.ebroapp.view.base.BaseFragment
 
-
 class MusicFragment :
     BaseFragment<FragmentMusicBinding, MusicViewModel>(MusicViewModel::class.java) {
 

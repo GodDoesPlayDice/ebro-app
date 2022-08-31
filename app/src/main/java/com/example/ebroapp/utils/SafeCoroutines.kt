@@ -38,11 +38,9 @@ inline fun CoroutineScope.launchMain(
 }
 
 @Suppress("NeedToUseCustomWithContextRule")
-suspend inline fun <T> withIO(noinline block: suspend CoroutineScope.() -> T): T {
-    return withContext(Dispatchers.IO, block)
-}
+suspend inline fun <T> withIO(noinline block: suspend CoroutineScope.() -> T): T =
+    withContext(Dispatchers.IO, block)
 
 @Suppress("NeedToUseCustomWithContextRule")
-suspend inline fun <T> withMain(noinline block: suspend CoroutineScope.() -> T): T {
-    return withContext(Dispatchers.Main, block)
-}
+suspend inline fun <T> withMain(noinline block: suspend CoroutineScope.() -> T): T =
+    withContext(Dispatchers.Main, block)
