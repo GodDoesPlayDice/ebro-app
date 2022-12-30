@@ -16,6 +16,7 @@ object Deps {
     const val KOTLIN_VERSION = "1.6.21"
     const val DETEKT_VERSION = "1.22.0"
 
+    private const val LINT_VERSION = "30.0.0"
     private const val NAVIGATION_VERSION = "2.5.1"
     private const val DAGGER_VERSION = "2.40"
     private const val RETROFIT_VERSION = "2.9.0"
@@ -55,4 +56,7 @@ object Deps {
     const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
     const val KTLINT = "com.pinterest:ktlint:0.47.1"
+
+    const val LINT_API = "com.android.tools.lint:lint-api:$LINT_VERSION"
+    const val LINT_CHECKS = "com.android.tools.lint:lint-checks:$LINT_VERSION"
 }

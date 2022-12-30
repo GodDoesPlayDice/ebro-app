@@ -24,4 +24,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ebroapp"
-include(":app", ":domain", ":network")
+include(":app", ":domain", ":network", ":custom_lint")

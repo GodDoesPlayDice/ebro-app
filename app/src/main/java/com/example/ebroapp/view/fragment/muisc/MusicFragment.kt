@@ -40,10 +40,10 @@ class MusicFragment :
         val volume: Int = audioManager.getStreamVolume(STREAM_MUSIC) * PERCENT / MAX_VOLUME
         binding.tvVolume.text = requireContext().getString(R.string.volume_percentage, volume)
         requireContext().contentResolver.setOnVolumeChangeListener(volumeObserver)
-        binding.ivVolumeUp.setOnClickListener {
+        binding.imgVolumeUp.setOnClickListener {
             audioManager.adjustVolume(ADJUST_RAISE, FLAG_PLAY_SOUND)
         }
-        binding.ivVolumeDown.setOnClickListener {
+        binding.imgVolumeDown.setOnClickListener {
             audioManager.adjustVolume(ADJUST_LOWER, FLAG_PLAY_SOUND)
         }
 
@@ -52,11 +52,11 @@ class MusicFragment :
             viewModel.playPauseMusic(isChecked)
         }
 
-        binding.btnNextSong.setOnClickListener {
+        binding.imgNextSong.setOnClickListener {
             viewModel.nextSong()
             fillCurrentSong()
         }
-        binding.btnPreviousSong.setOnClickListener {
+        binding.imgPreviousSong.setOnClickListener {
             viewModel.previousSong()
             fillCurrentSong()
         }

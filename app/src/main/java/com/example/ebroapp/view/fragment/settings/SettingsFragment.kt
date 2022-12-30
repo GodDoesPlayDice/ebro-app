@@ -21,7 +21,7 @@ class SettingsFragment :
     private val lightsButtons = mutableListOf<ToggleButton>()
     private val thumbView: View by lazy {
         LayoutInflater.from(requireContext())
-            .inflate(R.layout.settings_seekbar_thumb, null, false)
+            .inflate(R.layout.view_settings_seekbar_thumb, null, false)
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSettingsBinding =

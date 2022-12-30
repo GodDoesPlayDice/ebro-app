@@ -92,4 +92,6 @@ dependencies {
 //    implementation(Deps.NAVIGATION_MAPBOX)
 
     implementation(Deps.TIMBER)
+
+    lintChecks(project(":custom_lint"))
 }

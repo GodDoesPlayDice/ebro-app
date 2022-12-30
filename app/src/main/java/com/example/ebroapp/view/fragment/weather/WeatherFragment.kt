@@ -28,7 +28,7 @@ class WeatherFragment :
 
             Picasso.get()
                 .load("https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png")
-                .into(binding.ivWeather)
+                .into(binding.imgWeather)
 
             binding.tvDayOfWeek.text = getLongDay(current.dt)
             binding.tvTemperature.text =

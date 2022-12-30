@@ -58,11 +58,11 @@ class MusicFullFragment :
             }
         }
 
-        binding.btnNextSong.setOnClickListener {
+        binding.imgNextSong.setOnClickListener {
             viewModel.nextSong()
             fillCurrentSong()
         }
-        binding.btnPreviousSong.setOnClickListener {
+        binding.imgPreviousSong.setOnClickListener {
             viewModel.previousSong()
             fillCurrentSong()
         }

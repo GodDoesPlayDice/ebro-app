@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lower_toolbar_layout"
+    android:id="@+id/clLowerToolbar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -16,8 +16,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="128dp"
         app:layout_constraintEnd_toStartOf="@id/clRightSeatContainer"
-        app:layout_constraintStart_toEndOf="@+id/ivSettings"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintStart_toEndOf="@+id/imgSettings"
+        app:layout_constraintTop_toBottomOf="@+id/ll3">
 
         <ImageButton
             android:id="@+id/btnDecreaseLsTemperature"
@@ -91,7 +91,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/switch1"
         app:layout_constraintStart_toEndOf="@id/clLeftSeatContainer"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/ll3">
 
         <TextView
             android:id="@+id/tvRsTemperature"
@@ -158,7 +158,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/ivSettings"
+        android:id="@+id/imgSettings"
         android:layout_width="108dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -170,15 +170,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/settings"
         android:textColor="@color/text_gray"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/ivSettings"
-        app:layout_constraintStart_toStartOf="@+id/ivSettings"
-        app:layout_constraintTop_toBottomOf="@+id/ivSettings" />
+        app:layout_constraintEnd_toEndOf="@+id/imgSettings"
+        app:layout_constraintStart_toStartOf="@+id/imgSettings"
+        app:layout_constraintTop_toBottomOf="@+id/imgSettings" />
 
     <Switch
         android:id="@+id/switch1"
@@ -204,7 +203,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/ll3"
         android:layout_width="0dp"
         android:layout_height="96dp"
         android:layout_marginStart="8dp"
@@ -214,7 +213,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/switch1"
-        app:layout_constraintStart_toEndOf="@+id/ivSettings"
+        app:layout_constraintStart_toEndOf="@+id/imgSettings"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -226,7 +225,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView17"
+                android:id="@+id/img17"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -241,7 +240,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView24"
+                    android:id="@+id/img24"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginLeft="8dp"
@@ -250,7 +249,7 @@
                     android:src="@drawable/ic_dot_inactive" />
 
                 <ImageView
-                    android:id="@+id/imageView25"
+                    android:id="@+id/img25"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
@@ -258,7 +257,7 @@
                     android:src="@drawable/ic_dot_inactive" />
 
                 <ImageView
-                    android:id="@+id/imageView23"
+                    android:id="@+id/img23"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
@@ -276,7 +275,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView18"
+                android:id="@+id/img18"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -286,7 +285,7 @@
                 app:tint="@color/text_gray" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/tv9"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:text="@string/front"
@@ -304,7 +303,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView19"
+                android:id="@+id/img19"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -314,7 +313,7 @@
                 app:tint="@color/text_gray" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tv10"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:text="@string/auto"
@@ -331,7 +330,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView20"
+                android:id="@+id/img20"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -346,7 +345,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView27"
+                    android:id="@+id/img27"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginLeft="8dp"
@@ -355,7 +354,7 @@
                     android:src="@drawable/ic_dot_inactive" />
 
                 <ImageView
-                    android:id="@+id/imageView28"
+                    android:id="@+id/img28"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
@@ -363,7 +362,7 @@
                     android:src="@drawable/ic_dot_inactive" />
 
                 <ImageView
-                    android:id="@+id/imageView29"
+                    android:id="@+id/img29"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
@@ -371,7 +370,7 @@
                     android:src="@drawable/ic_dot_inactive" />
 
                 <ImageView
-                    android:id="@+id/imageView30"
+                    android:id="@+id/img30"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
@@ -379,7 +378,7 @@
                     android:src="@drawable/ic_dot_inactive" />
 
                 <ImageView
-                    android:id="@+id/imageView26"
+                    android:id="@+id/img26"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
@@ -396,7 +395,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView21"
+                android:id="@+id/img21"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -406,7 +405,7 @@
                 app:tint="@color/text_gray" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/tv11"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:text="@string/rear"
@@ -423,7 +422,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView22"
+                android:id="@+id/img22"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -438,21 +437,21 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView33"
+                    android:id="@+id/img33"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_dot_inactive" />
 
                 <ImageView
-                    android:id="@+id/imageView32"
+                    android:id="@+id/img32"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_dot_inactive" />
 
                 <ImageView
-                    android:id="@+id/imageView31"
+                    android:id="@+id/img31"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginEnd="8dp"
