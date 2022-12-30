@@ -73,7 +73,6 @@ class DomainRepositoryImpl @Inject constructor(
         preferences.edit().putString(DESTINATION_LOCATION, gson.toJson(point)).apply()
     }
 
-
     override fun removeDestinationLocation() {
         preferences.edit().putString(DESTINATION_LOCATION, "").apply()
     }

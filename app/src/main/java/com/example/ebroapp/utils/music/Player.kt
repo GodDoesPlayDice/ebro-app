@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.PowerManager
 import com.example.domain.entity.Song
 import com.example.domain.repository.DomainRepository
+import com.example.ebroapp.utils.TimeUtil.MILLS_IN_SECOND
 import com.example.ebroapp.utils.launchIO
 import com.example.ebroapp.utils.launchMain
 import com.example.ebroapp.utils.withMain
@@ -45,7 +46,6 @@ class Player @Inject constructor(
             mediaPlayer.stop()
             setDataSource(it.uri)
         }
-
     }
 
     fun isPlaying() = mediaPlayer.isPlaying
@@ -102,7 +102,6 @@ class Player @Inject constructor(
         Thread(observer).start()
     }
 
-
     fun setOnMusicLoadingComplete(onMusicLoadingComplete: () -> Unit) {
         this.onMusicLoadingComplete = onMusicLoadingComplete
     }
@@ -139,12 +138,12 @@ class Player @Inject constructor(
                 GlobalScope.launchMain({
                     if (mediaPlayer.isPlaying) {
                         listener(
-                            mediaPlayer.currentPosition / 1000,
-                            mediaPlayer.duration / 1000
+                            mediaPlayer.currentPosition / MILLS_IN_SECOND,
+                            mediaPlayer.duration / MILLS_IN_SECOND
                         )
                     }
                 }, { Timber.e(it) })
-                Thread.sleep(1000)
+                Thread.sleep(MILLS_IN_SECOND.toLong())
             }
         }
     }

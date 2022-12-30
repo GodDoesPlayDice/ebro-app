@@ -7,8 +7,8 @@ import com.example.domain.entity.Separator
 import com.example.domain.entity.Song
 import com.example.domain.entity.SongListItem
 import com.example.domain.entity.SongListItem.Companion.TYPE_SONG
-import com.example.ebroapp.databinding.ItemSeparatorBinding
-import com.example.ebroapp.databinding.ItemSongBinding
+import com.example.ebroapp.databinding.ListItemSeparatorBinding
+import com.example.ebroapp.databinding.ListItemSongBinding
 import com.example.ebroapp.utils.setImageFromUri
 
 class MusicAdapter(private val onClick: (Song) -> Unit) :
@@ -19,8 +19,8 @@ class MusicAdapter(private val onClick: (Song) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            TYPE_SONG -> SongViewHolder(ItemSongBinding.inflate(inflater, parent, false))
-            else -> SeparatorViewHolder(ItemSeparatorBinding.inflate(inflater, parent, false))
+            TYPE_SONG -> SongViewHolder(ListItemSongBinding.inflate(inflater, parent, false))
+            else -> SeparatorViewHolder(ListItemSeparatorBinding.inflate(inflater, parent, false))
         }
     }
 
@@ -47,7 +47,7 @@ class MusicAdapter(private val onClick: (Song) -> Unit) :
         items = songs
     }
 
-    class SongViewHolder(private val binding: ItemSongBinding) :
+    class SongViewHolder(private val binding: ListItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun fill(song: Song, onClick: (Song) -> Unit) {
             binding.ivAlbumCover.setImageFromUri(song.uri)
@@ -55,7 +55,7 @@ class MusicAdapter(private val onClick: (Song) -> Unit) :
         }
     }
 
-    class SeparatorViewHolder(private val binding: ItemSeparatorBinding) :
+    class SeparatorViewHolder(private val binding: ListItemSeparatorBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun fill(item: Separator) {
             binding.tvLabel.text = item.label

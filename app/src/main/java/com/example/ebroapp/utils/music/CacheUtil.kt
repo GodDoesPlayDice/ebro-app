@@ -5,8 +5,14 @@ import android.util.LruCache
 
 object CacheUtil {
 
-    private val maxMemory: Int = (Runtime.getRuntime().maxMemory() / 1024).toInt()
-    private val cacheSize = maxMemory / 8
+    private const val MB = 1000
+    private const val B = 8
+
+    private val maxMemory: Int = (Runtime.getRuntime().maxMemory() / MB).toInt()
+    private val cacheSize = maxMemory / B
+    private val memoryCache = object : LruCache<String, Bitmap>(cacheSize) {
+        override fun sizeOf(key: String?, value: Bitmap): Int = value.byteCount / MB
+    }
 
     fun addBitmapToMemoryCache(key: String, bitmap: Bitmap?) {
         if (bitmap != null && getBitmapFromMemCache(key) == null) {
@@ -15,8 +21,4 @@ object CacheUtil {
     }
 
     fun getBitmapFromMemCache(key: String): Bitmap? = memoryCache.get(key)
-
-    private val memoryCache = object : LruCache<String, Bitmap>(cacheSize) {
-        override fun sizeOf(key: String?, value: Bitmap): Int = value.byteCount / 1024
-    }
 }

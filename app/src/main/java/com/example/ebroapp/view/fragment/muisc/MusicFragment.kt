@@ -20,7 +20,11 @@ import com.example.ebroapp.view.base.BaseFragment
 class MusicFragment :
     BaseFragment<FragmentMusicBinding, MusicViewModel>(MusicViewModel::class.java) {
 
-    private lateinit var volumeObserver: VolumeObserver
+    private val volumeObserver: VolumeObserver by lazy {
+        VolumeObserver(requireContext(), Handler()) {
+            binding.tvVolume.text = requireContext().getString(R.string.volume_percentage, it)
+        }
+    }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMusicBinding =
         FragmentMusicBinding::inflate
@@ -35,14 +39,11 @@ class MusicFragment :
         val audioManager = requireContext().getSystemService(AUDIO_SERVICE) as AudioManager
         val volume: Int = audioManager.getStreamVolume(STREAM_MUSIC) * PERCENT / MAX_VOLUME
         binding.tvVolume.text = requireContext().getString(R.string.volume_percentage, volume)
-        volumeObserver = VolumeObserver(requireContext(), Handler()) {
-            binding.tvVolume.text = requireContext().getString(R.string.volume_percentage, it)
-        }
         requireContext().contentResolver.setOnVolumeChangeListener(volumeObserver)
-        binding.ivVolumeUp.setOnClickListener {
+        binding.imgVolumeUp.setOnClickListener {
             audioManager.adjustVolume(ADJUST_RAISE, FLAG_PLAY_SOUND)
         }
-        binding.ivVolumeDown.setOnClickListener {
+        binding.imgVolumeDown.setOnClickListener {
             audioManager.adjustVolume(ADJUST_LOWER, FLAG_PLAY_SOUND)
         }
 
@@ -51,11 +52,11 @@ class MusicFragment :
             viewModel.playPauseMusic(isChecked)
         }
 
-        binding.btnNextSong.setOnClickListener {
+        binding.imgNextSong.setOnClickListener {
             viewModel.nextSong()
             fillCurrentSong()
         }
-        binding.btnPreviousSong.setOnClickListener {
+        binding.imgPreviousSong.setOnClickListener {
             viewModel.previousSong()
             fillCurrentSong()
         }
