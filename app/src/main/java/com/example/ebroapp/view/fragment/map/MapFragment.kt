@@ -150,7 +150,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
             val enhancedLocation = locationMatcherResult.enhancedLocation
             navigationLocationProvider.changePosition(
                 location = enhancedLocation,
-                keyPoints = locationMatcherResult.keyPoints,
+                keyPoints = locationMatcherResult.keyPoints
             )
             viewportDataSource.onLocationChanged(enhancedLocation)
             viewportDataSource.evaluate()
@@ -228,7 +228,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
         }
 
         initMapBox()
-        
+
         navigationCamera =
             NavigationCamera(mapboxMap, binding.mapView.camera, viewportDataSource).apply {
                 binding.mapView.camera.addCameraAnimationsLifecycleListener(
@@ -244,7 +244,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
                     }
                 }
             }
-            
+
         mapboxMap.loadStyleUri(Style.DARK)
 
         binding.mapView.gestures.addOnMapLongClickListener { point ->
@@ -439,7 +439,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(MapViewModel:
 
     private fun setRouteAndStartNavigation(routes: List<DirectionsRoute>, isNewPoint: Boolean) {
         mapboxNavigation.setRoutes(routes)
-        //startSimulation(routes.first())
+        // startSimulation(routes.first())
         binding.soundButton.visibility = View.VISIBLE
         binding.routeOverview.visibility = View.VISIBLE
         binding.tripProgressCard.visibility = View.VISIBLE

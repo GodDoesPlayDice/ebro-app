@@ -23,4 +23,3 @@ class ViewModelFactory @Inject constructor(
         }
     }
 }
-

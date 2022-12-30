@@ -75,4 +75,3 @@ fun ShapeableImageView.setImageFromUri(
         bitmap?.let { setImageBitmap(it) } ?: setImageResource(error)
     }, { setImageResource(error) })
 }
-

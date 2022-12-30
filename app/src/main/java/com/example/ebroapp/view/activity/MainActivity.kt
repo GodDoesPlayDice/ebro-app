@@ -97,10 +97,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty()
-            && grantResults.size == 2
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED
-            && grantResults[1] == PackageManager.PERMISSION_GRANTED
+        if (grantResults.isNotEmpty() &&
+            grantResults.size == 2 &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+            grantResults[1] == PackageManager.PERMISSION_GRANTED
         ) {
             viewModel.setPlayList(this)
             recreate()

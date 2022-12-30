@@ -48,6 +48,5 @@ abstract class BaseFragment<Binding : ViewBinding, ViewModel : androidx.lifecycl
         _binding = null
     }
 
-
     abstract fun setupUI()
 }

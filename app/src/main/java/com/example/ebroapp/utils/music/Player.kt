@@ -45,7 +45,6 @@ class Player @Inject constructor(
             mediaPlayer.stop()
             setDataSource(it.uri)
         }
-
     }
 
     fun isPlaying() = mediaPlayer.isPlaying
@@ -101,7 +100,6 @@ class Player @Inject constructor(
         observer = MediaObserver(listener)
         Thread(observer).start()
     }
-
 
     fun setOnMusicLoadingComplete(onMusicLoadingComplete: () -> Unit) {
         this.onMusicLoadingComplete = onMusicLoadingComplete

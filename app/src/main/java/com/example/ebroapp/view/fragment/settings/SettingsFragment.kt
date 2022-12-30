@@ -48,7 +48,6 @@ class SettingsFragment :
                         buttonView.isChecked = true
                     }
                 }
-
             }
 
         lightsButtons.forEach { button ->
@@ -60,16 +59,16 @@ class SettingsFragment :
         thumbView = LayoutInflater.from(this.context)
             .inflate(R.layout.settings_seekbar_thumb, null, false)
         binding.sbDisplayBrightness.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                seekBar.thumb = getThumb(progress)
-                seekBar.thumbOffset = 60
-            }
+                SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    seekBar.thumb = getThumb(progress)
+                    seekBar.thumbOffset = 60
+                }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            })
         binding.sbDisplayBrightness.thumb = getThumb(0)
         binding.sbDisplayBrightness.thumbOffset = 60
     }

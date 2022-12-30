@@ -5,7 +5,7 @@ object Deps {
     const val MIN_SDK = 24
     const val TARGET_SDK = 31
 
-    //Sem Ver: Major.Minor.Patch
+    // Sem Ver: Major.Minor.Patch
     const val VERSION_CODE = 10014
     const val VERSION_NAME = "1.0.14"
 
@@ -14,7 +14,7 @@ object Deps {
     // Dependencies
     const val ANDROID_VERSION = "7.1.1"
     const val KOTLIN_VERSION = "1.6.21"
-    const val DETEKT_VERSION = "1.21.0"
+    const val DETEKT_VERSION = "1.22.0"
 
     private const val NAVIGATION_VERSION = "2.5.1"
     private const val DAGGER_VERSION = "2.40"
@@ -25,6 +25,7 @@ object Deps {
     const val KOTLIN_ANDROID = "org.jetbrains.kotlin.android"
     const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
     const val DETEKT = "io.gitlab.arturbosch.detekt"
+    const val DETEKT_FORMATTING = "io.gitlab.arturbosch.detekt:detekt-formatting:$DETEKT_VERSION"
 
     const val CORE = "androidx.core:core-ktx:1.8.0"
     const val APP_COMPAT = "androidx.appcompat:appcompat:1.4.2"
@@ -52,4 +53,6 @@ object Deps {
     const val RETROFIT = "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     const val RETROFIT_CONVERTER = "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:4.9.0"
+
+    const val KTLINT = "com.pinterest:ktlint:0.47.1"
 }
