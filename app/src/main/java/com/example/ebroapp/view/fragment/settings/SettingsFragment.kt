@@ -19,7 +19,10 @@ class SettingsFragment :
     BaseFragment<FragmentSettingsBinding, SettingsViewModel>(SettingsViewModel::class.java) {
 
     private val lightsButtons = mutableListOf<ToggleButton>()
-    private lateinit var thumbView: View
+    private val thumbView: View by lazy {
+        LayoutInflater.from(requireContext())
+            .inflate(R.layout.settings_seekbar_thumb, null, false)
+    }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSettingsBinding =
         FragmentSettingsBinding::inflate
@@ -56,21 +59,20 @@ class SettingsFragment :
     }
 
     private fun prepareSeekBar() {
-        thumbView = LayoutInflater.from(this.context)
-            .inflate(R.layout.settings_seekbar_thumb, null, false)
-        binding.sbDisplayBrightness.setOnSeekBarChangeListener(object :
-                SeekBar.OnSeekBarChangeListener {
+        binding.sbDisplayBrightness.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     seekBar.thumb = getThumb(progress)
-                    seekBar.thumbOffset = 60
+                    seekBar.thumbOffset = THUMB_OFFSET
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
+            }
+        )
         binding.sbDisplayBrightness.thumb = getThumb(0)
-        binding.sbDisplayBrightness.thumbOffset = 60
+        binding.sbDisplayBrightness.thumbOffset = THUMB_OFFSET
     }
 
     private fun getThumb(progress: Int): Drawable {
@@ -90,5 +92,6 @@ class SettingsFragment :
 
     companion object {
         private const val PERCENTAGE_STEP = 10
+        private const val THUMB_OFFSET = 60
     }
 }

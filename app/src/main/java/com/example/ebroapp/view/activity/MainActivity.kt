@@ -44,30 +44,25 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
         btnToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
-                    R.id.btnHome -> {
-                        openMainFragment()
-                    }
-                    R.id.btnMap -> {
+                    R.id.btnHome -> openMainFragment()
+                    R.id.btnMap ->
                         supportFragmentManager.commit {
                             replace(R.id.fragmentMain, MapFragment())
                         }
-                    }
-                    R.id.btnMusic -> {
+                    R.id.btnMusic ->
                         supportFragmentManager.commit {
                             replace(
                                 R.id.fragmentMain,
                                 MusicFullFragment()
                             )
                         }
-                    }
-                    R.id.btnSettings -> {
+                    R.id.btnSettings ->
                         supportFragmentManager.commit {
                             replace(
                                 R.id.fragmentMain,
                                 SettingsFragment()
                             )
                         }
-                    }
                 }
             }
         }
@@ -165,12 +160,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
         }
         mainFragment.setFragmentResultListener(REQUEST_KEY) { _, bundle ->
             when (bundle.getInt(FRAGMENT_ID)) {
-                R.id.fragmentMap -> {
-                    btnToggleGroup.check(R.id.btnMap)
-                }
-                R.id.fragmentMusic -> {
-                    btnToggleGroup.check(R.id.btnMusic)
-                }
+                R.id.fragmentMap -> btnToggleGroup.check(R.id.btnMap)
+                R.id.fragmentMusic -> btnToggleGroup.check(R.id.btnMusic)
             }
         }
     }

@@ -4,6 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.ebroapp.R
 import com.example.ebroapp.databinding.FragmentWeatherBinding
+import com.example.ebroapp.utils.TimeUtil.DAY_1
+import com.example.ebroapp.utils.TimeUtil.DAY_2
+import com.example.ebroapp.utils.TimeUtil.DAY_3
+import com.example.ebroapp.utils.TimeUtil.DAY_4
 import com.example.ebroapp.utils.TimeUtil.getLongDay
 import com.example.ebroapp.view.base.BaseFragment
 import com.squareup.picasso.Picasso
@@ -17,10 +21,10 @@ class WeatherFragment :
     override fun setupUI() {
         viewModel.weather.observe(viewLifecycleOwner) {
             val current = it.current
-            val day1 = it.daily[1]
-            val day2 = it.daily[2]
-            val day3 = it.daily[3]
-            val day4 = it.daily[4]
+            val day1 = it.daily[DAY_1]
+            val day2 = it.daily[DAY_2]
+            val day3 = it.daily[DAY_3]
+            val day4 = it.daily[DAY_4]
 
             Picasso.get()
                 .load("https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png")

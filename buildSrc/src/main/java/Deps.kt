@@ -6,7 +6,7 @@ object Deps {
     const val TARGET_SDK = 31
 
     // Sem Ver: Major.Minor.Patch
-    const val VERSION_CODE = 10014
+    const val VERSION_CODE = 10_014
     const val VERSION_NAME = "1.0.14"
 
     const val TEST_ANDROID_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
@@ -46,7 +46,7 @@ object Deps {
 
     const val PICASSO = "com.squareup.picasso:picasso:2.71828"
 
-    const val NAVIGATION_MAPBOX = "com.mapbox.navigation:android:2.3.0"
+//    const val NAVIGATION_MAPBOX = "com.mapbox.navigation:android:2.3.0"
 
     const val TIMBER = "com.jakewharton.timber:timber:5.0.1"
 

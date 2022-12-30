@@ -78,12 +78,12 @@ class MusicFullFragment :
     }
 
     private fun initAdapter() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 10).apply {
+        val gridLayoutManager = GridLayoutManager(requireContext(), SPAN_COUNT).apply {
             spanSizeLookup = object : SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when (songAdapter.getItemViewType(position)) {
                         TYPE_SONG -> 1
-                        TYPE_SEPARATOR -> 10
+                        TYPE_SEPARATOR -> SPAN_COUNT
                         else -> -1
                     }
                 }
@@ -108,5 +108,6 @@ class MusicFullFragment :
 
     companion object {
         private const val PERCENT = 100
+        private const val SPAN_COUNT = 10
     }
 }

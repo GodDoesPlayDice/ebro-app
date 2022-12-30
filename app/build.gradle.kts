@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("io.gitlab.arturbosch.detekt")
     kotlin("kapt")
 }
 
@@ -90,7 +89,7 @@ dependencies {
 
     implementation(Deps.PICASSO)
 
-    implementation(Deps.NAVIGATION_MAPBOX)
+//    implementation(Deps.NAVIGATION_MAPBOX)
 
     implementation(Deps.TIMBER)
 }

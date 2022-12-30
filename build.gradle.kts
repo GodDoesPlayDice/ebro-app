@@ -8,10 +8,10 @@ plugins {
     id(Deps.DETEKT) version Deps.DETEKT_VERSION
 }
 
-val сonfiguration: Configuration by configurations.creating
+val configuration: Configuration by configurations.creating
 
 dependencies {
-    сonfiguration(Deps.KTLINT) {
+    configuration(Deps.KTLINT) {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
         }
@@ -21,14 +21,14 @@ dependencies {
 
 val ktlint by tasks.creating(JavaExec::class) {
     description = "Check Kotlin code style."
-    classpath = сonfiguration
+    classpath = configuration
     mainClass.set("com.pinterest.ktlint.Main")
     args = listOf("src/**/*.kt")
 }
 
 val ktlintFormat by tasks.creating(JavaExec::class) {
     description = "Fix Kotlin code style deviations."
-    classpath = сonfiguration
+    classpath = configuration
     mainClass.set("com.pinterest.ktlint.Main")
     args = listOf("-F", "src/**/*.kt")
     jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
@@ -36,7 +36,7 @@ val ktlintFormat by tasks.creating(JavaExec::class) {
 
 detekt {
     source = files(projectDir)
-    toolVersion = "1.22.0"
+    toolVersion = Deps.DETEKT_VERSION
     config = files("$rootDir/detekt.yml")
 }
 
