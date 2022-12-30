@@ -3,6 +3,7 @@ package com.example.ebroapp.di.module.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ebroapp.di.scope.ActivityScope
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -18,9 +19,9 @@ class ViewModelFactory @Inject constructor(
         try {
             @Suppress("UNCHECKED_CAST")
             return creator.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException(e)
+        } catch (e: ClassCastException) {
+            Timber.e(e.message)
+            throw ClassCastException("Class cast exception")
         }
     }
 }
-

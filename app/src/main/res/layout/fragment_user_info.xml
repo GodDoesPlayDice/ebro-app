@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
+                android:id="@+id/cl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -28,19 +28,18 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/john_shepard"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView"
-                    app:layout_constraintStart_toEndOf="@+id/cardView"
-                    app:layout_constraintTop_toTopOf="@+id/cardView" />
+                    app:layout_constraintBottom_toBottomOf="@+id/cv"
+                    app:layout_constraintStart_toEndOf="@+id/cv"
+                    app:layout_constraintTop_toTopOf="@+id/cv" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
+                    android:id="@+id/cv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="250dp"
@@ -48,7 +47,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/ivAvatar"
+                        android:id="@+id/imgAvatar"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         app:srcCompat="@raw/ic_drake" />
@@ -60,8 +59,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/cardView"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView">
+                    app:layout_constraintStart_toStartOf="@+id/cv"
+                    app:layout_constraintTop_toBottomOf="@+id/cv">
 
                     <TextView
                         android:id="@+id/tvTimeTitle"
@@ -110,7 +109,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/ivEquipment"
+                        android:id="@+id/imgEquipment"
                         android:layout_width="21dp"
                         android:layout_height="29dp"
                         android:layout_marginTop="12dp"
@@ -126,9 +125,9 @@
                         android:text="@string/iphone_regret"
                         android:textColor="@color/white"
                         android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/ivEquipment"
-                        app:layout_constraintStart_toEndOf="@id/ivEquipment"
-                        app:layout_constraintTop_toTopOf="@+id/ivEquipment" />
+                        app:layout_constraintBottom_toBottomOf="@+id/imgEquipment"
+                        app:layout_constraintStart_toEndOf="@id/imgEquipment"
+                        app:layout_constraintTop_toTopOf="@+id/imgEquipment" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

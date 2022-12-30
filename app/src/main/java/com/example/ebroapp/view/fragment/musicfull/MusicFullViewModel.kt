@@ -31,7 +31,6 @@ class MusicFullViewModel @Inject constructor(
 
     fun nextSong(song: Song? = null) {
         song?.let { player.nextSong(it) } ?: player.nextSong()
-
     }
 
     fun setOnPlayerStateChangeListener(listener: (Int, Int) -> Unit) {

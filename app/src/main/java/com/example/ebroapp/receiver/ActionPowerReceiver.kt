@@ -18,9 +18,7 @@ class ActionPowerReceiver : BroadcastReceiver() {
         Injector.injectActionPowerReceiver(this)
 
         when (intent?.action) {
-            Intent.ACTION_POWER_CONNECTED -> {
-                startActivity(context, SplashActivity::class.java)
-            }
+            Intent.ACTION_POWER_CONNECTED -> startActivity(context, SplashActivity::class.java)
             Intent.ACTION_POWER_DISCONNECTED -> {
                 player.stopMusic()
                 startActivity(context, BlackActivity::class.java)

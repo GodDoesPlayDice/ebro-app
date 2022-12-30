@@ -8,7 +8,7 @@ data class FullWeather(
 data class Current(
     val dt: Long,
     val temp: Double,
-    val weather: List<Weather>,
+    val weather: List<Weather>
 )
 
 data class Daily(

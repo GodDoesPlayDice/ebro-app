@@ -14,6 +14,7 @@ import com.example.ebroapp.databinding.FragmentLowerToolbarBinding
 import com.example.ebroapp.utils.setOnSeekBarListener
 import com.example.ebroapp.view.base.BaseFragment
 
+@Suppress("MagicNumber")
 class LowerToolbarFragment :
     BaseFragment<FragmentLowerToolbarBinding, LowerToolbarViewModel>(LowerToolbarViewModel::class.java) {
 
@@ -158,15 +159,9 @@ class LowerToolbarFragment :
 
     private fun setTemperatureLabel(tempView: TextView, value: Int) {
         when {
-            value < 16 -> {
-                tempView.text = requireContext().getString(R.string.lo)
-            }
-            value > 25 -> {
-                tempView.text = requireContext().getString(R.string.hi)
-            }
-            else -> {
-                tempView.text = requireContext().getString(R.string.temperature_label, value)
-            }
+            value < 16 -> tempView.text = requireContext().getString(R.string.lo)
+            value > 25 -> tempView.text = requireContext().getString(R.string.hi)
+            else -> tempView.text = requireContext().getString(R.string.temperature_label, value)
         }
     }
 }

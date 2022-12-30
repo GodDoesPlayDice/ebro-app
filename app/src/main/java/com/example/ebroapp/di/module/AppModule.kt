@@ -4,15 +4,15 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.domain.repository.DomainRepository
-import com.example.ebroapp.di.module.network.NetworkModule
 import com.example.ebroapp.di.module.domain.DomainModule
-import com.example.network.repository.RemoteService
+import com.example.ebroapp.di.module.network.NetworkModule
 import com.example.ebroapp.utils.map.LocationListener
 import com.example.ebroapp.utils.music.Player
 import com.example.ebroapp.utils.provider.GsonProvider
 import com.example.ebroapp.utils.provider.GsonProviderImpl
 import com.example.network.provider.RetrofitProvider
 import com.example.network.provider.RetrofitProviderImpl
+import com.example.network.repository.RemoteService
 import com.google.gson.Gson
 import dagger.Binds
 import dagger.Module

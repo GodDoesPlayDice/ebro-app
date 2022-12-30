@@ -13,6 +13,7 @@ import com.example.ebroapp.di.module.AppModule
 import com.example.ebroapp.receiver.ActionPowerReceiver
 import com.example.ebroapp.view.activity.MainActivity
 
+@Suppress("LateinitUsage")
 object Injector {
 
     private lateinit var appComponent: IAppComponent

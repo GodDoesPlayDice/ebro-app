@@ -10,17 +10,21 @@ import android.provider.Settings.System.CONTENT_URI
 import android.widget.SeekBar
 import android.widget.TextView
 import com.example.ebroapp.R
+import com.example.ebroapp.utils.TimeUtil.SIXTY_UNITS
+import com.example.ebroapp.utils.TimeUtil.TEN_UNITS
 import com.example.ebroapp.utils.music.CacheUtil.addBitmapToMemoryCache
 import com.example.ebroapp.utils.music.CacheUtil.getBitmapFromMemCache
 import com.example.ebroapp.utils.music.VolumeObserver
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.GlobalScope
 
+private const val SEEK_BAR_SHIFT = 15
+
 fun TextView.setTime(time: Int) {
-    val minutes = time / 60
-    val seconds = time % 60
-    val stringMinutes = if (minutes >= 10) minutes else "0$minutes"
-    val stringSeconds = if (seconds >= 10) seconds else "0$seconds"
+    val minutes = time / SIXTY_UNITS
+    val seconds = time % SIXTY_UNITS
+    val stringMinutes = if (minutes >= TEN_UNITS) minutes else "0$minutes"
+    val stringSeconds = if (seconds >= TEN_UNITS) seconds else "0$seconds"
     val text = "$stringMinutes:$stringSeconds"
     this.text = text
 }
@@ -34,7 +38,7 @@ fun ContentResolver.setOnVolumeChangeListener(
 fun SeekBar.setOnSeekBarListener(addOp: (Int) -> Unit) {
     this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            addOp(15 + progress)
+            addOp(SEEK_BAR_SHIFT + progress)
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -75,4 +79,3 @@ fun ShapeableImageView.setImageFromUri(
         bitmap?.let { setImageBitmap(it) } ?: setImageResource(error)
     }, { setImageResource(error) })
 }
-

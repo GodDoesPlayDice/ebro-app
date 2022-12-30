@@ -3,7 +3,7 @@ package com.example.ebroapp.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ebroapp.databinding.ItemAddressesBinding
+import com.example.ebroapp.databinding.ListItemAddressesBinding
 
 class AddressesAdapter : RecyclerView.Adapter<AddressesAdapter.ViewHolder>() {
 
@@ -11,7 +11,7 @@ class AddressesAdapter : RecyclerView.Adapter<AddressesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(ItemAddressesBinding.inflate(inflater, parent, false))
+        return ViewHolder(ListItemAddressesBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -30,10 +30,10 @@ class AddressesAdapter : RecyclerView.Adapter<AddressesAdapter.ViewHolder>() {
         notifyItemInserted(items.size - 1)
     }
 
-    class ViewHolder(private val binding: ItemAddressesBinding) :
+    class ViewHolder(private val binding: ListItemAddressesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun fill(address: String) {
-            binding.tvAddressesItem.text = address
+            binding.tvAddresses.text = address
         }
     }
 }
