@@ -45,24 +45,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMo
             if (isChecked) {
                 when (checkedId) {
                     R.id.btnHome -> openMainFragment()
-                    R.id.btnMap ->
-                        supportFragmentManager.commit {
-                            replace(R.id.fragmentMain, MapFragment())
-                        }
-                    R.id.btnMusic ->
-                        supportFragmentManager.commit {
-                            replace(
-                                R.id.fragmentMain,
-                                MusicFullFragment()
-                            )
-                        }
-                    R.id.btnSettings ->
-                        supportFragmentManager.commit {
-                            replace(
-                                R.id.fragmentMain,
-                                SettingsFragment()
-                            )
-                        }
+                    R.id.btnMap -> supportFragmentManager.commit {
+                        replace(R.id.fragmentMain, MapFragment())
+                    }
+                    R.id.btnMusic -> supportFragmentManager.commit {
+                        replace(R.id.fragmentMain, MusicFullFragment())
+                    }
+                    R.id.btnSettings -> supportFragmentManager.commit {
+                        replace(R.id.fragmentMain, SettingsFragment())
+                    }
                 }
             }
         }

@@ -1,7 +1,10 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
+    id("ru.ok.tracer") version "0.2.8"
 }
 
 android {
@@ -51,11 +54,8 @@ android {
             "-Xjvm-default=all"
         )
     }
-    viewBinding {
-        isEnabled = true
-    }
     buildFeatures {
-        dataBinding = true
+        viewBinding = true
     }
 
     android.applicationVariants.all {
@@ -64,6 +64,15 @@ android {
                 this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
             variantOutputImpl.outputFileName = "Ebro $versionName ${buildType.name}.apk"
         }
+    }
+}
+
+tracer {
+    create("defaultConfig") {
+        pluginToken = "GvPWaETDEgr9Xl5lus5J2uI8HzmE1fC4tSdztVwyM0y1"
+        appToken = "CUzRuhcZdxE7gMySkEXaXkBUu9B7aEODecYr0mtgvjv2"
+
+        uploadMapping = true
     }
 }
 
@@ -94,4 +103,11 @@ dependencies {
     implementation(Deps.TIMBER)
 
     lintChecks(project(":custom_lint"))
+
+    implementation("ru.ok.tracer:tracer-crash-report:0.2.8")
+    implementation("ru.ok.tracer:tracer-crash-report-native:0.2.8")
+    implementation("ru.ok.tracer:tracer-heap-dumps:0.2.8")
+    implementation("ru.ok.tracer:tracer-disk-usage:0.2.8")
+    implementation("ru.ok.tracer:tracer-profiler-sampling:0.2.8")
+    implementation("ru.ok.tracer:tracer-profiler-systrace:0.2.8")
 }

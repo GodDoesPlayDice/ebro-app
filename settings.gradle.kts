@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven { setUrl("https://artifactory-external.vkpartner.ru/artifactory/maven") }
     }
 }
 @Suppress("UnstableApiUsage")
@@ -11,6 +12,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { setUrl("https://artifactory-external.vkpartner.ru/artifactory/maven") }
 //        maven {
 //            setUrl("https://api.mapbox.com/downloads/v2/releases/maven")
 //            authentication {
